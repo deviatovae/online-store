@@ -19,7 +19,7 @@ export default class Router {
         window.addEventListener('hashchange', () => this.loadRoute());
     }
 
-    private resolveRoute(path: string): any {
+    private resolveRoute(path: string): Function | null {
         return this.routes[path] || null;
     }
 
