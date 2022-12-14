@@ -39,28 +39,28 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-} 
 
-.header-logo__img {
-  position: absolute;
-  left: 0.6vw;
-  top: 3vw;
-  background: url(./assets/img/spruce_logo.svg) no-repeat center;
-  width: 1.6vw;
-  height: 2vw;
-  background-size: cover;
-}
+  &__img {
+    position: absolute;
+    left: 0.6vw;
+    top: 3vw;
+    background: url("./assets/img/spruce_logo.svg") no-repeat center;
+    width: 1.6vw;
+    height: 2vw;
+    background-size: cover;
+  }
 
-.header-logo__title {
-  font: 2.7vw Ruluko, sans-serif;
-  letter-spacing: 0.15em;
-  color: #8B9D93;
-} 
-    
-.header-logo__subtitle {
-  font: 2vw Ruge Boogie, sans-serif;
-  letter-spacing: 0.05em;
-  color: #8B9D93;
+  &__title {
+    font: 2.7vw Ruluko, sans-serif;
+    letter-spacing: 0.15em;
+    color: #8B9D93;
+  }
+
+  &__subtitle {
+    font: 2vw Ruge Boogie, sans-serif;
+    letter-spacing: 0.05em;
+    color: #8B9D93;
+  }
 }
 
 .header-cart {
@@ -70,42 +70,38 @@ html {
   align-items: center;
   margin-right: 4.5vw;
   cursor: pointer;
+
+  &__img {
+    background: url("./assets/img/cart-header.png") no-repeat center;
+    width: 3.5vw;
+    height: 4.5vw;
+    background-size: cover;
+  }
+
+  &__amount-container {
+    position: absolute;
+    top: 0.6vw;
+    right: -1vw;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 50%;
+    background: #8B9D93;
+    border: 0.5px solid #747474;
+  }
+
+  &__num {
+    font: 1vw Sitara;
+    color: #747474;
+  }
+
+  &__amount {
+    position: relative;
+    font: 1vw Sitara, sans-serif;
+    color: #eee;
+    right: -0.7vw;
+    top: 0.25vw
+  }
 }
-
-.header-cart__img {
-  background: url(./assets/img/cart-header.png) no-repeat center;
-  width: 3.5vw;
-  height: 4.5vw;
-  background-size: cover;
-}
-
-.header-cart__amount-container {
-  position: absolute;
-  top: 0.6vw;
-  right: -1vw;
-  width: 2vw;
-  height: 2vw;
-  border-radius: 50%;
-  background: #8B9D93;
-  border: 0.5px solid #747474;
-}
-
-.header-cart__num {
-  font: 1vw Sitara;
-  color: #747474;
-}
-
-.header-cart__amount {
-  position: relative;
-  font: 1vw Sitara, sans-serif;
-  color: #eee;
-  right: -0.7vw;
-  top: 0.25vw
-}
-
-
-
-
 
 .main {
   height: 100vh;
@@ -143,35 +139,33 @@ html {
 }
 
 .find-input-img {
-  background: url(../src/assets/img/loup.svg) no-repeat center;
+  background: url("./assets/img/loup.svg") no-repeat center;
   background-size: contain;
   width: 0.8vw;
   height: 0.8vw;
   position: absolute;
   top: 0.5vw;
   right: 0.3vw;
-  
+
 }
-
-
 
 
 .footer {
   background: #8B9D93;
-}
 
-.footer__container {
-  height: 6vw;
-  width: 90%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font: 1.2vw Sitara, sans-serif;
+  &__container {
+    height: 6vw;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: 1.2vw Sitara, sans-serif;
+  }
 }
 
 .footer-github {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   gap: 1vw;
   align-items: center;
 }
@@ -184,32 +178,31 @@ html {
   flex-direction: row;
   align-items: center;
   gap: 0.5vw;
-}
 
-.github-link:hover {
-  filter: invert(100%);
-  transition: 0.3s;
-  cursor: pointer;
+  &:hover {
+    filter: invert(100%);
+    transition: 0.3s;
+    cursor: pointer;
+  }
 }
 
 .github-link-img {
   display: inline-block;
   width: 2vw;
   height: 2vw;
-  background: url(../src/assets/img/github.svg) no-repeat center;
+  background: url("./assets/img/github.svg") no-repeat center;
   background-size: cover;
 }
-  
+
 .rsschool-logo {
   width: 6vw;
   height: 3vw;
   transition: 0.3s;
-  background: url(../src/assets/img/rs-logo.svg)  no-repeat center;
-}
+  background: url("./assets/img/rs-logo.svg") no-repeat center;
 
-.rsschool-logo:hover {
-  filter: invert(100%);
-  transition: 0.3s;
-  cursor: pointer;
+  &:hover {
+    filter: invert(100%);
+    transition: 0.3s;
+    cursor: pointer;
+  }
 }
-  
