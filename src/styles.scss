@@ -1,13 +1,15 @@
-p {
-  margin: 0;
-}
+@import url('./fonts.scss');
+@import url('./normalize.css');
+
+
+$Ruluko: Ruluko, sans-serif;
+$Ruge_Boogie: Ruge Boogie, sans-serif;
+$Sitara: Sitara, sans-serif;
+$oliva:#8B9D93;
+
 
 a {
   text-decoration: none;
-}
-
-body {
-  margin: 0;
 }
 
 html {
@@ -39,6 +41,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   &__img {
     position: absolute;
@@ -51,15 +54,15 @@ html {
   }
 
   &__title {
-    font: 2.7vw Ruluko, sans-serif;
+    font: 2.7vw $Ruluko;
     letter-spacing: 0.15em;
-    color: #8B9D93;
+    color: $oliva;
   }
 
   &__subtitle {
-    font: 2vw Ruge Boogie, sans-serif;
+    font: 2vw $Ruge_Boogie;
     letter-spacing: 0.05em;
-    color: #8B9D93;
+    color: $oliva;
   }
 }
 
@@ -72,7 +75,7 @@ html {
   cursor: pointer;
 
   &__img {
-    background: url("./assets/img/cart-header.png") no-repeat center;
+    background: url("./assets/img/cart-header.svg") no-repeat center;
     width: 3.5vw;
     height: 4.5vw;
     background-size: cover;
@@ -85,18 +88,18 @@ html {
     width: 2vw;
     height: 2vw;
     border-radius: 50%;
-    background: #8B9D93;
+    background: $oliva;
     border: 0.5px solid #747474;
   }
 
   &__num {
-    font: 1vw Sitara;
+    font: 1vw $Sitara;
     color: #747474;
   }
 
   &__amount {
     position: relative;
-    font: 1vw Sitara, sans-serif;
+    font: 1vw $Sitara;
     color: #eee;
     right: -0.7vw;
     top: 0.25vw
@@ -108,7 +111,7 @@ html {
 }
 
 .find-container {
-  background-color: #8B9D93;
+  background-color: $oliva;
   height: 9.5vw;
   display: flex;
   flex-direction: column;
@@ -118,7 +121,7 @@ html {
 
 .find-title {
   width: 34%;
-  font: 1.7vw Sitara, sans-serif;
+  font: 1.7vw $Sitara;
   font-weight: 700;
   letter-spacing: 0.05em;
   color: #fff;
@@ -135,7 +138,7 @@ html {
 }
 
 .find-input::placeholder {
-  font: 1.1vw Sitara, sans-serif;
+  font: 1.1vw $Sitara;
 }
 
 .find-input-img {
@@ -151,7 +154,7 @@ html {
 
 
 .footer {
-  background: #8B9D93;
+  background: $oliva;
 
   &__container {
     height: 6vw;
@@ -159,7 +162,8 @@ html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font: 1.2vw Sitara, sans-serif;
+    font: 1.2vw $Sitara;
+    color: #fff;
   }
 }
 
@@ -170,8 +174,10 @@ html {
   align-items: center;
 }
 
+
+
 .github-link {
-  color: rgb(0, 0, 0);
+  color: #fff;
   position: relative;
   text-decoration: none;
   display: flex;
@@ -192,6 +198,7 @@ html {
   height: 2vw;
   background: url("./assets/img/github.svg") no-repeat center;
   background-size: cover;
+  filter: invert(100%);
 }
 
 .rsschool-logo {

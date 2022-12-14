@@ -1,2 +1,2 @@
 import './styles.scss';
-import './fonts.scss';
+// import './fonts.scss';
