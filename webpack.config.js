@@ -10,11 +10,8 @@ module.exports = {
             {
                 test: /\.s[ac]ss$/i,
                 use: [
-                  // Creates `style` nodes from JS strings
                   "style-loader",
-                  // Translates CSS into CommonJS
                   "css-loader",
-                  // Compiles Sass to CSS
                   "sass-loader",
                 ],
             },
@@ -24,6 +21,10 @@ module.exports = {
             {
               test: /\.(png|svg|jpeg|)$/i,
               type: 'asset/resource',
+            },
+            {
+                test: /\.(woff|woff2|ttf)$/i,
+                type: 'asset/resource',
             },
         ],
     },
