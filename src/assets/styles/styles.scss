@@ -1,12 +1,6 @@
-@import url('./fonts.scss');
-@import url('./normalize.css');
-
-
-$Ruluko: Ruluko, sans-serif;
-$Ruge_Boogie: Ruge Boogie, sans-serif;
-$Sitara: Sitara, sans-serif;
-$oliva:#8B9D93;
-
+@import 'common/_variables';
+@import url('fonts.scss');
+@import url('normalize.css');
 
 a {
   text-decoration: none;
@@ -47,7 +41,7 @@ html {
     position: absolute;
     left: 10px;
     top: 48px;
-    background: url("./assets/img/spruce_logo.svg") no-repeat center;
+    background: url("../img/spruce_logo.svg") no-repeat center;
     width: 32px;
     height: 32px;
 
@@ -79,74 +73,8 @@ html {
       font-size: 1.1rem;
     }
   }
-  
+
 }
-
-.header-cart {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 3.5%;
-  cursor: pointer;
-
-  &__img {
-    background: url("./assets/img/cart-header.svg") no-repeat center;
-    width: 80px;
-    height: 80px;
-
-    @media screen and (max-width: 450px) {
-      width: 50px;
-      height: 50px;
-      background-size: contain;
-    }
-  }
-
-  &__amount-container {
-    position: absolute;
-    top: 14px;
-    right: -8px;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: $oliva;
-    border: 0.5px solid #747474;
-
-    @media screen and (max-width: 450px) {
-      width: 25px;
-      height: 25px;
-      top: 5px;
-      right: -3px;
-      background-size: contain;
-    }
-  }
-
-  &__num {
-    font: 1.5rem $Sitara;
-    color: #747474;
-
-    @media screen and (max-width: 450px) {
-      font-size: 1rem;
-    }
-  }
-
-  &__amount {
-    position: relative;
-    font: 1rem $Sitara;
-    color: #eee;
-    right: -12px;
-    top: 4px;
-
-    @media screen and (max-width: 450px) {
-      // font-size: 1rem;
-      right: -8px;
-      top: 1px;
-    }
-  }
-}
-
-
-
 
 .main {
   height: 100vh;
@@ -190,7 +118,7 @@ html {
 }
 
 .find-input-img {
-  background: url("./assets/img/loup.svg") no-repeat center;
+  background: url("../img/loup.svg") no-repeat center;
   position: absolute;
   width: 12px;
   height: 13px;
@@ -255,7 +183,7 @@ html {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background: url("./assets/img/github.svg") no-repeat center;
+  background: url("../img/github.svg") no-repeat center;
   filter: invert(100%);
 }
 
@@ -263,7 +191,7 @@ html {
   width: 60px;
   height: 30px;
   transition: 0.3s;
-  background: url("./assets/img/rs-logo.svg") no-repeat center;
+  background: url("../img/rs-logo.svg") no-repeat center;
 
   &:hover {
     filter: invert(100%);
