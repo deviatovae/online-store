@@ -1,4 +1,4 @@
-export default class Router {
+export class Router {
     private routes: { [key: string]: Function; } = {};
     private fallbackRoute: Function | null;
 
