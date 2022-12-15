@@ -25,12 +25,12 @@ html {
 }
 
 .header {
-  background-color: #F5F5F5;
+  background-color: #fff;
 }
 
 .header__container {
-  width: 95%;
-  height: 7vw;
+  width: 94%;
+  height: 108px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -45,25 +45,41 @@ html {
 
   &__img {
     position: absolute;
-    left: 0.6vw;
-    top: 3vw;
+    left: 10px;
+    top: 48px;
     background: url("./assets/img/spruce_logo.svg") no-repeat center;
-    width: 1.6vw;
-    height: 2vw;
-    background-size: cover;
+    width: 32px;
+    height: 32px;
+
+    @media screen and (max-width: 450px) {
+      width: 22px;
+      height: 22px;
+      left: 10px;
+      top: 33px;
+      background-size: contain;
+    }
   }
 
   &__title {
-    font: 2.7vw $Ruluko;
+    font: 2.5rem $Ruluko;
     letter-spacing: 0.15em;
     color: $oliva;
+
+    @media screen and (max-width: 450px) {
+      font-size: 1.8rem;
+    }
   }
 
   &__subtitle {
-    font: 2vw $Ruge_Boogie;
+    font: 1.7rem $Ruge_Boogie;
     letter-spacing: 0.05em;
     color: $oliva;
+
+    @media screen and (max-width: 450px) {
+      font-size: 1.1rem;
+    }
   }
+  
 }
 
 .header-cart {
@@ -71,40 +87,66 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 4.5vw;
+  margin-right: 3.5%;
   cursor: pointer;
 
   &__img {
     background: url("./assets/img/cart-header.svg") no-repeat center;
-    width: 3.5vw;
-    height: 4.5vw;
-    background-size: cover;
+    width: 80px;
+    height: 80px;
+
+    @media screen and (max-width: 450px) {
+      width: 50px;
+      height: 50px;
+      background-size: contain;
+    }
   }
 
   &__amount-container {
     position: absolute;
-    top: 0.6vw;
-    right: -1vw;
-    width: 2vw;
-    height: 2vw;
+    top: 14px;
+    right: -8px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: $oliva;
     border: 0.5px solid #747474;
+
+    @media screen and (max-width: 450px) {
+      width: 25px;
+      height: 25px;
+      top: 5px;
+      right: -3px;
+      background-size: contain;
+    }
   }
 
   &__num {
-    font: 1vw $Sitara;
+    font: 1.5rem $Sitara;
     color: #747474;
+
+    @media screen and (max-width: 450px) {
+      font-size: 1rem;
+    }
   }
 
   &__amount {
     position: relative;
-    font: 1vw $Sitara;
+    font: 1rem $Sitara;
     color: #eee;
-    right: -0.7vw;
-    top: 0.25vw
+    right: -12px;
+    top: 4px;
+
+    @media screen and (max-width: 450px) {
+      // font-size: 1rem;
+      right: -8px;
+      top: 1px;
+    }
   }
 }
+
+
+
 
 .main {
   height: 100vh;
@@ -112,7 +154,7 @@ html {
 
 .find-container {
   background-color: $oliva;
-  height: 9.5vw;
+  height: 152px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -120,36 +162,40 @@ html {
 }
 
 .find-title {
-  width: 34%;
-  font: 1.7vw $Sitara;
+  width: 530px;
+  font: 1.65rem $Sitara;
   font-weight: 700;
   letter-spacing: 0.05em;
   color: #fff;
+  text-align: center;
+
+  @media screen and (max-width: 600px) {
+    width: 280px;
+    font-size: 1rem;
+  }
 }
 
 .find-input-wrapper {
-  width: 17%;
   position: relative;
+  width: 230px;
 }
 
 .find-input {
   width: 100%;
-  height: 1.3vw;
+  height: 28px;
 }
 
 .find-input::placeholder {
-  font: 1.1vw $Sitara;
+  font: 1em $Sitara;
 }
 
 .find-input-img {
   background: url("./assets/img/loup.svg") no-repeat center;
-  background-size: contain;
-  width: 0.8vw;
-  height: 0.8vw;
   position: absolute;
-  top: 0.5vw;
-  right: 0.3vw;
-
+  width: 12px;
+  height: 13px;
+  top: 10px;
+  right: 2px;
 }
 
 
@@ -157,24 +203,37 @@ html {
   background: $oliva;
 
   &__container {
-    height: 6vw;
+    height: 70px;
     width: 90%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font: 1.2vw $Sitara;
+    font: 1.2rem $Sitara;
     color: #fff;
-  }
+
+    @media screen and (max-width: 820px) {
+      height: 120px;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+    @media screen and (max-width: 500px) {
+      height: 200px;
+      gap: 10px;
+    }
+}
 }
 
 .footer-github {
   display: flex;
   flex-direction: row;
-  gap: 1vw;
+  gap: 15px;
   align-items: center;
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+    gap: 2px;
+  }
 }
-
-
 
 .github-link {
   color: #fff;
@@ -183,7 +242,7 @@ html {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.5vw;
+  gap: 5px;
 
   &:hover {
     filter: invert(100%);
@@ -194,16 +253,15 @@ html {
 
 .github-link-img {
   display: inline-block;
-  width: 2vw;
-  height: 2vw;
+  width: 20px;
+  height: 20px;
   background: url("./assets/img/github.svg") no-repeat center;
-  background-size: cover;
   filter: invert(100%);
 }
 
 .rsschool-logo {
-  width: 6vw;
-  height: 3vw;
+  width: 60px;
+  height: 30px;
   transition: 0.3s;
   background: url("./assets/img/rs-logo.svg") no-repeat center;
 
