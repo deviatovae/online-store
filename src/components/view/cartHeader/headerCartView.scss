@@ -5,7 +5,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 3.5%;
   cursor: pointer;
 
   &__img {
@@ -43,6 +42,10 @@
     font: 1.5rem $Sitara;
     color: #747474;
 
+    @media screen and (max-width: 600px) {
+      font-size: 1.2rem;
+    }
+
     @media screen and (max-width: 450px) {
       font-size: 1rem;
     }
@@ -56,7 +59,6 @@
     top: 4px;
 
     @media screen and (max-width: 450px) {
-      // font-size: 1rem;
       right: -8px;
       top: 1px;
     }
