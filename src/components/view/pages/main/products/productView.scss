@@ -7,12 +7,19 @@
   flex-direction: column;
   gap: 10px;
   font: 1rem $Sitara;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    // cursor: pointer;
+  }
 
   &__img {
     background: url(../../../../../assets/img/zaglushka.png) no-repeat center;
     width: 214px;
     height: 158px;
     margin: 0 auto;
+    
   }
 
   &__cart-text {
@@ -23,6 +30,10 @@
     justify-content: center;
     align-items: center;
     color: #fff;
+    position: relative;
+    right: 250px;
+    transition: 0.2s;
+    cursor: pointer;
   }
 
   &__info {
@@ -31,9 +42,12 @@
   }
 }
 
+.product-item:hover > .product-item__cart-text {
+    right: 0px;
+    transition: 0.2s;
+}
+
 .item-info {
-
-
   &__name-price {
     display: flex;
     flex-direction: row;

@@ -1,10 +1,14 @@
 import {ViewInterface} from "../../viewInterface";
 import {FiltersView} from "./filters/filtersView";
 import {ProductView} from "./products/productView"
+import {ProductListView} from "./products/productListView"
+
 
 export class MainPageView implements ViewInterface<void> {
     private filtersView: FiltersView = new FiltersView()
     private productView: ProductView = new ProductView()
+    // private productListView: ProductListView = new ProductListView()
+    
     render(data: void): string {
 
         // language=HTML
