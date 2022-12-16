@@ -608,13 +608,13 @@
   },
   {
     "id": 56,
-    "name": "Пряничный теремок",
-    "price": 1,
-    "collection": "1940",
-    "color": "желтый",
-    "size": "малый",
+    "name": "Christmas tree porcelain LED",
+    "price": 6.99,
+    "collection": 2023,
+    "color": "white",
+    "size": 17,
     "favorite": false,
-    "category": "",
+    "category": "Christmas decorations",
     "images": []
   },
   {
