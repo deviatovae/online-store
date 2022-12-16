@@ -1,0 +1,43 @@
+@import '../../../../../assets/styles/common/variables';
+
+.product-item {
+  width: 214px;
+  height: 324px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font: 1rem $Sitara;
+
+  &__img {
+    background: url(../../../../../assets/img/zaglushka.png) no-repeat center;
+    width: 214px;
+    height: 158px;
+    margin: 0 auto;
+  }
+
+  &__cart-text {
+    width: 100%;
+    background-color: $oliva;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.item-info {
+
+
+  &__name-price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+}

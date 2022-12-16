@@ -5,10 +5,21 @@
   color: $mainBlack;
   margin-bottom: 50px;
 
+
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  column-gap: 57px;
+
   &__bread-crumbs {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    height: 40px;                     //временно
   }
 
   &__products {
+    
   }
 }
 
