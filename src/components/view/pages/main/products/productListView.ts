@@ -1,31 +1,19 @@
 import './productListView.scss'
 import {ViewInterface} from "../../../viewInterface";
 
-// import {ProductView} from "./productView"
+import {ProductView} from "./productView";
+import {Product} from "../../../../types/product";
 
-import products from '../../../../../assets/data/products.json' ;
-
-export class ProductListView implements ViewInterface<void> {
+export class ProductListView implements ViewInterface<Product[]> {
     
-    // private productView: ProductView = new ProductView()
+    private productView: ProductView = new ProductView()
 
-    render(data?: void): string {
+    render(products: Product[]): string {
+        const cards = products.map((product) => this.productView.render(product))
         return `
-        <div class="product-item">
-          <div class="product-item__img"></div>
-          <div class="product-item__cart-text">Add to cart</div>
-          <div class="product-item__info">
-            <div class="item-info__name-price">
-              <span class="item-info__name">Шарик</span>
-              <span class="item-info__price">$100</span>
-            </div>
-            <div class="item-info__color">Color:</div>
-            <div class="item-info__colection">Colection:</div>
-            <div class="item-info__size">Size:</div>
-            <div class="item-info__category">Categor:</div>
-          </div>
-        </div>
+        ${cards.join(' ')}
     `
     }
-
+    
 }
+
