@@ -37,8 +37,14 @@ export class FiltersView implements ViewInterface<void> {
               <div class="filters-item__title">Price</div>
               <div class="filters-item__content item-content">
                 <div class="item-content__price price">
-                  <input type="text" class="price__box-start box-start" value="$">
-                  <input type="text" class="price__box-end box-end" value="$">
+                  <div>
+                    <input type="text" class="price__box-start box-start" value="0">
+                    <span class="price__dollar_start">$</span>
+                  </div>
+                  <div>
+                    <input type="text" class="price__box-end box-end" value="0">
+                    <span class="price__dollar_end">$</span>
+                  </div>
                 </div>
                 <div class="item-content__dual-range dual-range">
                   <input class="range-bar" type="range" step="100">
@@ -74,8 +80,8 @@ export class FiltersView implements ViewInterface<void> {
               <div class="filters-item__title">In stock</div>
               <div class="filters-item__content item-content">
                 <div class="item-content__stock stock">
-                  <input type="text" class="price__box-start box-start" value="cm">
-                  <input type="text" class="price__box-end box-end" value="cm">
+                  <input type="text" class="price__box-start box-start" placeholder="0 cm">
+                  <input type="text" class="price__box-end box-end" placeholder="700 cm">
                 </div>
                 <div class="item-content__dual-range dual-range">
                   <input class="range-bar" type="range" step="100">

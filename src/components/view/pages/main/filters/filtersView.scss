@@ -1,4 +1,12 @@
 @import '../../../../../assets/styles/common/variables';
+input {
+  color: $darkGray;
+  text-align: center;
+}
+
+._hidden {
+  display: none;
+}
 
 .main-catalog {
   padding: 0 20px;
@@ -22,7 +30,7 @@
     }
   }
 
-  //стили листа в productListView.scss 
+  //стили листа в productListView.scss
   &__products {
 
   }
@@ -203,10 +211,36 @@
   margin-bottom: 15px;
 }
 
+.price {
+  position: relative;
+
+  &__dollar_end,
+  &__dollar_start {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 600;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  &__dollar_end{
+    right: 35px;
+  }
+
+  &__dollar_start{
+    left: 95px;
+  }
+}
+
 .box-start,
 .box-end {
   width: 80px;
   height: 30px;
+  overflow: hidden;
+  padding-right: 15px;
 }
 
 .dual-range{
@@ -223,8 +257,8 @@
   margin-bottom: 7px;
 
   &__label{
-    color: $mainBlack;
     font-family: $Sitara;
+    color: $darkGray;
 
     &:hover{
       cursor: pointer;
@@ -234,9 +268,10 @@
   }
 
   &__checkbox{
-    width: 14px;
-    height: 14px;
+    width: 18px;
+    height: 18px;
     padding: 0;
+
     &:hover{
       cursor: pointer;
     }

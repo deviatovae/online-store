@@ -8,9 +8,8 @@ import products from '../../../../assets/data/products.json' ;
 export class MainPageView implements ViewInterface<void> {
     private filtersView: FiltersView = new FiltersView()
     private productListView: ProductListView = new ProductListView()
-    
-    render(data: void): string {
 
+    render(data: void): string {
         // language=HTML
         return `
           <div class="find-container">
@@ -32,8 +31,6 @@ export class MainPageView implements ViewInterface<void> {
               <div class="main-catalog__products">
                 ${this.productListView.render(products)}
               </div>
-
-
             </section>
           </div>
         `
