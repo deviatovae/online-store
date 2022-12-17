@@ -4,11 +4,27 @@
   padding: 0 20px;
   color: $mainBlack;
   margin-bottom: 50px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  column-gap: 57px;
 
   &__bread-crumbs {
+    margin: 11px 0;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    height: 26px;
+
+    //временно
+    &:after{
+      content: 'тут будут хлебные крошки';
+    }
   }
 
+  //стили листа в productListView.scss 
   &__products {
+
   }
 }
 

@@ -1,0 +1,12 @@
+@import '../../../../../assets/styles/common/variables';
+
+.main-catalog {
+ 
+    &__products {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 39px;
+        row-gap: 8px;
+      }
+  
+}

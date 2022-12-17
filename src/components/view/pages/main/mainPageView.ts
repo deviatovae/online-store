@@ -1,8 +1,14 @@
 import {ViewInterface} from "../../viewInterface";
 import {FiltersView} from "./filters/filtersView";
+import {ProductListView} from "./products/productListView"
+
+import products from '../../../../assets/data/products.json' ;
+
 
 export class MainPageView implements ViewInterface<void> {
     private filtersView: FiltersView = new FiltersView()
+    private productListView: ProductListView = new ProductListView()
+    
     render(data: void): string {
 
         // language=HTML
@@ -23,7 +29,11 @@ export class MainPageView implements ViewInterface<void> {
               <div class="main-catalog__filters">
                 ${this.filtersView.render()}
               </div>
-              <div class="main-catalog__products"></div>
+              <div class="main-catalog__products">
+                ${this.productListView.render(products)}
+              </div>
+
+
             </section>
           </div>
         `
