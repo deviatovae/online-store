@@ -1,6 +1,9 @@
 import {Router} from "../router/router";
 import {Pages} from "./pages";
 
+/**
+ * логика отрисовки приложения
+ */
 export class App {
     private router: Router;
     private pages: Pages;
