@@ -11,4 +11,7 @@ export class Controller {
     public catalog(callback: CallbackFn<void>) {
         callback();
     }
+
+    addProductToCart(id: number) {
+    }
 }
