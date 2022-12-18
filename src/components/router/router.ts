@@ -6,6 +6,9 @@ export class Router {
         this.fallbackRoute = null;
     }
 
+    /**
+     * обращается к объекту routes и в поле path присваивает коллбэк
+     */
     public route(path: string, view: Function): void {
         this.routes[path] = view;
     }
@@ -14,15 +17,24 @@ export class Router {
         this.fallbackRoute = view
     }
 
+    /**
+     * при загрузке страницы или при изменении в хэше вызывает loadRoute
+     */
     public start() {
         window.addEventListener('load', () => this.loadRoute());
         window.addEventListener('hashchange', () => this.loadRoute());
     }
 
+    /**
+     * обращается в полю routes и достает оттуда значение по ключу и возвращает функцию (с url)
+     */
     private resolveRoute(path: string): Function | null {
         return this.routes[path] || null;
     }
 
+    /**
+     * ищет и вызывает функцию которая была записана в routes по url (после #) или возывает fallback
+     */
     private loadRoute(): void {
         let url = window.location.hash.slice(1) || '/';
         let route = this.resolveRoute(url);

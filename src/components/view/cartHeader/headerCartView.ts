@@ -2,9 +2,14 @@ import './headerCartView.scss';
 import {View} from "../view";
 import {CartType} from "../../types/cartType";
 
-export class HeaderCartView extends View<CartType> {
-    public render(cart: CartType): string {
-
+/**
+ * view иконки корзины в хедере
+ *
+ * принимает список продуктов (временно, лучше принимать уже готовый объект с полями count, и price (sum))
+ * возвращает готовый html инонки корзины
+ */
+export class HeaderCartView extends View<Product[]> {
+    public render(products: Product[]): string {
         return `<div class="header-cart">
           <div class="header-cart__img"></div>
           <div class="header-cart__amount-container">

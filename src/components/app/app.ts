@@ -2,6 +2,9 @@ import {Router} from "../router/router";
 import {Pages} from "./pages";
 import store from "../store/store";
 
+/**
+ * логика отрисовки приложения
+ */
 export class App {
     private router: Router;
     private pages: Pages;

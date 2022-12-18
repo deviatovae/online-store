@@ -4,7 +4,10 @@ import {Product} from "../../../../types/product";
 import {Controller} from "../../../../controller/controller";
 import {View} from "../../../view";
 
-
+/**
+ * view отвечающий за формирование html для одного товара
+ *   - используется в productListView
+ */
 export class ProductView extends View<Product> {
     render(product: Product): string {
         return `
@@ -27,6 +30,18 @@ export class ProductView extends View<Product> {
     `
     }
 
+    /**
+     * После рендера (когда html компонента попадет в DOM) ставим обработчик события при клике на "Add to card"
+     *   - находим все элементы (кнопки Add to card) с помощью селектора .product-item__cart-text
+     *   - вешаем на них обработчик по клику
+     *   - обработчик получает элемент, из элемента берёт id и аттрибута data-id
+     *   - вызывает метод контроллера addProductToCart и передает id продукта
+     *
+     * предполагается что:
+     * контроллер должен будет добавить этот идентификатор продукта в корзину (в стейт),
+     * что должно привести к изменению состояния,
+     * что должно вызвать перерисовку компонентов
+     */
     public afterRender(controller: Controller): void {
         super.afterRender(controller);
 
