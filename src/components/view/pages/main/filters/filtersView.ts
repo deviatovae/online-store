@@ -1,8 +1,8 @@
 import './filtersView.scss'
-import {ViewInterface} from "../../../viewInterface";
+import {View} from "../../../view";
 
-export class FiltersView implements ViewInterface<void> {
-    render(data?: void): string {
+export class FiltersView extends View<void> {
+    public render(data?: void): string {
         // language=HTML
         return `
           <div class="filters" xmlns="http://www.w3.org/1999/html">

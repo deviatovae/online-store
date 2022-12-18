@@ -1,9 +1,9 @@
-import {ViewInterface} from "../viewInterface";
 import './headerCartView.scss';
 import {Product} from "../../types/product";
+import {View} from "../view";
 
-export class HeaderCartView implements ViewInterface<Product[]> {
-    render(products: Product[]): string {
+export class HeaderCartView extends View<Product[]> {
+    public render(products: Product[]): string {
         const count: number = products.length || 0
         const price = products.reduce((sum, product) => product.price + sum, 0)
 
