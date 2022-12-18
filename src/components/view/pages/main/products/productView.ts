@@ -8,10 +8,10 @@ import {View} from "../../../view";
 export class ProductView extends View<Product> {
     render(product: Product): string {
         return `
-        <div class="product-item" data-id="${product.id}">
+        <div class="product-item">
           <div class="product-item__img"></div>
           <div class="product-item__text-wrapper">
-            <div class="product-item__cart-text">Add to cart</div>
+            <div class="product-item__cart-text" data-id="${product.id}">Add to cart</div>
           </div>
           <div class="product-item__info">
             <div class="item-info__name-price">
@@ -30,12 +30,12 @@ export class ProductView extends View<Product> {
     public afterRender(controller: Controller): void {
         super.afterRender(controller);
 
-        document
-            .querySelector('.product-item__cart-text')
-            ?.addEventListener('click', (el: Event) => {
-                console.log(1111)
-                const button = el.target as HTMLElement
-                controller.addProductToCart(Number(button.dataset.id));
-            });
+        document.querySelectorAll('.product-item__cart-text')
+            .forEach((button: Element) => {
+                button.addEventListener('click', (event: Event) => {
+                    const button = event.target as HTMLElement
+                    controller.addProductToCart(Number(button.dataset.id));
+                })
+            })
     }
 }

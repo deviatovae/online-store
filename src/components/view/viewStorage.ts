@@ -5,13 +5,7 @@ import {NotFoundPageView} from "./pages/notFound/notFoundPageView";
 import {Product} from "../types/product";
 
 export class ViewStorage {
-    public readonly cartHeader: ViewInterface<Product[]>;
-    public readonly mainPage: ViewInterface<void>;
-    public readonly notFoundPage: ViewInterface<void>;
-
-    constructor() {
-        this.cartHeader = new HeaderCartView();
-        this.mainPage = new MainPageView();
-        this.notFoundPage = new NotFoundPageView();
-    }
+    public readonly cartHeader = new HeaderCartView();
+    public readonly mainPage = new MainPageView();
+    public readonly notFoundPage = new NotFoundPageView();
 }

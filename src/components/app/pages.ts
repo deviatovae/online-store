@@ -1,6 +1,6 @@
 import {ViewStorage} from "../view/viewStorage";
 import {Controller} from "../controller/controller";
-import {Product} from "../types/product";
+import {CartType} from "../types/cartType";
 
 export class Pages {
     private controller: Controller;
@@ -9,10 +9,11 @@ export class Pages {
     constructor() {
         this.controller = new Controller();
         this.views = new ViewStorage();
-        this.init();
     }
 
     public main(): void {
+        this.init();
+
         this.controller.catalog(() => {
             this.getPageContainer().innerHTML = this.views.mainPage.render()
             this.views.mainPage.afterRender(this.controller);
@@ -20,14 +21,16 @@ export class Pages {
     }
 
     public notFound(): void {
+        this.init();
+
         this.getPageContainer().innerHTML = this.views.notFoundPage.render();
     }
 
     private init() {
-        this.controller.cart((data: Product[]) => {
+        this.controller.cart((cartData: CartType) => {
             const cartContainer = document.querySelector('#header-cart');
             if (cartContainer) {
-                cartContainer.innerHTML = this.views.cartHeader.render(data);
+                cartContainer.innerHTML = this.views.cartHeader.render(cartData);
             }
         })
     }
