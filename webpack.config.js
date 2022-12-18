@@ -21,10 +21,16 @@ module.exports = {
             {
               test: /\.(png|svg|jpeg|)$/i,
               type: 'asset/resource',
+              generator: {
+                filename: 'assets/img/[hash][ext][query]'
+              } 
             },
             {
-                test: /\.(woff|woff2|ttf)$/i,
-                type: 'asset/resource',
+              test: /\.(woff|woff2|ttf)$/i,
+              type: 'asset/resource',
+              generator: {
+                  filename: 'assets/fonts/[hash][ext][query]'
+              }
             },
         ],
     },
