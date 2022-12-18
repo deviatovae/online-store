@@ -1,8 +1,8 @@
-import {ViewInterface} from "../../viewInterface";
 import './notFoundPageView.scss';
+import {View} from "../../view";
 
-export class NotFoundPageView implements ViewInterface<null> {
-    render(): string {
+export class NotFoundPageView extends View<null> {
+    public render(): string {
         return `
 <div class="not-found">
   <h1>404</h1>

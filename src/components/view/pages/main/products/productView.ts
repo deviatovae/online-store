@@ -1,16 +1,14 @@
 import './productView.scss'
-import {ViewInterface} from "../../../viewInterface";
 
-
-// import products from '../../../../../assets/data/products.json' ;
 import {Product} from "../../../../types/product";
+import {Controller} from "../../../../controller/controller";
+import {View} from "../../../view";
 
 
-export class ProductView implements ViewInterface<Product> {
+export class ProductView extends View<Product> {
     render(product: Product): string {
-
         return `
-        <div class="product-item">
+        <div class="product-item" data-id="${product.id}">
           <div class="product-item__img"></div>
           <div class="product-item__text-wrapper">
             <div class="product-item__cart-text">Add to cart</div>
@@ -27,5 +25,17 @@ export class ProductView implements ViewInterface<Product> {
           </div>
         </div>
     `
+    }
+
+    public afterRender(controller: Controller): void {
+        super.afterRender(controller);
+
+        document
+            .querySelector('.product-item__cart-text')
+            ?.addEventListener('click', (el: Event) => {
+                console.log(1111)
+                const button = el.target as HTMLElement
+                controller.addProductToCart(Number(button.dataset.id));
+            });
     }
 }

@@ -1,15 +1,15 @@
-import {ViewInterface} from "../../viewInterface";
 import {FiltersView} from "./filters/filtersView";
-import {ProductListView} from "./products/productListView"
+import {View} from "../../view";
+import {ProductListView} from "./products/productListView";
+import products from '../../../../assets/data/products.json'
 
-import products from '../../../../assets/data/products.json' ;
+export class MainPageView extends View<void> {
+    protected views = {
+        filters: new FiltersView(),
+        productList: new ProductListView(),
+    }
 
-
-export class MainPageView implements ViewInterface<void> {
-    private filtersView: FiltersView = new FiltersView()
-    private productListView: ProductListView = new ProductListView()
-
-    render(data: void): string {
+    public render(data: void): string {
         // language=HTML
         return `
           <div class="find-container">
@@ -26,10 +26,10 @@ export class MainPageView implements ViewInterface<void> {
             <section class="main-catalog">
               <div class="main-catalog__bread-crumbs"></div>
               <div class="main-catalog__filters">
-                ${this.filtersView.render()}
+                ${this.views.filters.render()}
               </div>
               <div class="main-catalog__products">
-                ${this.productListView.render(products)}
+                ${this.views.productList.render(products)}
               </div>
             </section>
           </div>
