@@ -8,8 +8,8 @@ import {CartType} from "../../types/cartType";
  * принимает список продуктов (временно, лучше принимать уже готовый объект с полями count, и price (sum))
  * возвращает готовый html инонки корзины
  */
-export class HeaderCartView extends View<Product[]> {
-    public render(products: Product[]): string {
+export class HeaderCartView extends View<CartType> {
+    public render(cart: CartType): string {
         return `<div class="header-cart">
           <div class="header-cart__img"></div>
           <div class="header-cart__amount-container">
