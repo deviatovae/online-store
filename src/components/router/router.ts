@@ -17,6 +17,12 @@ export class Router {
     public start() {
         window.addEventListener('load', () => this.loadRoute());
         window.addEventListener('hashchange', () => this.loadRoute());
+        window.addEventListener('popstate', () => this.loadRoute())
+    }
+
+    public static redirectTo(url: string) {
+        history.pushState({}, '', url);
+        window.dispatchEvent(new Event('popstate'));
     }
 
     private resolveRoute(path: string): Function | null {
@@ -24,7 +30,7 @@ export class Router {
     }
 
     private loadRoute(): void {
-        let url = window.location.hash.slice(1) || '/';
+        let url = window.location.pathname;
         let route = this.resolveRoute(url);
 
         if (!route) {

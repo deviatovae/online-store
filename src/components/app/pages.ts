@@ -19,6 +19,11 @@ export class Pages {
         })
     }
 
+    public cart(): void {
+        this.getPageContainer().innerHTML = this.views.cartPage.render()
+        this.views.cartPage.afterRender(this.controller);
+    }
+
     public notFound(): void {
         this.getPageContainer().innerHTML = this.views.notFoundPage.render();
     }
@@ -28,6 +33,7 @@ export class Pages {
             const cartContainer = document.querySelector('#header-cart');
             if (cartContainer) {
                 cartContainer.innerHTML = this.views.cartHeader.render(data);
+                this.views.cartHeader.afterRender(this.controller)
             }
         })
     }

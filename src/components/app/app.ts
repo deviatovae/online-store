@@ -12,6 +12,7 @@ export class App {
 
     public start(): void {
         this.router.route('/', () => this.pages.main());
+        this.router.route('/cart', () => this.pages.cart());
         this.router.fallback(() => this.pages.notFound());
         this.router.start();
     }
