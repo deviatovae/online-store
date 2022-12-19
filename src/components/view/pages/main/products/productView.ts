@@ -11,10 +11,10 @@ import {View} from "../../../view";
 export class ProductView extends View<Product> {
     render(product: Product): string {
         return `
-        <div class="product-item" data-id="${product.id}">
+        <div class="product-item">
           <div class="product-item__img"></div>
           <div class="product-item__text-wrapper">
-            <div class="product-item__cart-text">Add to cart</div>
+            <div class="product-item__cart-text" data-id="${product.id}">Add to cart</div>
           </div>
           <div class="product-item__info">
             <div class="item-info__name-price">
