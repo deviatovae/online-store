@@ -1,18 +1,27 @@
 import {ViewStorage} from "../view/viewStorage";
 import {Controller} from "../controller/controller";
-import {Product} from "../types/product";
+import {CartType} from "../types/cartType";
 
+/**
+ * занимается отрисовкой конкретных страниц
+ */
 export class Pages {
     private controller: Controller;
     private views: ViewStorage;
-
     constructor() {
         this.controller = new Controller();
         this.views = new ViewStorage();
-        this.init();
     }
 
+    /**
+     * отрисовывает страницу main.
+     * вызывает контроллер для получения данных, передавая коллбэк который выполнится когда будут готовы данные.
+     * в коллбэке мы вызываем рендер view (который вернет нам строку html) и вставляем ее в наш контейнер <main></main>
+     * после чего вызываем afterRender, чтобы сооьщить, что в DOM добавились элементы
+     */
     public main(): void {
+        this.init();
+
         this.controller.catalog(() => {
             this.getPageContainer().innerHTML = this.views.mainPage.render()
             this.views.mainPage.afterRender(this.controller);
@@ -25,14 +34,16 @@ export class Pages {
     }
 
     public notFound(): void {
+        this.init();
+
         this.getPageContainer().innerHTML = this.views.notFoundPage.render();
     }
 
     private init() {
-        this.controller.cart((data: Product[]) => {
+        this.controller.cart((cartData: CartType) => {
             const cartContainer = document.querySelector('#header-cart');
             if (cartContainer) {
-                cartContainer.innerHTML = this.views.cartHeader.render(data);
+                cartContainer.innerHTML = this.views.cartHeader.render(cartData);
                 this.views.cartHeader.afterRender(this.controller)
             }
         })

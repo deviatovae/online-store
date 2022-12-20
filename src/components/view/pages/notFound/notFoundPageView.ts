@@ -1,6 +1,11 @@
 import './notFoundPageView.scss';
 import {View} from "../../view";
 
+/**
+ * возвращает html для страницы 404
+ *
+ * @todo доделать верстку/стили
+ */
 export class NotFoundPageView extends View<null> {
     public render(): string {
         return `

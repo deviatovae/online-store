@@ -1,3 +1,4 @@
+/** тип для описания полей нашего продукта из products.json */
 export type Product = {
     id: number
     name: string
