@@ -28,6 +28,11 @@ export class Pages {
         })
     }
 
+    public cart(): void {
+        this.getPageContainer().innerHTML = this.views.cartPage.render()
+        this.views.cartPage.afterRender(this.controller);
+    }
+
     public notFound(): void {
         this.init();
 
@@ -39,6 +44,7 @@ export class Pages {
             const cartContainer = document.querySelector('#header-cart');
             if (cartContainer) {
                 cartContainer.innerHTML = this.views.cartHeader.render(cartData);
+                this.views.cartHeader.afterRender(this.controller)
             }
         })
     }

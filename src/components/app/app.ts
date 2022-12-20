@@ -20,6 +20,11 @@ export class App {
             store.subscribe(() => this.pages.main())
         });
 
+        this.router.route('/cart', () => {
+            this.pages.cart()
+            store.subscribe(() => this.pages.cart())
+        });
+
         this.router.fallback(() => {
             this.pages.notFound()
             store.subscribe(() => this.pages.notFound())

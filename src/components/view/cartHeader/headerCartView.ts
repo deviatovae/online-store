@@ -1,5 +1,7 @@
 import './headerCartView.scss';
 import {View} from "../view";
+import {Controller} from "../../controller/controller";
+import {Router} from "../../router/router";
 import {CartType} from "../../types/cartType";
 
 /**
@@ -17,5 +19,20 @@ export class HeaderCartView extends View<CartType> {
           </div>
           <div class="header-cart__num">$${cart.price.toFixed(2)}</div>
         </div>`
+    }
+
+    public afterRender(controller: Controller) {
+        super.afterRender(controller);
+
+        const cart = document.querySelector('.header-cart') as HTMLElement
+        cart.addEventListener('click', () => {
+            Router.redirectTo('/cart');
+        })
+
+        const logo = document.querySelector('.header-link') as HTMLElement
+        logo.addEventListener('click', (e) => {
+            e.preventDefault();
+            Router.redirectTo('/');
+        })
     }
 }
