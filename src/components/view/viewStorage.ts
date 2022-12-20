@@ -3,7 +3,7 @@ import {HeaderCartView} from "./cartHeader/headerCartView";
 import {MainPageView} from "./pages/main/mainPageView";
 import {NotFoundPageView} from "./pages/notFound/notFoundPageView";
 import {Product} from "../types/product";
-import CartPageView from "./pages/cartPageView";
+import CartPageView from "./pages/shoppingCart/cartPageView";
 
 export class ViewStorage {
     public readonly cartHeader: ViewInterface<Product[]>;
