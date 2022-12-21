@@ -25,7 +25,6 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
-
   }
 
 }
@@ -63,14 +62,12 @@
     grid-template-columns: 2fr 2fr 1fr 1fr 1fr;
     align-items: center;
     padding: 40px 0px;
-
   }
 
   &__img {
     background: url(../../../../assets/img/zaglushka.png) no-repeat center;
     width: 157px;
     height: 158px;
-    // margin: 0 auto;
   }
 
   &__info {
@@ -129,7 +126,7 @@
 
 .cart-item-qty {
 
-    
+
   &__value-container {
     grid-column: 1 / 2;
     grid-row: 1 / 3;
@@ -170,13 +167,13 @@
   }
 
   &__arrow-up {
-    background: url(../../../../assets/img/arrow_up.svg) no-repeat center;
+    background: url("../../../../assets/img/arrow_up.svg") no-repeat center;
     width: 6px;
     height: 7px;
   }
 
   &__arrow-down {
-    background: url(../../../../assets/img/arrow_up.svg) no-repeat center;
+    background: url("../../../../assets/img/arrow_up.svg") no-repeat center;
     transform: rotate(180deg);
     width: 6px;
     height: 7px; 
@@ -190,32 +187,31 @@
   border: 1px solid #C0C0C0;
   height: 300px;
 
-    &__header {
-      font: 1.5rem $Sitara;
-      color: $oliva;
-      text-transform: uppercase;
-      display: flex;
-      justify-content: center;
-      padding: 10px 0px;
-    
-    }
+  &__header {
+    font: 1.5rem $Sitara;
+    color: $oliva;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0px;
+  }
 
-    &__order-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 140px;
-        justify-content: space-between;
-    }
+  &__order-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 140px;
+    justify-content: space-between;
+  }
 }
 
 .order-container {
 
     &__text-value {
-        display: flex;
-        justify-content: space-between;
-        width: 90%;
-        border-top: 1px solid #D9D9D9;
+      display: flex;
+      justify-content: space-between;
+      width: 90%;
+      border-top: 1px solid #D9D9D9;
     }
 
     &__text,
@@ -255,7 +251,7 @@
     }  
   
     &:active {
-      transform: scale(97%);
+      transform: scale(98%);
       transition: transform 0.2s;
 
     }
@@ -277,11 +273,29 @@
   border-radius: 5px;
 }
 
-.button-apply {
-    width: 71px;
-    height: 40px;
-    background: #747474;
-    border-radius: 5px;
-    font: 1rem $Sitara;
-    color: #fff;
+.buton-apply {
+  width: 71px;
+  height: 40px;
+  background: #8B9D93;
+  border-radius: 5px;
+  border: none;
+  font: 1rem $Sitara;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+    &:active {
+      transform: scale(97%);
+      transition: transform 0.2s;
+    }
+
+    &:disabled {
+      background: #747474;
+      cursor: default;
+      transform: none;
+    }
+
+
+
+
 }
