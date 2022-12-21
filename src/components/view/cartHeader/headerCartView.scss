@@ -20,6 +20,9 @@
   }
 
   &__amount-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 14px;
     right: -8px;
@@ -39,7 +42,7 @@
   }
 
   &__num {
-    font: 1.5rem $Sitara;
+    font: 1.2rem $Sitara;
     color: #747474;
 
     @media screen and (max-width: 600px) {
@@ -52,15 +55,7 @@
   }
 
   &__amount {
-    position: relative;
     font: 1rem $Sitara;
     color: #eee;
-    right: -12px;
-    top: 4px;
-
-    @media screen and (max-width: 450px) {
-      right: -8px;
-      top: 1px;
-    }
   }
 }
