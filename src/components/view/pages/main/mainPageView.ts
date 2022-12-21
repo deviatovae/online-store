@@ -33,10 +33,10 @@ export class MainPageView extends View<void> {
             <section class="main-catalog">
               <div class="main-catalog__bread-crumbs"></div>
               <div class="main-catalog__filters">
-                ${this.views.filters.render()}
+                                  ${this.views.filters.render()}
               </div>
               <div class="main-catalog__products">
-                ${this.views.productList.render(products)}
+                                  ${this.views.productList.render(products)}
               </div>
             </section>
           </div>
