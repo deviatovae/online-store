@@ -26,6 +26,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.9.1"
+    "@reduxjs/toolkit": "^1.9.1",
+    "nouislider": "^15.6.1"
   }
 }

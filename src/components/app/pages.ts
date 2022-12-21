@@ -1,6 +1,6 @@
 import {ViewStorage} from "../view/viewStorage";
 import {Controller} from "../controller/controller";
-import {CartType} from "../types/cartType";
+import {CartDataType} from "../types/cartDataType";
 
 /**
  * занимается отрисовкой конкретных страниц
@@ -8,6 +8,7 @@ import {CartType} from "../types/cartType";
 export class Pages {
     private controller: Controller;
     private views: ViewStorage;
+
     constructor() {
         this.controller = new Controller();
         this.views = new ViewStorage();
@@ -29,8 +30,19 @@ export class Pages {
     }
 
     public cart(): void {
+        this.init();
+
         this.getPageContainer().innerHTML = this.views.cartPage.render()
         this.views.cartPage.afterRender(this.controller);
+    }
+
+    public payment(): void {
+        this.init();
+
+        this.controller.cart((cartData) => {
+            this.getPageContainer().innerHTML = this.views.paymentPage.render(cartData)
+            this.views.paymentPage.afterRender(this.controller);
+        })
     }
 
     public notFound(): void {
@@ -40,7 +52,7 @@ export class Pages {
     }
 
     private init() {
-        this.controller.cart((cartData: CartType) => {
+        this.controller.cart((cartData: CartDataType) => {
             const cartContainer = document.querySelector('#header-cart');
             if (cartContainer) {
                 cartContainer.innerHTML = this.views.cartHeader.render(cartData);

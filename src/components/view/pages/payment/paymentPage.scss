@@ -1,0 +1,230 @@
+@import 'src/assets/styles/common/variables';
+
+.payment-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 50px;
+
+  &__container {
+    display: flex;
+    gap: 40px;
+    padding: 20px 10px;
+  }
+}
+
+.payment-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 500px;
+
+  &__title {
+    font-size: 24px;
+    color: $mainBlack;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name,
+  &__shipping-address,
+  &__email,
+  &__phone-number {
+    height: 40px;
+    padding: 10px;
+    border: solid $greyBorder 1px;
+    margin-bottom: 15px;
+  }
+}
+
+.payment-details__title,
+.payment-method__top {
+  display: flex;
+  padding: 10px 0;
+}
+
+
+.payment-method {
+  display: flex;
+  flex-direction: column;
+  border: none;
+
+  &__top {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border-bottom: solid 1px #d9d9d9;
+    margin-bottom: 10px;
+  }
+
+  &__title {
+    margin-right: 15px;
+    color: rgb(116, 116, 116);
+    letter-spacing: 1px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  }
+
+.cards {
+  display: flex;
+  gap: 10px;
+
+  &__img {
+    width: 57px;
+    height: 37px;
+    padding: 5px;
+    background-size: contain;
+
+    &_visa {
+
+      background: url("/src/assets/img/payment/visa.svg") center no-repeat;
+    }
+
+    &_mastercard {
+      background: url("/src/assets/img/payment/mastercard.svg") center no-repeat;
+
+    }
+
+    &_amex {
+      background: url("/src/assets/img/payment/paypal.svg") center center no-repeat;
+    }
+  }
+}
+
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  &__bottom-row{
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.card-details__name,
+.card-details__card-number,
+.bottom-row__date,
+.bottom-row__cvv {
+  padding: 10px;
+  border: solid $greyBorder 1px;
+  height: 40px;
+}
+
+.bottom-row {
+  &__cvv,
+  &__date {
+    width: 220px;
+  }
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 400px;
+  border: solid 1px $greyBorder;
+  background-color: #F9F9F9;
+  padding: 10px 15px;
+
+
+  &__title {
+    font-size: 24px;
+    color: $oliva;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: solid $greyBorder 1px;
+    margin-bottom: 20px;
+  }
+
+  &__list {
+    margin-bottom: 60px;
+  }
+
+  &__order-btn {
+    border-radius: 10px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: $oliva;
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    height: 50px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #a4b3a9;
+    }
+  }
+
+}
+
+.summary-item {
+  padding: 5px 0;
+  border-bottom: solid $greyBorder 1px;
+
+  &__top{
+    font-size: 16px;
+    font-family: $Sitara;
+    font-weight: 400;
+    width: 300px;
+    line-height: 28px;
+    padding: 0 0 10px 0;
+  }
+}
+
+.bottom-item {
+  display: flex;
+
+  &__quantity {
+    font-weight: 600;
+    margin-right: 60px;
+  }
+
+  &__price {
+    margin-left: auto;
+    font-weight: 500;
+    font-size: 18px;
+  }
+}
+
+.summary-discount,
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.summary-discount {
+  &__name,
+  &__amount {
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  &__name {
+    color: rgb(116, 116, 116);
+  }
+  &__amount {
+    color: $mainBlack;
+  }
+}
+.summary-total {
+
+  &__name,
+  &__amount {
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  &__amount {
+    letter-spacing: 1px;
+  }
+}
+
