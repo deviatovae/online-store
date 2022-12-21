@@ -15,15 +15,15 @@ module.exports = {
                   "sass-loader",
                 ],
             },
-            { 
-              test: /\.tsx?$/, 
+            {
+              test: /\.tsx?$/,
               use: 'ts-loader' },
             {
               test: /\.(png|svg|jpeg|)$/i,
               type: 'asset/resource',
               generator: {
                 filename: 'assets/img/[hash][ext][query]'
-              } 
+              }
             },
             {
               test: /\.(woff|woff2|ttf)$/i,
@@ -43,7 +43,10 @@ module.exports = {
         assetModuleFilename: 'assets/[hash][ext][query]',
     },
     devServer: {
-        port: 4200
+        port: 4200,
+        historyApiFallback: {
+            index: '/'
+        }
     },
     plugins: [
         new HtmlWebpackPlugin({

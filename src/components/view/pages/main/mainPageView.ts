@@ -3,12 +3,19 @@ import {View} from "../../view";
 import {ProductListView} from "./products/productListView";
 import products from '../../../../assets/data/products.json'
 
+/**
+ * view-компонент, который возвращает страницу main (фильтры, каталог)
+ *   - использует (вызывает) внутри себя более мелкие компоненты FiltersView, ProductListView
+ */
 export class MainPageView extends View<void> {
     protected views = {
         filters: new FiltersView(),
         productList: new ProductListView(),
     }
 
+    /**
+     * @todo нужно прпнимать здесь объект со всеми данными, требующимися для отрисовки (вызова render) всех компонентов
+     */
     public render(data: void): string {
         // language=HTML
         return `

@@ -1,7 +1,15 @@
 import './filtersView.scss'
 import {View} from "../../../view";
 
+/**
+ * view отвечающий за отрисовку фильтров каталога
+ */
 export class FiltersView extends View<void> {
+    /**
+     * @todo нужно принимать здесь объект с данными, требующимися для отрисовки фильтров
+     * @todo объект должен содержать все значения фильтров (нужно получать их из списка продуктов)
+     * @todo также объект должен содержать выбранные пользователем фильтры (из GET параметров)
+     */
     public render(data?: void): string {
         // language=HTML
         return `
