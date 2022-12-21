@@ -25,6 +25,12 @@ export class App {
             store.subscribe(() => this.pages.cart())
         });
 
+        this.router.route('/payment', () => {
+
+            this.pages.payment()
+            store.subscribe(() => this.pages.payment())
+        });
+
         this.router.fallback(() => {
             this.pages.notFound()
             store.subscribe(() => this.pages.notFound())

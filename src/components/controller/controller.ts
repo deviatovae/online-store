@@ -3,7 +3,7 @@ import {Product} from "../types/product";
 import store from "../store/store";
 import {addProductToCart} from "../store/reducers/cart";
 import products from '../../assets/data/products.json'
-import {CartType} from "../types/cartType";
+import {CartDataType} from "../types/cartDataType";
 
 /**
  * контроллер получает, изменяет, фильтрует данные, которые потребуются для view
@@ -13,14 +13,14 @@ export class Controller {
     /**
      * возвращает данные для корзины / иконки в хэдере
      */
-    public cart(callback: CallbackFn<CartType>): void {
+    public cart(callback: CallbackFn<CartDataType>): void {
         const cartItems = store.getState().cart
-        const viewData = {
-            count: cartItems.reduce((sum, item) => sum + item.quantity, 0),
-            price: cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+        const cartData: CartDataType = {
+            items: cartItems,
+            orderTotal: cartItems.reduce((sum, cartItem) => sum + cartItem.product.price * cartItem.quantity, 0),
+            productCount: cartItems.reduce((count, cartItem) => count + cartItem.quantity, 0),
         }
-
-        callback(viewData);
+        callback(cartData);
     }
 
     /**
