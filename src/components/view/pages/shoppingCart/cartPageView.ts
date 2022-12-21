@@ -1,6 +1,7 @@
 import {View} from "../../view";
 import {Controller} from "../../../controller/controller";
 import './cartPageView.scss'
+import {Router} from "../../../router/router";
 
 
 export default class CartPageView extends View<void> {
@@ -65,5 +66,10 @@ export default class CartPageView extends View<void> {
 
     afterRender(controller: Controller) {
         super.afterRender(controller);
+
+        const order = document.querySelector('.button-order') as HTMLElement | null;
+        if (order) {
+            order.onclick = () => Router.redirectTo('/payment');
+        }
     }
 }
