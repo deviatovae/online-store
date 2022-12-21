@@ -4,6 +4,7 @@ export type Product = {
     name: string
     price: number
     collection: number
+    stock: number
     color: string
     size: number
     favorite: boolean
