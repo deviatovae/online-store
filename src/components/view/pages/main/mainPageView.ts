@@ -1,13 +1,13 @@
 import {FiltersView} from "./filters/filtersView";
 import {View} from "../../view";
 import {ProductListView} from "./products/productListView";
-import products from '../../../../assets/data/products.json'
+import {MainPageDataType} from "../../../types/mainPageDataType";
 
 /**
  * view-компонент, который возвращает страницу main (фильтры, каталог)
  *   - использует (вызывает) внутри себя более мелкие компоненты FiltersView, ProductListView
  */
-export class MainPageView extends View<void> {
+export class MainPageView extends View<MainPageDataType> {
     protected views = {
         filters: new FiltersView(),
         productList: new ProductListView(),
@@ -16,7 +16,7 @@ export class MainPageView extends View<void> {
     /**
      * @todo нужно прпнимать здесь объект со всеми данными, требующимися для отрисовки (вызова render) всех компонентов
      */
-    public render(data: void): string {
+    public render(data: MainPageDataType): string {
         // language=HTML
         return `
           <div class="find-container">
@@ -33,10 +33,10 @@ export class MainPageView extends View<void> {
             <section class="main-catalog">
               <div class="main-catalog__bread-crumbs"></div>
               <div class="main-catalog__filters">
-                                  ${this.views.filters.render()}
+                ${this.views.filters.render(data.filters)}
               </div>
               <div class="main-catalog__products">
-                                  ${this.views.productList.render(products)}
+                ${this.views.productList.render(data.products)}
               </div>
             </section>
           </div>

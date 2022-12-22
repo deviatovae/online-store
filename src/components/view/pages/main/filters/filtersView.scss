@@ -119,15 +119,6 @@ input {
   }
   background-color: black;
 }
-.is-grey{
-  &:hover{
-    &:after{
-      content: 'gray';
-      left: 2px;
-    }
-  }
-  background-color: gray;
-}
 .is-silver{
   &:hover{
     &:after{
