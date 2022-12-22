@@ -39,13 +39,23 @@ export const slice = createSlice({
 
       return state;
     },
+    /**
+     * удаляет продукт с любым количеством из стейта корзины
+     */
+    removeProductFromCartAll: (state, { payload: product }: PayloadAction<Product>): CartItemType[] => {
+      const item = state.find((item) => item.product.id === product.id);
+      if (item) {
+        return state.filter((stateItem) => stateItem !== item)
+      }
+      return state;
+    },
   },
 });
 
 /**
  * экспортируем экшены из слайса, чтобы использовать их в контроллере
  */
-export const { addProductToCart, removeProductFromCart } = slice.actions;
+export const { addProductToCart, removeProductFromCart, removeProductFromCartAll } = slice.actions;
 
 /**
  * экспортируем редюсер из слайса, чтобы использовать его для инициализации store

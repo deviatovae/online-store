@@ -12,7 +12,7 @@ export class ProductView extends View<Product> {
     render(product: Product): string {
         return `
         <div class="product-item">
-          <div class="product-item__img"></div>
+          <div class="product-item__img" style="background-image: url('${product.images[0]}')"></div>
           <div class="product-item__text-wrapper">
             <div class="product-item__cart-text" data-id="${product.id}">Add to cart</div>
           </div>
@@ -24,7 +24,7 @@ export class ProductView extends View<Product> {
             <div class="item-info__color">Color: ${product.color}</div>
             <div class="item-info__colection">Colection: ${product.collection}</div>
             <div class="item-info__size">Size: ${product.size}cm</div>
-            <div class="item-info__category">Categor: ${product.category}</div>
+            <div class="item-info__category">Category: ${product.category}</div>
           </div>
         </div>
     `

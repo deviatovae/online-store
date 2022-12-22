@@ -12,7 +12,7 @@ export class CartPageListView extends View<CartItemType[]>{
         return cartItems.map((cartItem) => {
             return `<div class="cart-item">
             <div class="cart-item__content">
-              <div class="cart-item__img"></div>
+              <div class="cart-item__img" style="background-image: url('${cartItem.product.images[0]}')"></div>
               <div class="cart-item__info">
                 <div class="cart-item-info__name">${cartItem.product.name}</div>
                 <div class="cart-item-info__color">Color: ${cartItem.product.color}</div>
@@ -42,24 +42,25 @@ export class CartPageListView extends View<CartItemType[]>{
     afterRender(controller: Controller) {
       super.afterRender(controller);
   
-         document.addEventListener('click', (e: Event) => {
-          const clickElement = e.target as HTMLElement; 
+        document.querySelectorAll<HTMLElement>('.arrow-up').forEach((button: Element) => {
+          button.addEventListener('click', (event: Event) => {
+            const button = event.target as HTMLElement
+            controller.addProductToCart(Number(button.dataset.id));
+          })
+        });
 
-          if (clickElement.classList.contains('arrow-up')) {
-            controller.addProductToCart(Number(clickElement.dataset.id));
-          }
+        document.querySelectorAll<HTMLElement>('.arrow-down').forEach((button: Element) => {
+          button.addEventListener('click', (event: Event) => {
+            const button = event.target as HTMLElement
+            controller.removeProductFromCart(Number(button.dataset.id));
+          })
+        });
 
-          if (clickElement.classList.contains('arrow-down')) {
-            controller.removeProductFromCart(Number(clickElement.dataset.id));
-          }
-
-          if (clickElement.classList.contains('cart-item__cross')) {
-
-          }
-
-
-        })
-
+        document.querySelectorAll<HTMLElement>('.cart-item__cross').forEach((button: Element) => {
+          button.addEventListener('click', (event: Event) => {
+            const button = event.target as HTMLElement
+            controller.removeProductFromCartAll(Number(button.dataset.id));
+          })
+        });
   }
 }
-

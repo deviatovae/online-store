@@ -12,9 +12,7 @@ export default class CartPageView extends View<CartDataType> {
   protected views = {
     cartList: new CartPageListView()
 };
-
     render(cartItems: CartDataType): string {
-      
         return `
         <div class="shopping-cart wrapper">
           <div class="shopping-cart__header wrapper">SHOPPING CART</div>
@@ -51,8 +49,10 @@ export default class CartPageView extends View<CartDataType> {
         super.afterRender(controller);
 
         const order = document.querySelector('.button-order') as HTMLElement | null;
+
         if (order) {
             order.onclick = () => Router.redirectTo('/payment');
         }
     }
 }
+

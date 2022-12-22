@@ -3,6 +3,7 @@ import {Product} from "../types/product";
 import store from "../store/store";
 import {addProductToCart} from "../store/reducers/cart";
 import {removeProductFromCart} from "../store/reducers/cart";
+import {removeProductFromCartAll} from "../store/reducers/cart";
 import products from '../../assets/data/products.json'
 import {CartDataType} from "../types/cartDataType";
 import {MainPageDataType} from "../types/mainPageDataType";
@@ -69,7 +70,6 @@ export class Controller {
         }
     }
 
-
     /**
      * удаление продукта из корзины по идентификатору
      */ 
@@ -77,6 +77,16 @@ export class Controller {
         const product = products.find((product: Product) => product.id === id)
         if (product) {
             store.dispatch(removeProductFromCart(product))
+        }
+    }
+
+    /**
+     * удаление любого количесва продуктов из корзины по идентификатору
+     */ 
+    removeProductFromCartAll(id: number) {
+        const product = products.find((product: Product) => product.id === id)
+        if (product) {
+            store.dispatch(removeProductFromCartAll(product))
         }
     }
 
