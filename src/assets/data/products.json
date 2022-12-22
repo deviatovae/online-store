@@ -9,7 +9,10 @@
     "size": 9,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/geometric-star.jpg",
+      "/assets/img/products/geometric-star(1).jpg"
+    ]
   },
   {
     "id": 2,
@@ -21,7 +24,10 @@
     "size": 10,
     "favorite": true,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/Christmas-pine-cone.jpg",
+      "/assets/img/products/Christmas-pine-cone(1).jpg"
+    ]
   },
   {
     "id": 3,
@@ -33,7 +39,10 @@
     "size": 270,
     "favorite": false,
     "category": "Garland & Wreath",
-    "images": []
+    "images": [
+      "/assets/img/products/lametta-christmas-red-shiny(1).jpg",
+      "/assets/img/products/lametta-christmas-red-shiny.jpg"
+    ]
   },
   {
     "id": 4,
@@ -45,19 +54,25 @@
     "size": 12,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/popcorn-machine-glass-hanging-figurine-12cm-red.jpg",
+      "/assets/img/products/popcorn-machine-glass-hanging-figurine-12cm-red(1).jpg"
+    ]
   },
   {
     "id": 5,
-    "name": "Candy Cane",
+    "name": "Christmas garland with stars",
     "price": 3.99,
     "stock": 10,
     "collection": 2023,
-    "color": "red",
-    "size": 12,
+    "color": "silver",
+    "size": 270,
     "favorite": true,
-    "category": "Tree decorations",
-    "images": []
+    "category": "Garland & Wreath",
+    "images": [
+      "/assets/img/products/christmas-garland-with-stars-silver-270x6cm-shiny.jpg",
+      "/assets/img/products/christmas-garland-with-stars-silver-270x6cm-shiny(1).jpg"
+    ]
   },
   {
     "id": 6,
@@ -69,19 +84,25 @@
     "size": 60,
     "favorite": false,
     "category": "Do It Yourself",
-    "images": []
+    "images": [
+      "/assets/img/products/decorative-hanging-branch-with-hooks-60cm-grey.jpg",
+      "/assets/img/products/decorative-hanging-branch-with-hooks-60cm-grey(1).jpg"
+    ]
   },
   {
     "id": 7,
     "name": "3 DIY Christmas baubles with markers",
     "price": 6.95,
     "stock": 47,
-    "collection": 2021,
+    "collection": 2022,
     "color": "silver",
     "size": 8,
     "favorite": true,
     "category": "Do It Yourself",
-    "images": []
+    "images": [
+      "/assets/img/products/3-diy-silver-christmas-baubles-8-cm-with-markers.jpg",
+      "/assets/img/products/3-diy-silver-christmas-baubles-8-cm-with-markers(1).jpg"
+    ]
   },
   {
     "id": 8,
@@ -93,7 +114,10 @@
     "size": 80,
     "favorite": false,
     "category": "Do It Yourself",
-    "images": []
+    "images": [
+      "/assets/img/products/wooden-ornament-display-tree-black-80-cm.jpg",
+      "/assets/img/products/wooden-ornament-display-tree-black-80-cm(1).jpg"
+    ]
   },
   {
     "id": 9,
@@ -105,7 +129,10 @@
     "size": 1,
     "favorite": false,
     "category": "Do It Yourself",
-    "images": []
+    "images": [
+      "/assets/img/products/fake-snow-250g.jpg",
+      "/assets/img/products/fake-snow-250g(1).jpg"
+    ]
   },
   {
     "id": 10,
@@ -117,7 +144,10 @@
     "size": 24,
     "favorite": false,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/gnome-with-led-hat-eucalyptus-24-cm-porcelain.jpg",
+      "/assets/img/products/gnome-with-led-hat-eucalyptus-24-cm-porcelain(1).jpg"
+    ]
   },
   {
     "id": 11,
@@ -129,7 +159,10 @@
     "size": 10,
     "favorite": false,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/porcelain-christmas-tree-candle-holder-green-10-cm.jpg",
+      "/assets/img/products/porcelain-christmas-tree-candle-holder-green-10-cm(1).jpg"
+    ]
   },
   {
     "id": 12,
@@ -141,7 +174,10 @@
     "size": 35,
     "favorite": false,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/led-christmas-tree-figurine-35-cm-magnesia.jpg",
+      "/assets/img/products/led-christmas-tree-figurine-35-cm-magnesia(1).jpg"
+    ]
   },
   {
     "id": 13,
@@ -153,7 +189,10 @@
     "size": 15,
     "favorite": true,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/deco-christmas-tree-15cm-night-blue.jpg",
+      "/assets/img/products/deco-christmas-tree-15cm-night-blue(1).jpg"
+    ]
   },
   {
     "id": 14,
@@ -165,7 +204,10 @@
     "size": 34,
     "favorite": true,
     "category": "Garland & Wreath",
-    "images": []
+    "images": [
+      "/assets/img/products/natural-christmas-wreath-with-stars-34cm.jpg",
+      "/assets/img/products/natural-christmas-wreath-with-stars-34cm(1).jpg"
+    ]
   },
   {
     "id": 15,
@@ -177,7 +219,10 @@
     "size": 20,
     "favorite": false,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/nutcracker-polyresin-20-cm.jpg",
+      "/assets/img/products/nutcracker-polyresin-20-cm.jpg"
+    ]
   },
   {
     "id": 16,
@@ -189,7 +234,10 @@
     "size": 9,
     "favorite": true,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/glass-christmas-ornament-gingerbread-house-gold-9-cm.jpg",
+      "/assets/img/products/glass-christmas-ornament-gingerbread-house-gold-9-cm(1).jpg"
+    ]
   },
   {
     "id": 17,
@@ -201,7 +249,10 @@
     "size": 700,
     "favorite": false,
     "category": "Christmas lights",
-    "images": []
+    "images": [
+      "/assets/img/products/led-lights-warm-7-m.jpg",
+      "/assets/img/products/led-lights-warm-7-m(1).jpg"
+    ]
   },
   {
     "id": 18,
@@ -213,7 +264,10 @@
     "size": 500,
     "favorite": true,
     "category": "Christmas lights",
-    "images": []
+    "images": [
+      "/assets/img/products/50-led-light-chain-warm-white-battery-operated-indoor-use.jpg",
+      "/assets/img/products/50-led-light-chain-warm-white-battery-operated-indoor-use(1).jpg"
+    ]
   },
   {
     "id": 19,
@@ -225,7 +279,10 @@
     "size": 450,
     "favorite": false,
     "category": "Christmas lights",
-    "images": []
+    "images": [
+      "/assets/img/products/10-led-light-chain-warm-white-light-timer-indoor-a-outdoor-use-4-5-m.jpg",
+      "/assets/img/products/10-led-light-chain-warm-white-light-timer-indoor-a-outdoor-use-4-5-m(1).jpg"
+    ]
   },
   {
     "id": 20,
@@ -237,7 +294,10 @@
     "size": 8,
     "favorite": true,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/luxury-glass-christmas-bauble-with-ice-flowers-8-cm-pearl.jpg",
+      "/assets/img/products/luxury-glass-christmas-bauble-with-ice-flowers-8-cm-pearl(1).jpg"
+    ]
   },
   {
     "id": 21,
@@ -249,7 +309,10 @@
     "size": 8,
     "favorite": true,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/onion-glass-bauble-lampion-champagne-8-cm.jpg",
+      "/assets/img/products/onion-glass-bauble-lampion-champagne-8-cm(1).jpg"
+    ]
   },
   {
     "id": 22,
@@ -261,7 +324,10 @@
     "size": 10,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/shatterproof-christmas-stars-10cm-champagne-12-pieces(1).jpg",
+      "/assets/img/products/shatterproof-christmas-stars-10cm-champagne-12-pieces.jpg"
+    ]
   },
   {
     "id": 23,
@@ -273,7 +339,10 @@
     "size": 8,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/blue-paper-christmas-bauble-8-cm.jpg",
+      "/assets/img/products/blue-paper-christmas-bauble-8-cm(1).jpg"
+    ]
   },
   {
     "id": 24,
@@ -285,7 +354,10 @@
     "size": 270,
     "favorite": false,
     "category": "Garland & Wreath",
-    "images": []
+    "images": [
+      "/assets/img/products/bead-garland-14mmx270cm-copper.jpg",
+      "/assets/img/products/bead-garland-14mmx270cm-copper(1).jpg"
+    ]
   },
   {
     "id": 25,
@@ -297,7 +369,10 @@
     "size": 8,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/glitter-3d-christmas-stars-8cm-silver-4-pieces.jpg",
+      "/assets/img/products/glitter-3d-christmas-stars-8cm-silver-4-pieces(1).jpg"
+    ]
   },
   {
     "id": 26,
@@ -309,7 +384,10 @@
     "size": 8,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/elegant-glass-christmas-bauble-mercury-effect-8cm-lavender.jpg",
+      "/assets/img/products/elegant-glass-christmas-bauble-mercury-effect-8cm-lavender(1).jpg"
+    ]
   },
   {
     "id": 27,
@@ -321,7 +399,10 @@
     "size": 19,
     "favorite": false,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/porcelain-house-with-led-19-cm-white.jpg",
+      "/assets/img/products/porcelain-house-with-led-19-cm-white(1).jpg"
+    ]
   },
   {
     "id": 28,
@@ -333,7 +414,10 @@
     "size": 48,
     "favorite": false,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/snowman-with-lantern-magnesia-48cm.jpg",
+      "/assets/img/products/snowman-with-lantern-magnesia-48cm(1).jpg"
+    ]
   },
   {
     "id": 29,
@@ -345,7 +429,10 @@
     "size": 270,
     "favorite": true,
     "category": "Garland & Wreath",
-    "images": []
+    "images": [
+      "/assets/img/products/garland-with-snow-20-x-270cm.jpg",
+      "/assets/img/products/garland-with-snow-20-x-270cm(1).jpg"
+    ]
   },
   {
     "id": 30,
@@ -357,7 +444,10 @@
     "size": 200,
     "favorite": true,
     "category": "Garland & Wreath",
-    "images": []
+    "images": [
+      "/assets/img/products/feather-garland-200cm-dark-red.jpg",
+      "/assets/img/products/feather-garland-200cm-dark-red(1).jpg"
+    ]
   },
   {
     "id": 31,
@@ -369,19 +459,25 @@
     "size": 10,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/pink-donut-christmas-ornament-glass-10-cm.jpg",
+      "/assets/img/products/pink-donut-christmas-ornament-glass-10-cm(1).jpg"
+    ]
   },
   {
     "id": 32,
-    "name": "Синий шар Вселенная",
-    "price": 11,
+    "name": "Standing gnome",
+    "price": 14.55,
     "stock": 46,
-    "collection": 2021,
-    "color": "blue",
-    "size": 9,
+    "collection": 2023,
+    "color": "pink",
+    "size": 54,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/standing-gnome-52cm-pink-silver.jpg",
+      "/assets/img/products/standing-gnome-52cm-pink-silver(1).jpg"
+    ]
   },
   {
     "id": 33,
@@ -393,7 +489,10 @@
     "size": 9,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/shatterproof-christmas-ornament-cupcake-macroon-9-cm.jpg",
+      "/assets/img/products/shatterproof-christmas-ornament-cupcake-macroon-9-cm(1).jpg"
+    ]
   },
   {
     "id": 34,
@@ -405,7 +504,10 @@
     "size": 13,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/hanger-flamingo-on-scooter-multicoloured-glass-13-cm.jpg",
+      "/assets/img/products/hanger-flamingo-on-scooter-multicoloured-glass-13-cm(1).jpg"
+    ]
   },
   {
     "id": 35,
@@ -417,7 +519,10 @@
     "size": 16.5,
     "favorite": true,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/christmas-ornament-hamburger-16-5cm.jpg",
+      "/assets/img/products/christmas-ornament-hamburger-16-5cm(1).jpg"
+    ]
   },
   {
     "id": 36,
@@ -429,7 +534,10 @@
     "size": 150,
     "favorite": false,
     "category": "Garland & Wreath",
-    "images": []
+    "images": [
+      "/assets/img/products/pinecone-garland-brown-snowy-150cm.jpg",
+      "/assets/img/products/pinecone-garland-brown-snowy-150cm(1).jpg"
+    ]
   },
   {
     "id": 37,
@@ -441,7 +549,10 @@
     "size": 22,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/tree-topper-star-22-cm-pink-glitter.jpg",
+      "/assets/img/products/tree-topper-star-22-cm-pink-glitter(1).jpg"
+    ]
   },
   {
     "id": 38,
@@ -453,7 +564,10 @@
     "size": 8,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/transparent-fillable-christmas-bauble-made-of-glass-8-cm-gold.jpg",
+      "/assets/img/products/transparent-fillable-christmas-bauble-made-of-glass-8-cm-gold(1).jpg"
+    ]
   },
   {
     "id": 39,
@@ -465,7 +579,10 @@
     "size": 11,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/hanging-star-ornament-11cm-white.jpg",
+      "/assets/img/products/hanging-star-ornament-11cm-white(1).jpg"
+    ]
   },
   {
     "id": 40,
@@ -477,7 +594,10 @@
     "size": 9,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/feather-christmas-bauble-9cm-pink.jpg",
+      "/assets/img/products/feather-christmas-bauble-9cm-pink.jpg"
+    ]
   },
   {
     "id": 41,
@@ -489,7 +609,10 @@
     "size": 12,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/hanging-star-decoration-flannel-12cm-purple.jpg",
+      "/assets/img/products/hanging-star-decoration-flannel-12cm-purple(1).jpg"
+    ]
   },
   {
     "id": 42,
@@ -501,7 +624,10 @@
     "size": 8,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/2-glitter-balls-of-petals-8-cm-soft-pink.jpg",
+      "/assets/img/products/2-glitter-balls-of-petals-8-cm-soft-pink(1).jpg"
+    ]
   },
   {
     "id": 43,
@@ -513,7 +639,10 @@
     "size": 8,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/black-bauble-with-ruches-8-cm.jpg",
+      "/assets/img/products/black-bauble-with-ruches-8-cm(1).jpg"
+    ]
   },
   {
     "id": 44,
@@ -525,19 +654,25 @@
     "size": 25,
     "favorite": true,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/set-of-4-metallic-red-twist-candles-25-cm.jpg",
+      "/assets/img/products/set-of-4-metallic-red-twist-candles-25-cm(1).jpg"
+    ]
   },
   {
     "id": 45,
     "name": "Antique Christmas bell",
     "price": 3.99,
     "stock": 3,
-    "collection": 2021,
+    "collection": 2022,
     "color": "silver",
     "size": 7,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/unique-glass-christmas-bell-7-cm-antique-silver.jpg",
+      "/assets/img/products/unique-glass-christmas-bell-7-cm-antique-silver(1).jpg"
+    ]
   },
   {
     "id": 46,
@@ -549,19 +684,25 @@
     "size": 45,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/christmas-stocking-45cm-grey.jpg",
+      "/assets/img/products/christmas-stocking-45cm-grey(1).jpg"
+    ]
   },
   {
     "id": 47,
     "name": "Hanger deer antlers",
     "price": 2.66,
     "stock": 12,
-    "collection": 2021,
+    "collection": 2022,
     "color": "green",
     "size": 12,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/hanger-deer-antlers-12-cm-eucalyptus.jpg",
+      "/assets/img/products/hanger-deer-antlers-12-cm-eucalyptus(1).jpg"
+    ]
   },
   {
     "id": 48,
@@ -573,7 +714,10 @@
     "size": 8,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/unique-glass-christmas-bauble-with-deco-8-cm-iceblue.jpg",
+      "/assets/img/products/unique-glass-christmas-bauble-with-deco-8-cm-iceblue(1).jpg"
+    ]
   },
   {
     "id": 49,
@@ -585,7 +729,10 @@
     "size": 15,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/2-shatterproof-christmas-bells-burgundy-15-cm.jpg",
+      "/assets/img/products/2-shatterproof-christmas-bells-burgundy-15-cm(1).jpg"
+    ]
   },
   {
     "id": 50,
@@ -597,7 +744,10 @@
     "size": 270,
     "favorite": false,
     "category": "Garland & Wreath",
-    "images": []
+    "images": [
+      "/assets/img/products/christmas-garland-black-270x7-5cm-shiny.jpg",
+      "/assets/img/products/christmas-garland-black-270x7-5cm-shiny(1).jpg"
+    ]
   },
   {
     "id": 51,
@@ -609,7 +759,10 @@
     "size": 10,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/unique-glass-christmas-bauble-with-diamonds-10-cm-red-copper.jpg",
+      "/assets/img/products/unique-glass-christmas-bauble-with-diamonds-10-cm-red-copper(1).jpg"
+    ]
   },
   {
     "id": 52,
@@ -621,7 +774,10 @@
     "size": 9,
     "favorite": true,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/blowfish-glass-hanging-figurine-9cm-blue.jpg",
+      "/assets/img/products/blowfish-glass-hanging-figurine-9cm-blue(1).jpg"
+    ]
   },
   {
     "id": 53,
@@ -633,7 +789,10 @@
     "size": 12,
     "favorite": false,
     "category": "Tree decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/jellyfish-glass-hanging-figurine-12cm-blue.jpg",
+      "/assets/img/products/jellyfish-glass-hanging-figurine-12cm-blue(1).jpg"
+    ]
   },
   {
     "id": 54,
@@ -645,7 +804,10 @@
     "size": 25,
     "favorite": false,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/Purple Poinsettia.jpg",
+      "/assets/img/products/Purple Poinsettia(1).jpg"
+    ]
   },
   {
     "id": 55,
@@ -657,7 +819,10 @@
     "size": 45,
     "favorite": false,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/Gnome-with-sequin-hat(1).jpg",
+      "/assets/img/products/Gnome-with-sequin-hat.jpg"
+    ]
   },
   {
     "id": 56,
@@ -669,7 +834,10 @@
     "size": 17,
     "favorite": false,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/christmas-tree-porcelain-17-cm-white-led.jpg",
+      "/assets/img/products/christmas-tree-porcelain-17-cm-white-led(1).jpg"
+    ]
   },
   {
     "id": 57,
@@ -681,7 +849,10 @@
     "size": 26,
     "favorite": false,
     "category": "Garland & Wreath",
-    "images": []
+    "images": [
+      "/assets/img/products/floral-hoop-wreath-26cm.jpg",
+      "/assets/img/products/floral-hoop-wreath-26cm(1).jpg"
+    ]
   },
   {
     "id": 58,
@@ -693,7 +864,10 @@
     "size": 10,
     "favorite": false,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/lying-down-reindeer-grey-10-cm-polyresin(1).jpg",
+      "/assets/img/products/lying-down-reindeer-grey-10-cm-polyresin.jpg"
+    ]
   },
   {
     "id": 59,
@@ -705,7 +879,10 @@
     "size": 20,
     "favorite": false,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/deco-christmas-tree-with-star-20cm-green.jpg",
+      "/assets/img/products/deco-christmas-tree-with-star-20cm-green(1).jpg"
+    ]
   },
   {
     "id": 60,
@@ -717,6 +894,9 @@
     "size": 25,
     "favorite": true,
     "category": "Christmas decorations",
-    "images": []
+    "images": [
+      "/assets/img/products/deco-christmas-tree-with-star-25cm-green.jpg",
+      "/assets/img/products/deco-christmas-tree-with-star-25cm-green(1).jpg"
+    ]
   }
 ]
