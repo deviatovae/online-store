@@ -1,46 +1,28 @@
 import {View} from "../../view";
 import {Controller} from "../../../controller/controller";
-import './cartPageView.scss'
+import './cartPage.scss'
+import {CartPageListView} from "./cartPageListView";
+import {CartDataType} from "../../../types/cartDataType";
 
 
-export default class CartPageView extends View<void> {
-    render(data?: void): string {
+export default class CartPageView extends View<CartDataType> {
+  protected views = {
+    cartList: new CartPageListView()
+};
+
+    render(cartItems: CartDataType): string {
+      
         return `
         <div class="shopping-cart wrapper">
           <div class="shopping-cart__header wrapper">SHOPPING CART</div>
+          <div class="shopping-cart__subheader">
+            <span>Item</span>
+            <span>Price</span>
+            <span>Qty</span>
+            <span>Subtotal</span>
+          </div>
           <div class="shopping-cart__list">
-            <div class="cart-item">
-              <div class="cart-item__header">
-                <span>Item</span>
-                <span>Price</span>
-                <span>Qty</span>
-                <span>Subtotal</span>
-              </div>
-              <div class="cart-item__content">
-                <div class="cart-item__img"></div>
-                <div class="cart-item__info">
-                  <div class="cart-item-info__name">Christmas bauble</div>
-                  <div class="cart-item-info__color">Color: </div>
-                  <div class="cart-item-info__collecrion">Collecrion: </div>
-                  <div class="cart-item-info__size">Size: </div>
-                  <div class="cart-item-info__category">Category: </div>
-                </div>
-               <div class="cart-item__price">$8</div>
-               <div class="cart-item__qty">
-                 <div class="cart-item-qty__value-container">
-                   <div class="cart-item-qty__value">2</div>
-                 </div>
-                 <div class="cart-item-qty__arrow-container up">
-                   <div class="cart-item-qty__arrow-up"></div>
-                </div>
-                <div class="cart-item-qty__arrow-container down">
-                   <div class="cart-item-qty__arrow-down"></div>
-                </div>
-               </div>
-               <div class="cart-item__subtotal">$16</div>
-              </div>
-              <div class="cart-item__cross"></div>
-            </div>
+          ${this.views.cartList.render(cartItems.items)}
           </div>
           <div class="shopping-cart__summery">
             <div class="summery-info">
@@ -59,8 +41,7 @@ export default class CartPageView extends View<void> {
               <input class="input-promo" type="text" placeholder="  Enter promo code">
               <button class="button-apply" disabled="disabled">Apply</button>
             </div>
-        </div>
-    `
+        </div>`;
     }
 
     afterRender(controller: Controller) {
