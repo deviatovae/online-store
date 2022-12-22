@@ -27,7 +27,7 @@ export default class CartPageView extends View<CartDataType> {
           </div>
           <div class="shopping-cart__summery">
             <div class="summery-info">
-              <div class="summery-info__header">SUMMERY</div>
+              <div class="summery-info__header">SUMMARY</div>
               <div class="summery-info__order-container">
                 <div class="order-container__text-value">
                   <div class="order-container__text">Order Total</div>

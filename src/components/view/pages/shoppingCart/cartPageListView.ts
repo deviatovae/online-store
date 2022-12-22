@@ -3,7 +3,9 @@ import {CartItemType} from "../../../types/cartItemType";
 import {formatPrice} from "../../helpers/helpers";
 import {Controller} from "../../../controller/controller";
 
-
+// <div class="cart-item-qty__value">${cartItem.quantity}</div>
+// placeholder="${cartItem.quantity}
+// value="${cartItem.quantity}"
 
 export class CartPageListView extends View<CartItemType[]>{
     protected views = {}
@@ -23,7 +25,8 @@ export class CartPageListView extends View<CartItemType[]>{
              <div class="cart-item__price">$${cartItem.product.price}</div>
              <div class="cart-item__qty">
                <div class="cart-item-qty__value-container">
-                 <div class="cart-item-qty__value">${cartItem.quantity}</div>
+                 <input class="cart-item-qty__value-container quantity-input" type="number" value="${cartItem.quantity}">
+
                </div>
                <div class="cart-item-qty__arrow-container arrow-up" data-id="${cartItem.product.id}">
                  <div class="cart-item-qty__arrow-up"></div>
@@ -44,23 +47,36 @@ export class CartPageListView extends View<CartItemType[]>{
   
         document.querySelectorAll<HTMLElement>('.arrow-up').forEach((button: Element) => {
           button.addEventListener('click', (event: Event) => {
-            const button = event.target as HTMLElement
+            const button = event.currentTarget as HTMLElement
             controller.addProductToCart(Number(button.dataset.id));
           })
         });
 
         document.querySelectorAll<HTMLElement>('.arrow-down').forEach((button: Element) => {
           button.addEventListener('click', (event: Event) => {
-            const button = event.target as HTMLElement
+            const button = event.currentTarget as HTMLElement
             controller.removeProductFromCart(Number(button.dataset.id));
           })
         });
 
         document.querySelectorAll<HTMLElement>('.cart-item__cross').forEach((button: Element) => {
           button.addEventListener('click', (event: Event) => {
-            const button = event.target as HTMLElement
+            const button = event.currentTarget as HTMLElement
             controller.removeProductFromCartAll(Number(button.dataset.id));
           })
         });
+
+        const input = document.querySelector('.quantity-input') as HTMLInputElement;
+        if (input) {
+          input.addEventListener('input', () => {
+          if (input.value.length > 3) {
+              input.value = input.value.slice(0, 3)
+            }
+        })
+        }
+  
+      
+
+
   }
 }
