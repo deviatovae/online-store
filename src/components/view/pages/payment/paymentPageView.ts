@@ -27,7 +27,7 @@ export class PaymentPageView extends View<CartDataType> {
                 </div>
                 <div class="payment-details__payment-method payment-method">
                   <div class="payment-method__top">
-                    <div class="payment-method__title">Payment method</div>
+                    <div class="payment-method__title">PAYMENT METHOD</div>
                     <div class="payment-method__cards cards">
                       <div class="cards__img cards__img_visa"></div>
                       <div class="cards__img cards__img_mastercard"></div>

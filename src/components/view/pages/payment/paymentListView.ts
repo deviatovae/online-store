@@ -23,7 +23,13 @@ export class PaymentListView extends View<CartItemType[]> {
                   </div>
                   <div class="summary-item__bottom bottom-item">
                     <div class="bottom-item__quantity">Qty</div>
+                    <div class="bottom-item__quantity-minus">
+                    <span>-</span>
+                    </div>
                     <div class="bottom-item__count">${cartItem.quantity}</div>
+                    <div class="bottom-item__quantity-plus">
+                    <span>+</span>
+                    </div>
                     <div class="bottom-item__price">$${formatPrice(cartItem.product.price * cartItem.quantity)}</div>
                   </div>
                 </div>`
