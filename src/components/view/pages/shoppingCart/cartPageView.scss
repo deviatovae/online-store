@@ -25,6 +25,7 @@
     grid-template-columns: 4fr 1fr 1fr 1fr;
     border-top: 1px solid $greyBorder;
     border-bottom: 1px solid $greyBorder;
+    height: 30px;
     padding: 15px 0px;
 
     span:first-child {
@@ -41,7 +42,6 @@
     grid-column: 1 / 2;
     display: flex;
     flex-direction: column;
-    gap: 40px;
   }
 
   &__summery {
@@ -157,17 +157,6 @@
     &:hover {
       cursor: pointer;
     }
-    
-    &.up:active {
-      transform: translateY(-3px);
-      transition: transform 0.15s;
-    }
-
-    &.down:active {
-      transform: translateY(3px);
-      transition: transform 0.15s;
-    }
-
   }
 
   &__arrow-up {
@@ -184,6 +173,25 @@
   }
 
 }
+
+.arrow-up {
+
+  &:active {
+    transform: translateY(-3px);
+    transition: transform 0.15s;
+  }
+}
+
+.arrow-down {
+
+  &:active {
+    transform: translateY(3px);
+    transition: transform 0.15s;
+  }
+}
+
+
+
 
 
 .summery-info {

@@ -1,8 +1,11 @@
 import {View} from "../../view";
 import {Controller} from "../../../controller/controller";
-import './cartPage.scss'
+import './cartPageView.scss'
+import {Router} from "../../../router/router";
+
 import {CartPageListView} from "./cartPageListView";
 import {CartDataType} from "../../../types/cartDataType";
+import {formatPrice} from "../../helpers/helpers";
 
 
 export default class CartPageView extends View<CartDataType> {
@@ -30,7 +33,7 @@ export default class CartPageView extends View<CartDataType> {
               <div class="summery-info__order-container">
                 <div class="order-container__text-value">
                   <div class="order-container__text">Order Total</div>
-                  <div class="order-container__total-value">$8</div>
+                  <div class="order-container__total-value">$${formatPrice(cartItems.orderTotal)}</div>
                 </div>
                 <div class="order-container-button">
                   <button class="button-order">Proceed to Checkout</button>
@@ -46,5 +49,10 @@ export default class CartPageView extends View<CartDataType> {
 
     afterRender(controller: Controller) {
         super.afterRender(controller);
+
+        const order = document.querySelector('.button-order') as HTMLElement | null;
+        if (order) {
+            order.onclick = () => Router.redirectTo('/payment');
+        }
     }
 }

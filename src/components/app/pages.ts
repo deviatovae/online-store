@@ -23,8 +23,8 @@ export class Pages {
     public main(): void {
         this.init();
 
-        this.controller.catalog(() => {
-            this.getPageContainer().innerHTML = this.views.mainPage.render()
+        this.controller.catalog((data) => {
+            this.getPageContainer().innerHTML = this.views.mainPage.render(data)
             this.views.mainPage.afterRender(this.controller);
         })
     }
