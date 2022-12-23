@@ -4,6 +4,8 @@ import store from "../store/store";
 import {addProductToCart} from "../store/reducers/cart";
 import {removeProductFromCart} from "../store/reducers/cart";
 import {removeProductFromCartAll} from "../store/reducers/cart";
+import {addProductToCartValueInput} from "../store/reducers/cart";
+
 import products from '../../assets/data/products.json'
 import {CartDataType} from "../types/cartDataType";
 import {MainPageDataType} from "../types/mainPageDataType";
@@ -67,6 +69,15 @@ export class Controller {
         const product = products.find((product: Product) => product.id === id)
         if (product) {
             store.dispatch(addProductToCart(product))
+        }
+    }
+    /**
+     * добавление количества продукта из инпут по идентификатору
+     */
+    addProductToCartValueInput(id: number, value: number) {
+        const product = products.find((product: Product) => product.id === id)
+        if (product) {
+            store.dispatch(addProductToCartValueInput({product: product, quantity: value}))
         }
     }
 

@@ -3,10 +3,6 @@ import {CartItemType} from "../../../types/cartItemType";
 import {formatPrice} from "../../helpers/helpers";
 import {Controller} from "../../../controller/controller";
 
-// <div class="cart-item-qty__value">${cartItem.quantity}</div>
-// placeholder="${cartItem.quantity}
-// value="${cartItem.quantity}"
-
 export class CartPageListView extends View<CartItemType[]>{
     protected views = {}
 
@@ -25,7 +21,7 @@ export class CartPageListView extends View<CartItemType[]>{
              <div class="cart-item__price">$${cartItem.product.price}</div>
              <div class="cart-item__qty">
                <div class="cart-item-qty__value-container">
-                 <input class="cart-item-qty__value-container quantity-input" type="number" value="${cartItem.quantity}">
+                 <input class="cart-item-qty__value-container quantity-input" type="number" data-id="${cartItem.product.id}" value="${cartItem.quantity}">
 
                </div>
                <div class="cart-item-qty__arrow-container arrow-up" data-id="${cartItem.product.id}">
@@ -66,17 +62,21 @@ export class CartPageListView extends View<CartItemType[]>{
           })
         });
 
-        const input = document.querySelector('.quantity-input') as HTMLInputElement;
-        if (input) {
-          input.addEventListener('input', () => {
+        document.querySelectorAll<HTMLElement>('.quantity-input').forEach((input: Element) => {
+          input.addEventListener('input', (event: Event) => {
+            const input = event.currentTarget as HTMLInputElement
           if (input.value.length > 3) {
-              input.value = input.value.slice(0, 3)
+              input.value = input.value.slice(0, 3);
             }
-        })
-        }
+          })
+
+          input.addEventListener('change', (event: Event) => {
+            const input = event.currentTarget as HTMLInputElement;
+            controller.addProductToCartValueInput(Number(input.dataset.id), Number(input.value));
+          })
+        });
   
-      
-
-
+    
   }
 }
+

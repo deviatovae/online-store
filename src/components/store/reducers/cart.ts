@@ -25,6 +25,18 @@ export const slice = createSlice({
 
       return state;
     },
+
+    /**
+     * изменяет quantity на величину value из input
+     */
+    addProductToCartValueInput: (state, { payload: cartItem }: PayloadAction<CartItemType>): CartItemType[] => {
+      const item = state.find((item) => item.product.id === cartItem.product.id);
+      if (!item) return state
+      item.quantity = cartItem.quantity
+      return state;
+    },
+
+
     /**
      * удаляет продукт из стейта корзины, если quantity > 1, то просто уменьшает значение этого поля
      */
@@ -32,8 +44,12 @@ export const slice = createSlice({
       const item = state.find((item) => item.product.id === product.id);
       if (item) {
         if (item.quantity === 1) {
-          return state.filter((stateItem) => stateItem !== item)
+          // return state.filter((stateItem) => stateItem !== item)
         }
+        if (item.quantity === 1 ) {
+          item.quantity = 2
+        };
+        
         item.quantity -= 1;
       }
 
@@ -55,7 +71,7 @@ export const slice = createSlice({
 /**
  * экспортируем экшены из слайса, чтобы использовать их в контроллере
  */
-export const { addProductToCart, removeProductFromCart, removeProductFromCartAll } = slice.actions;
+export const { addProductToCart, removeProductFromCart, removeProductFromCartAll, addProductToCartValueInput } = slice.actions;
 
 /**
  * экспортируем редюсер из слайса, чтобы использовать его для инициализации store
