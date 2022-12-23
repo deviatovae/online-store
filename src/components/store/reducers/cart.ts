@@ -46,10 +46,10 @@ export const slice = createSlice({
         if (item.quantity === 1) {
           // return state.filter((stateItem) => stateItem !== item)
         }
-        if (item.quantity === 1 ) {
+        if (item.quantity <= 1 ) {
           item.quantity = 2
         };
-        
+
         item.quantity -= 1;
       }
 

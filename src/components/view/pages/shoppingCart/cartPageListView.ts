@@ -66,8 +66,11 @@ export class CartPageListView extends View<CartItemType[]>{
           input.addEventListener('input', (event: Event) => {
             const input = event.currentTarget as HTMLInputElement
           if (input.value.length > 3) {
-              input.value = input.value.slice(0, 3);
-            }
+              input.value = input.value.slice(0, 3)
+          }
+          if (Number(input.value) < 0) {
+            input.value = "0"
+          }
           })
 
           input.addEventListener('change', (event: Event) => {
@@ -76,7 +79,6 @@ export class CartPageListView extends View<CartItemType[]>{
           })
         });
   
-    
   }
 }
 
