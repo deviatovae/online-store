@@ -43,12 +43,12 @@ export const slice = createSlice({
     removeProductFromCart: (state, { payload: product }: PayloadAction<Product>): CartItemType[] => {
       const item = state.find((item) => item.product.id === product.id);
       if (item) {
-        if (item.quantity === 1) {
-          // return state.filter((stateItem) => stateItem !== item)
-        }
         if (item.quantity <= 1 ) {
-          item.quantity = 2
-        };
+          return state.filter((stateItem) => stateItem !== item)
+        }
+        // if (item.quantity <= 1 ) {
+        //   item.quantity = 2
+        // };
 
         item.quantity -= 1;
       }

@@ -62,19 +62,34 @@ export class CartPageListView extends View<CartItemType[]>{
           })
         });
 
+        
         document.querySelectorAll<HTMLElement>('.quantity-input').forEach((input: Element) => {
           input.addEventListener('input', (event: Event) => {
             const input = event.currentTarget as HTMLInputElement
-          if (input.value.length > 3) {
-              input.value = input.value.slice(0, 3)
-          }
-          if (Number(input.value) < 0) {
-            input.value = "0"
-          }
+
+            // верификация по длинне
+            if (input.value.length > 3) {
+                input.value = input.value.slice(0, 3)
+            }
+            // верификация отрицательных чисел
+            if (Number(input.value) < 0) {
+              input.value = "1"
+            }
+            // верификация по целым числам
+            if (Number(input.value) % 1 !== 0) {
+              input.value = String(Math.round(Number(input.value)))
+            }
+
           })
 
           input.addEventListener('change', (event: Event) => {
             const input = event.currentTarget as HTMLInputElement;
+
+            // удалить товар если в инпут внести 0
+            if (Number(input.value) === 0 ) {
+              controller.removeProductFromCartAll(Number(input.dataset.id));
+            }
+
             controller.addProductToCartValueInput(Number(input.dataset.id), Number(input.value));
           })
         });
