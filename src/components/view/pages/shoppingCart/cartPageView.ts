@@ -59,16 +59,18 @@ export default class CartPageView extends View<CartDataType> {
   
     afterRender(controller: Controller) {
         super.afterRender(controller);
-
         const order = document.querySelector('.button-order') as HTMLElement | null;
 
         if (order) {
             order.onclick = () => Router.redirectTo('/payment');
         }
-
+    
         // блок промо кода
-        const buttom = document.querySelector('.button-apply')as HTMLInputElement 
-        const input = document.querySelector('.input-promo')as HTMLInputElement 
+        const buttom = document.querySelector('.button-apply')as HTMLInputElement
+        const input = document.querySelector('.input-promo')as HTMLInputElement
+        const totalValue = document.querySelector('.order-container__total-value') as HTMLElement;
+        const valuePromo = document.querySelector('.order-container__text-value-promo') as HTMLElement;
+        const textPromo = document.querySelector('.order-container__text-promo') as HTMLElement;
 
         // валидация промо на снятие disabled и Applied / Apply
         input.addEventListener('input', (event: Event) => {
@@ -80,25 +82,19 @@ export default class CartPageView extends View<CartDataType> {
             buttom.textContent = "Apply";
           }
 
-
-          buttom.addEventListener('click', (event: Event) => {
+            buttom.addEventListener('click', (event: Event) => {
               if (input.value === "XMAS2023" || input.value === "RS") {
                 console.log(input.value)
                 buttom.textContent = "Applied";
+                totalValue.style.textDecoration = "line-through";
+                totalValue.style.fontSize = "16px";
+                totalValue.style.color = "#747474";
+                valuePromo.style.visibility = "visible"
+                textPromo.textContent = input.value + '-15% OFF'
               }
+            })
 
-          
         })
-
-
-        
-      })
-
-
-
-
-
-
     }
 }
 
