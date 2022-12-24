@@ -2,12 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Product } from '../../types/product';
 import {CartItemType} from "../../types/cartItemType";
 import {loadState} from "./storeDb";
-import store from "../store";
 
 /**
  * начальное состояние стейта
  */
-let initialState: CartItemType[] = loadState('cart');
+let initialState = loadState<CartItemType[]>('cart', []);
 
 export const slice = createSlice({
   name: 'cart',
@@ -77,10 +76,3 @@ export const { addProductToCart, removeProductFromCart, removeProductFromCartAll
  * экспортируем редюсер из слайса, чтобы использовать его для инициализации store
  */
 export default slice.reducer;
-
-
-function addTodo(text: string) {
-  return { type: 'todos/todoAdded', payload: text }
-}
-
-const action = addTodo('Learn about actions' )
