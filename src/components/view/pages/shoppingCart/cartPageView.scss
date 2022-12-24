@@ -232,7 +232,7 @@ input[type=number]::-webkit-outer-spin-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    // justify-content: space-between;
   }
 }
 
@@ -261,14 +261,26 @@ input[type=number]::-webkit-outer-spin-button {
 
     }
 
+    &__text-value-promo {
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 }
 
-.order-container-button {
 
+.order-container-button {
+  margin-top:auto;
+  align-items: flex-end;
+  flex-shrink: 3;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .button-order {
-  width: 360px;
+  width: 90%;
   height: 32px;
   background: $oliva;
   font: 1rem $Sitara;
@@ -289,14 +301,18 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .shopping-promo {
-  display: flex;
+  // display: flex;
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  row-gap: 15px;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 20px;
 }
 
 .input-promo {
-  width: 75%;
+  grid-column: 1 / 2;
+  width: 95%;
   height: 40px;
   background: #FFFFFF;
   border: 1px solid $greyBorder;
@@ -314,17 +330,23 @@ input[type=number]::-webkit-outer-spin-button {
   cursor: pointer;
   transition: transform 0.2s;
 
-    &:active {
-      transform: scale(97%);
-      transition: transform 0.2s;
-    }
+  &:active {
+    transform: scale(97%);
+    transition: transform 0.2s;
+  }
+  &:disabled {
+    background: $darkGray;
+    cursor: default;
+    transform: none;
+  }
+  
 
-    &:disabled {
-      background: $darkGray;
-      cursor: default;
-      transform: none;
-    }
 
 
+}
 
+.ptomo-test {
+  grid-column: 1 / 3;
+  color: #c0c0c0;
+  text-align: center;
 }

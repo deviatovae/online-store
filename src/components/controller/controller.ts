@@ -25,6 +25,9 @@ export class Controller {
             items: cartItems,
             orderTotal: cartItems.reduce((sum, cartItem) => sum + cartItem.product.price * cartItem.quantity, 0),
             productCount: cartItems.reduce((count, cartItem) => count + cartItem.quantity, 0),
+
+            // orderTotalCupon: cartItems.reduce((sum, cartItem) => sum + cartItem.product.price/ .15 * cartItem.quantity, 0),
+     
         }
         callback(cartData);
     }

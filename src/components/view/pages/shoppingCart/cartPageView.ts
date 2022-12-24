@@ -7,11 +7,18 @@ import {CartPageListView} from "./cartPageListView";
 import {CartDataType} from "../../../types/cartDataType";
 import {formatPrice} from "../../helpers/helpers";
 
+import {PromoListView} from "./promoListView";
+
+
 
 export default class CartPageView extends View<CartDataType> {
   protected views = {
     cartList: new CartPageListView()
 };
+  protected viewsPromo = {
+    promoList: new PromoListView()
+};
+
     render(cartItems: CartDataType): string {
         return `
         <div class="shopping-cart wrapper">
@@ -33,18 +40,23 @@ export default class CartPageView extends View<CartDataType> {
                   <div class="order-container__text">Order Total</div>
                   <div class="order-container__total-value">$${formatPrice(cartItems.orderTotal)}</div>
                 </div>
+
+                <div class="order-container__text-value-promo">${this.viewsPromo.promoList.render(cartItems.items)}</div>
+    
                 <div class="order-container-button">
                   <button class="button-order">Proceed to Checkout</button>
                 </div>
               </div>
             </div>
             <div class="shopping-promo">
-              <input class="input-promo" type="text" placeholder="  Enter promo code">
+              <input class="input-promo" type="text" maxlength="10" placeholder="  Enter promo code">
               <button class="button-apply" disabled="disabled">Apply</button>
+              <div class="ptomo-test">Promo for test: 'RS', 'XMAS2023'</div>
             </div>
         </div>`;
     }
 
+  
     afterRender(controller: Controller) {
         super.afterRender(controller);
 
@@ -53,6 +65,40 @@ export default class CartPageView extends View<CartDataType> {
         if (order) {
             order.onclick = () => Router.redirectTo('/payment');
         }
+
+        // блок промо кода
+        const buttom = document.querySelector('.button-apply')as HTMLInputElement 
+        const input = document.querySelector('.input-promo')as HTMLInputElement 
+
+        // валидация промо на снятие disabled и Applied / Apply
+        input.addEventListener('input', (event: Event) => {
+          if (input.value === "XMAS2023" || input.value === "RS") {
+            buttom.removeAttribute("disabled");
+          }
+          else {
+            buttom.setAttribute("disabled", "true");
+            buttom.textContent = "Apply";
+          }
+
+
+          buttom.addEventListener('click', (event: Event) => {
+              if (input.value === "XMAS2023" || input.value === "RS") {
+                console.log(input.value)
+                buttom.textContent = "Applied";
+              }
+
+          
+        })
+
+
+        
+      })
+
+
+
+
+
+
     }
 }
 

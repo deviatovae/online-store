@@ -18,13 +18,11 @@ export class CartPageListView extends View<CartItemType[]>{
                 <div class="cart-item-info__size">Size: ${cartItem.product.size}cm</div>
                 <div class="cart-item-info__category">Category: ${cartItem.product.category}</div>
                 <div class="cart-item-info__instock" data-id="${cartItem.product.id}">In stock: ${cartItem.product.stock}</div>
-
               </div>
              <div class="cart-item__price">$${cartItem.product.price}</div>
              <div class="cart-item__qty">
                <div class="cart-item-qty__value-container">
                  <input class="cart-item-qty__value-container quantity-input" type="number" data-id="${cartItem.product.id}" data-stock="${cartItem.product.stock}" value="${cartItem.quantity}">
-
                </div>
                <div class="cart-item-qty__arrow-container arrow-up" data-stock="${cartItem.product.stock}" data-id="${cartItem.product.id}">
                  <div class="cart-item-qty__arrow-up"></div>
