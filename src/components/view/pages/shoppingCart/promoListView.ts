@@ -1,13 +1,9 @@
 import {View} from "../../view";
 import {CartItemType} from "../../../types/cartItemType";
 import {formatPrice} from "../../helpers/helpers";
-import {CartDataType} from "../../../types/cartDataType";
-import {Controller} from "../../../controller/controller";
-
 
 export class PromoListView extends View<CartItemType[]> {
     protected views = {}
-
 
     public render(cartItems: CartItemType[]): string {
         return cartItems.map((cartItem) => {

@@ -10,6 +10,7 @@ import products from '../../assets/data/products.json'
 import {CartDataType} from "../types/cartDataType";
 import {MainPageDataType} from "../types/mainPageDataType";
 import {FilterCategoryType, FiltersDataType, MinMaxType} from "../types/filtersDataType";
+import {addAppliedPromocode} from "../store/reducers/promocode";
 
 /**
  * контроллер получает, изменяет, фильтрует данные, которые потребуются для view
@@ -25,9 +26,7 @@ export class Controller {
             items: cartItems,
             orderTotal: cartItems.reduce((sum, cartItem) => sum + cartItem.product.price * cartItem.quantity, 0),
             productCount: cartItems.reduce((count, cartItem) => count + cartItem.quantity, 0),
-
-            // orderTotalCupon: cartItems.reduce((sum, cartItem) => sum + cartItem.product.price/ .15 * cartItem.quantity, 0),
-     
+            promocodes: store.getState().promocode,
         }
         callback(cartData);
     }
@@ -86,7 +85,7 @@ export class Controller {
 
     /**
      * удаление продукта из корзины по идентификатору
-     */ 
+     */
     removeProductFromCart(id: number) {
         const product = products.find((product: Product) => product.id === id)
         if (product) {
@@ -96,7 +95,7 @@ export class Controller {
 
     /**
      * удаление любого количесва продуктов из корзины по идентификатору
-     */ 
+     */
     removeProductFromCartAll(id: number) {
         const product = products.find((product: Product) => product.id === id)
         if (product) {
@@ -104,5 +103,21 @@ export class Controller {
         }
     }
 
+    /**
+     * проверка промокода
+     */
+    isPromocodeAvailable(name: string): boolean {
+        return store.getState().promocode.available.some(code => code.name === name)
+    }
 
+    isPromocodeApplied(name: string): boolean {
+        return store.getState().promocode.applied.some(code => code.name === name)
+    }
+
+    applyPromocode(name: string): void {
+        const promo = store.getState().promocode.available.find(code => code.name === name)
+        if (promo) {
+            store.dispatch(addAppliedPromocode(promo.id))
+        }
+    }
 }
