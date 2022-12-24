@@ -128,7 +128,22 @@
     font: 1.2rem $Sitara;
     padding-bottom: 10px;
   }
+}
 
+.shake {
+  animation: 1s ease-in-out 0s normal none infinite running trambling-animation;
+}
+
+@keyframes trambling-animation {
+  0%, 50%, 100% {
+      transform: rotate(0deg);
+  }
+  10%, 30% {
+      transform: rotate(-5deg);
+  }
+  20%, 40% {
+      transform: rotate(5deg);
+  }
 }
 
 .cart-item-qty {
@@ -159,8 +174,6 @@
     &:hover {
       cursor: pointer;
     }
-
-
   }
 
   &__arrow-up {
@@ -197,12 +210,7 @@
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
-  margin: 0; 
-}
-
-.quantity-input:active > .quantity-input::placeholder {
-  display: none;
-  background: #000;
+  // margin: 0;
 }
 
 .summery-info {

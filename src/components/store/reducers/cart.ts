@@ -21,7 +21,10 @@ export const slice = createSlice({
       if (!item) {
         return [...state, { product: product, quantity: 1 }];
       }
-      item.quantity += 1;
+        //  quantity не может быть больше stock
+      if (product.stock > item.quantity) {
+        item.quantity += 1;
+      }
 
       return state;
     },
@@ -31,8 +34,8 @@ export const slice = createSlice({
      */
     addProductToCartValueInput: (state, { payload: cartItem }: PayloadAction<CartItemType>): CartItemType[] => {
       const item = state.find((item) => item.product.id === cartItem.product.id);
-      if (!item) return state
-      item.quantity = cartItem.quantity
+      if (!item) return state;
+      item.quantity = cartItem.quantity;
       return state;
     },
 
@@ -44,11 +47,8 @@ export const slice = createSlice({
       const item = state.find((item) => item.product.id === product.id);
       if (item) {
         if (item.quantity <= 1 ) {
-          return state.filter((stateItem) => stateItem !== item)
+          return state.filter((stateItem) => stateItem !== item);
         }
-        // if (item.quantity <= 1 ) {
-        //   item.quantity = 2
-        // };
 
         item.quantity -= 1;
       }
@@ -61,7 +61,7 @@ export const slice = createSlice({
     removeProductFromCartAll: (state, { payload: product }: PayloadAction<Product>): CartItemType[] => {
       const item = state.find((item) => item.product.id === product.id);
       if (item) {
-        return state.filter((stateItem) => stateItem !== item)
+        return state.filter((stateItem) => stateItem !== item);
       }
       return state;
     },
