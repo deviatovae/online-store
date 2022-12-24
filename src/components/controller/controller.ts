@@ -2,6 +2,10 @@ import {CallbackFn} from "../types/callbackFn";
 import {Product} from "../types/product";
 import store from "../store/store";
 import {addProductToCart} from "../store/reducers/cart";
+import {removeProductFromCart} from "../store/reducers/cart";
+import {removeProductFromCartAll} from "../store/reducers/cart";
+import {addProductToCartValueInput} from "../store/reducers/cart";
+
 import products from '../../assets/data/products.json'
 import {CartDataType} from "../types/cartDataType";
 import {MainPageDataType} from "../types/mainPageDataType";
@@ -21,6 +25,9 @@ export class Controller {
             items: cartItems,
             orderTotal: cartItems.reduce((sum, cartItem) => sum + cartItem.product.price * cartItem.quantity, 0),
             productCount: cartItems.reduce((count, cartItem) => count + cartItem.quantity, 0),
+
+            // orderTotalCupon: cartItems.reduce((sum, cartItem) => sum + cartItem.product.price/ .15 * cartItem.quantity, 0),
+     
         }
         callback(cartData);
     }
@@ -67,4 +74,35 @@ export class Controller {
             store.dispatch(addProductToCart(product))
         }
     }
+    /**
+     * добавление количества продукта из инпут по идентификатору
+     */
+    addProductToCartValueInput(id: number, value: number) {
+        const product = products.find((product: Product) => product.id === id)
+        if (product) {
+            store.dispatch(addProductToCartValueInput({product: product, quantity: value}))
+        }
+    }
+
+    /**
+     * удаление продукта из корзины по идентификатору
+     */ 
+    removeProductFromCart(id: number) {
+        const product = products.find((product: Product) => product.id === id)
+        if (product) {
+            store.dispatch(removeProductFromCart(product))
+        }
+    }
+
+    /**
+     * удаление любого количесва продуктов из корзины по идентификатору
+     */ 
+    removeProductFromCartAll(id: number) {
+        const product = products.find((product: Product) => product.id === id)
+        if (product) {
+            store.dispatch(removeProductFromCartAll(product))
+        }
+    }
+
+
 }

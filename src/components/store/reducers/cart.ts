@@ -21,22 +21,48 @@ export const slice = createSlice({
       if (!item) {
         return [...state, { product: product, quantity: 1 }];
       }
-      item.quantity += 1;
+        //  quantity не может быть больше stock
+      if (product.stock > item.quantity) {
+        item.quantity += 1;
+      }
 
       return state;
     },
+
+    /**
+     * изменяет quantity на величину value из input
+     */
+    addProductToCartValueInput: (state, { payload: cartItem }: PayloadAction<CartItemType>): CartItemType[] => {
+      const item = state.find((item) => item.product.id === cartItem.product.id);
+      if (!item) return state;
+      item.quantity = cartItem.quantity;
+      return state;
+    },
+
+
     /**
      * удаляет продукт из стейта корзины, если quantity > 1, то просто уменьшает значение этого поля
      */
     removeProductFromCart: (state, { payload: product }: PayloadAction<Product>): CartItemType[] => {
       const item = state.find((item) => item.product.id === product.id);
       if (item) {
-        if (item.quantity === 1) {
-          return state.filter((stateItem) => stateItem !== item)
+        if (item.quantity <= 1 ) {
+          return state.filter((stateItem) => stateItem !== item);
         }
+
         item.quantity -= 1;
       }
 
+      return state;
+    },
+    /**
+     * удаляет продукт с любым количеством из стейта корзины
+     */
+    removeProductFromCartAll: (state, { payload: product }: PayloadAction<Product>): CartItemType[] => {
+      const item = state.find((item) => item.product.id === product.id);
+      if (item) {
+        return state.filter((stateItem) => stateItem !== item);
+      }
       return state;
     },
   },
@@ -45,7 +71,7 @@ export const slice = createSlice({
 /**
  * экспортируем экшены из слайса, чтобы использовать их в контроллере
  */
-export const { addProductToCart, removeProductFromCart } = slice.actions;
+export const { addProductToCart, removeProductFromCart, removeProductFromCartAll, addProductToCartValueInput } = slice.actions;
 
 /**
  * экспортируем редюсер из слайса, чтобы использовать его для инициализации store

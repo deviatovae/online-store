@@ -54,3 +54,5 @@ export class ProductView extends View<Product> {
             })
     }
 }
+
+
