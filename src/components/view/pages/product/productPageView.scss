@@ -1,11 +1,11 @@
 @import 'src/assets/styles/common/variables';
 
 .product-page {
-  height: 853px;
+  height: 850px;
   padding: 0px 30px;
   display: grid;
   grid-template-columns: 1.2fr 1fr;
-  grid-template-rows: 200px 240px 360px;
+  grid-template-rows: 0.5fr 0.5fr 1fr;
   position: relative;
 
 
@@ -69,7 +69,6 @@
       width: 620px;
       height: 620px;
     }
-
   }
 
   &__summaru-item {
