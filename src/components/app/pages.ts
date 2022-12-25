@@ -37,6 +37,14 @@ export class Pages {
         })
     }
 
+    public product(): void {
+        this.init();
+        this.controller.cart((cartData) => {
+           this.getPageContainer().innerHTML = this.views.productPage.render(cartData)
+           this.views.productPage.afterRender(this.controller);
+        })
+    }
+
     public payment(): void {
         this.init();
 
