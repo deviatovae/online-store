@@ -67,7 +67,6 @@ export default class ProductPageView extends View<CartDataType> {
               <button class="button-buy-now button">BUY NOW</button>
             </div>
           </div>
-          
           `;
       }
   
@@ -81,5 +80,12 @@ export default class ProductPageView extends View<CartDataType> {
             arrowBack.onclick = () => Router.redirectTo('/');
           }
     
+          const buttonAdd = document.querySelector('.button-add-cart') as HTMLElement;
+            buttonAdd.addEventListener('click', (event: Event) => {
+                  const button = event.currentTarget as HTMLElement
+                  controller.addProductToCart(Number(button.dataset.id));
+              })
+
+      
         }
   }
