@@ -31,7 +31,6 @@ export class App {
         });
 
         this.router.route('/payment', () => {
-
             this.pages.payment()
             store.subscribe(() => this.pages.payment())
         });
