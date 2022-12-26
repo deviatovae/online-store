@@ -19,7 +19,7 @@ export class AppliedPromocodeListView extends View<CartDataType> {
         }).join('')
 
         // language=HTML
-        const priceAfterDiscount = items ? formatPrice(cart.getPriceByPromocodes(cart.promocodes.applied)) : '';
+        const priceAfterDiscount = items ? `$${formatPrice(cart.getPriceByPromocodes(cart.promocodes.applied))}` : '';
 
         // language=HTML
         return `
