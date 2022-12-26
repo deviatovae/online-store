@@ -6,6 +6,11 @@ export class Router {
         this.fallbackRoute = null;
     }
 
+    public static redirectTo(url: string) {
+        history.pushState({}, '', url);
+        window.dispatchEvent(new Event('popstate'));
+    }
+
     /**
      * обращается к объекту routes и в поле path присваивает коллбэк
      */
@@ -26,34 +31,37 @@ export class Router {
         window.addEventListener('popstate', () => this.loadRoute())
     }
 
-    public static redirectTo(url: string) {
-        history.pushState({}, '', url);
-        window.dispatchEvent(new Event('popstate'));
-    }
-
-    /**
-     * обращается в полю routes и достает оттуда значение по ключу и возвращает функцию (с url)
-     */
-    private resolveRoute(path: string): Function | null {
-        return this.routes[path] || null;
-    }
-
     /**
      * ищет и вызывает функцию которая была записана в routes по url (после #) или возывает fallback
      */
     private loadRoute(): void {
         let url = window.location.pathname;
-        let route = this.resolveRoute(url);
 
-        if (!route) {
-            if (this.fallbackRoute) {
-                this.fallbackRoute();
-                return;
-            } else {
-                throw new Error(`Page "${url}" not found`);
+        for (let route of Object.keys(this.routes)) {
+            const routeSplit = route.split('/');
+            const urlSplit = url.split('/');
+            const args: string[] = [];
+
+            const isMatch = urlSplit.every((urlPart, i) => {
+                const routePart = routeSplit[i];
+                if (routePart && routePart.indexOf(':') >= 0) {
+                    args.push(urlPart)
+                    return true;
+                }
+                return urlPart === routePart;
+            });
+
+            if (isMatch) {
+                return this.routes[route](...args);
             }
         }
 
-        route();
-    };
+        if (this.fallbackRoute) {
+            this.fallbackRoute();
+            return;
+        }
+
+        throw new Error(`Page "${url}" not found`);
+    }
+    ;
 }
