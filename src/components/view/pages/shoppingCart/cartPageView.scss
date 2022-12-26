@@ -13,7 +13,8 @@
     letter-spacing: 0.05em;
     color: $oliva;
     grid-column: 1 / 3;
-    padding-bottom: 25px;
+    margin-bottom: 25px;
+    text-align: center;
   }
 
   &__subheader {
@@ -34,7 +35,7 @@
     }
 
     span {
-      text-align: center; 
+      text-align: center;
     }
   }
 
@@ -186,7 +187,7 @@
     background: url("../../../../assets/img/arrow_up.svg") no-repeat center;
     transform: rotate(180deg);
     width: 6px;
-    height: 7px; 
+    height: 7px;
   }
 
 }
@@ -207,9 +208,9 @@
   }
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
   // margin: 0;
 }
 
@@ -243,32 +244,65 @@ input[type=number]::-webkit-outer-spin-button {
       justify-content: space-between;
       width: 90%;
       border-top: 1px solid $greyBorder;
+      margin-bottom: 7px;
     }
 
     &__text,
     &__total-value {
-      font: 1.5rem $Sitara;
+      font: 1.2rem $Sitara;
       color: #000;
-      font-weight: 700;
+      font-weight: 600;
       padding-top: 10px;
     }
 
-    &__total-value {
-
-    }
-
-    &__button {
-
-    }
 
     &__text-value-promo {
-      display: none;
       visibility: hidden;
       width: 90%;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+}
+
+.promocode-order {
+  display: flex;
+  width: 90%;
+
+  &__total-value {
+    font: 1.2rem $Sitara;
+    font-weight: 700;
+    margin-left: auto;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__item {
+    display: flex;
+    gap: 20px;
+    align-items: start;
+  }
+
+  &__name {
+    color: $darkGray;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+}
+
+.remove-btn {
+  background: url('https://api.iconify.design/typcn/delete-outline.svg?color=%238b9d93&width=24&height=24') no-repeat center center / contain;
+  width: 24px;
+  height: 24px;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
 }
 
 
@@ -293,8 +327,8 @@ input[type=number]::-webkit-outer-spin-button {
 
     &:hover {
     cursor: pointer;
-    }  
-  
+    }
+
     &:active {
       transform: scale(98%);
       transition: transform 0.2s;
@@ -309,7 +343,6 @@ input[type=number]::-webkit-outer-spin-button {
   row-gap: 15px;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 20px;
 }
 
 .input-promo {
@@ -341,14 +374,23 @@ input[type=number]::-webkit-outer-spin-button {
     cursor: default;
     transform: none;
   }
-  
-
-
 
 }
 
-.ptomo-test {
+.promo-test {
   grid-column: 1 / 3;
-  color: #c0c0c0;
+  color: $darkGray;
   text-align: center;
+
+  &__name {
+    display: inline-block;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+.discount {
+  text-decoration: line-through;
+  color: $darkGray;
 }

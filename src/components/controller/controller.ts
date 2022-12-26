@@ -7,10 +7,10 @@ import {removeProductFromCartAll} from "../store/reducers/cart";
 import {addProductToCartValueInput} from "../store/reducers/cart";
 
 import products from '../../assets/data/products.json'
-import {CartDataType} from "../types/cartDataType";
+import {CartDataType, GetPriceByPromocodes} from "../types/cartDataType";
 import {MainPageDataType} from "../types/mainPageDataType";
 import {FilterCategoryType, FiltersDataType, MinMaxType} from "../types/filtersDataType";
-import {addAppliedPromocode} from "../store/reducers/promocode";
+import promocode, {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/promocode";
 
 /**
  * контроллер получает, изменяет, фильтрует данные, которые потребуются для view
@@ -22,9 +22,21 @@ export class Controller {
      */
     public cart(callback: CallbackFn<CartDataType>): void {
         const cartItems = store.getState().cart
+        const promocodes = store.getState().promocode;
+
+        const price = cartItems.reduce((count, cartItem) => count + cartItem.product.price * cartItem.quantity, 0);
+        const priceByPromocodes: GetPriceByPromocodes = (promocodes) => {
+            const discount = promocodes?.reduce((discount, p) => discount + p.discount, 0);
+            if (discount) {
+                return price - discount / 100 * price
+            }
+            return price;
+        };
+
         const cartData: CartDataType = {
             items: cartItems,
-            orderTotal: cartItems.reduce((sum, cartItem) => sum + cartItem.product.price * cartItem.quantity, 0),
+            priceAfterDiscount: priceByPromocodes(promocodes.applied),
+            getPriceByPromocodes: priceByPromocodes,
             productCount: cartItems.reduce((count, cartItem) => count + cartItem.quantity, 0),
             promocodes: store.getState().promocode,
         }
@@ -110,14 +122,17 @@ export class Controller {
         return store.getState().promocode.available.some(code => code.name === name)
     }
 
-    isPromocodeApplied(name: string): boolean {
-        return store.getState().promocode.applied.some(code => code.name === name)
-    }
-
     applyPromocode(name: string): void {
         const promo = store.getState().promocode.available.find(code => code.name === name)
         if (promo) {
             store.dispatch(addAppliedPromocode(promo.id))
+        }
+    }
+
+    removeAppliedPromocode(id: number): void {
+        const promo = store.getState().promocode.applied.find(code => code.id === id)
+        if (promo) {
+            store.dispatch(removeAppliedPromocode(promo.id))
         }
     }
 }

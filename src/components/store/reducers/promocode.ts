@@ -1,7 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {loadState} from "./storeDb";
 import {PromocodeDataType} from "../../types/promocodeDataType";
-import {PromocodeType} from "../../types/promocodeType";
 
 /**
  * начальное состояние стейта
@@ -29,14 +28,9 @@ export const slice = createSlice({
         /**
          * добавляет продукт в стейт корзины, при повторном добавлении увеличивает quantity
          */
-        addAvailablePromocode: (state, {payload: promocode}: PayloadAction<PromocodeType>): PromocodeDataType => {
-            state.available.push(promocode)
-            return state;
-        },
-
         addAppliedPromocode: (state, {payload: id}: PayloadAction<number>): PromocodeDataType => {
             const promocode = state.available.find(el => el.id === id)
-            if (promocode) {
+            if (promocode && !state.applied.some((el) => el.id === id)) {
                 state.applied.push(promocode)
             }
             return state;
@@ -52,7 +46,7 @@ export const slice = createSlice({
 /**
  * экспортируем экшены из слайса, чтобы использовать их в контроллере
  */
-export const {addAvailablePromocode, addAppliedPromocode} = slice.actions;
+export const {addAppliedPromocode, removeAppliedPromocode} = slice.actions;
 
 /**
  * экспортируем редюсер из слайса, чтобы использовать его для инициализации store
