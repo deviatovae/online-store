@@ -87,6 +87,7 @@ body{
 }
 
 .main {
+
 }
 
 .find-container {
@@ -168,7 +169,7 @@ body{
 
 .footer {
   background: $oliva;
-  margin-top: 30px;
+  margin-top: 50px;
 
   &__container {
     padding: 10px;
@@ -189,7 +190,7 @@ body{
       gap: 5px;
       font-size: 0.8rem;
     }
-}
+  }
 }
 
 .footer-github {

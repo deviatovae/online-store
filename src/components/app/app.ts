@@ -20,13 +20,17 @@ export class App {
             store.subscribe(() => this.pages.main())
         });
 
+        this.router.route('/product', () => {
+            this.pages.product()
+            store.subscribe(() => this.pages.product())
+        });
+
         this.router.route('/cart', () => {
             this.pages.cart()
             store.subscribe(() => this.pages.cart())
         });
 
         this.router.route('/payment', () => {
-
             this.pages.payment()
             store.subscribe(() => this.pages.payment())
         });
