@@ -15,6 +15,29 @@
     row-gap: 40px;
   }
 
+  &__empty {
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__empty-title {
+    font: 1.5rem $Sitara;
+    letter-spacing: 0.05em;
+    color: $oliva;
+    margin-bottom: 25px;
+    text-align: center;
+    border-bottom: solid 1px $greyBorder;
+  }
+  &__empty-subtitle {
+    text-align: center;
+    font-size: 1.3rem;
+    color: $mainBlack;
+    padding: 50px;
+  }
+
   &__header {
     font: 1.5rem $Sitara;
     letter-spacing: 0.05em;
