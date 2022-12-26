@@ -20,9 +20,9 @@ export class App {
             store.subscribe(() => this.pages.main())
         });
 
-        this.router.route('/product', () => {
-            this.pages.product()
-            store.subscribe(() => this.pages.product())
+        this.router.route('/product/:id', (id: string) => {
+            this.pages.product(id)
+            store.subscribe(() => this.pages.product(id))
         });
 
         this.router.route('/cart', () => {

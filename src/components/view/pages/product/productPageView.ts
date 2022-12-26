@@ -5,14 +5,13 @@ import {Router} from "../../../router/router";
 import {CartDataType} from "../../../types/cartDataType";
 
 import {CartItemType} from "../../../types/cartItemType";
+import {Product} from "../../../types/product";
+import {formatPrice} from "../../helpers/helpers";
 
-
-
-
-export default class ProductPageView extends View<CartDataType> {
+export default class ProductPageView extends View<Product> {
     protected views = {};
-  
-      render(cartItems: CartDataType): string {
+
+      render(product: Product): string {
           return `
           <div class="product-page wrapper">
             <div class="product-page__arrow-back"></div>
@@ -26,7 +25,7 @@ export default class ProductPageView extends View<CartDataType> {
             </div>
 
             <div class="product-page__summaru-item">
-              Christmas Bauble | Silver | 10cm $8.00
+              ${product.name} | ${product.color} | ${product.size} $${formatPrice(product.price)}
             </div>
 
             <div class="product-page__cart-container">
@@ -69,23 +68,23 @@ export default class ProductPageView extends View<CartDataType> {
           </div>
           `;
       }
-  
-    
+
+
       afterRender(controller: Controller) {
           super.afterRender(controller);
 
           const arrowBack = document.querySelector('.product-page__arrow-back') as HTMLElement | null;
-  
+
           if (arrowBack) {
             arrowBack.onclick = () => Router.redirectTo('/');
           }
-    
+
           const buttonAdd = document.querySelector('.button-add-cart') as HTMLElement;
             buttonAdd.addEventListener('click', (event: Event) => {
                   const button = event.currentTarget as HTMLElement
                   controller.addProductToCart(Number(button.dataset.id));
               })
 
-      
+
         }
   }
