@@ -17,7 +17,7 @@ export class HeaderCartView extends View<CartDataType> {
           <div class="header-cart__amount-container">
             <p class="header-cart__amount">${cart.productCount}</p>
           </div>
-          <div class="header-cart__num">$${cart.orderTotal.toFixed(2)}</div>
+          <div class="header-cart__num">$${cart.priceAfterDiscount.toFixed(2)}</div>
         </div>`
     }
 

@@ -1,0 +1,185 @@
+@import 'src/assets/styles/common/variables';
+
+.product-page {
+  height: 850px;
+  padding: 0px 30px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  grid-template-rows: 1fr 1fr 2fr;
+  position: relative;
+
+  @media screen and (max-width: 1070px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 3fr 1fr 1fr 1fr;
+    height: 1350px;
+    align-items: center;
+  }
+
+  &__arrow-back {
+    background: url("../../../../assets/img/arow_back_product.svg") no-repeat center;
+    width: 70px;
+    height: 70px;
+    transition: transform 0.1s;
+    cursor: pointer;
+    position: absolute;
+    left: 40px;
+    top: 40px;
+
+    &:active {
+      transform: translateX(-7px);
+      transition: transform 0.1s;
+    }
+
+    @media screen and (max-width: 1070px) {
+      width: 35px;
+      height: 35px;
+      background-size: contain;
+    }
+  }
+
+  &__img-container {
+    grid-row: 1 / 4;
+    display: flex;
+    align-items: center;
+
+    @media screen and (max-width: 1070px) {
+      grid-column: 1;
+      grid-row: 2 / 4;
+    }
+  }
+
+  &__img-one,
+  &__img-two {
+    background: url("../../../../assets/img/zaglushka.png") no-repeat center;
+    width: 87px;
+    height: 87px;
+    background-size: contain;
+  }
+
+  &__img-main {
+    background: url("../../../../assets/img/zaglushka.png") no-repeat center;
+    width: 680px;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    margin: 0 auto;
+
+    @media screen and (max-width: 1070px) {
+      width: 620px;
+      height: 620px;
+    }
+  }
+
+  &__summaru-item {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    width: 500px;
+    font: 2rem $Sitara;
+    padding-left: 20px;
+
+    @media screen and (max-width: 1070px) {
+      grid-column: 1;
+      grid-row: 1 / 2;
+      padding-left: 130px;
+    }
+  }
+
+  &__cart-container {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    display: flex;
+    align-items: center;
+    height: 60px;
+
+    @media screen and (max-width: 1070px) {
+      grid-column: 1;
+      grid-row: 4 / 5;
+    }
+  }
+  
+  &__specifications-container {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    @media screen and (max-width: 1070px) {
+      grid-column: 1;
+      grid-row: 5 / 6;
+    }
+  }
+}
+
+.img-container__slider {
+
+  @media screen and (max-width: 1070px) {
+    display: none;
+  }
+}
+
+.specifications {
+  &__title {
+    width: 95%;
+    font: 1.2rem $Sitara;
+    font-weight: 700;
+    border-bottom: 1px solid #D9D9D9;
+    padding-bottom: 10px;
+  }
+
+  &__name-content-container {
+    width: 95%;
+    height: 215px;
+    display: flex;
+    gap: 95px;
+    font: 1rem $Sitara;
+  }
+
+  &__content-container,
+  &__name-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__name-title {
+    font-weight: 700;
+  }
+}
+
+.button-add-cart {
+  width: 80%;
+  height: 60px;
+  border-radius: 4px;
+  background-color: $oliva;
+  border: none;
+  font: 1rem $Sitara;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.button-buy-now {
+  margin-top: 20px;
+  width: 100%;
+  height: 60px;
+  border-radius: 4px;
+  background-color: $oliva;
+  font: 1rem $Sitara;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.button-add-cart:hover,
+.button-buy-now:hover {
+  background-color: $olivaHover;
+  transition: all 0.3s;
+}
+
+.button-add-cart:active,
+.button-buy-now:active {
+  transform: scale(98%);
+  transition: all 0.3s;
+}

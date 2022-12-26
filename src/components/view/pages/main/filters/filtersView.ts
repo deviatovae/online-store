@@ -14,7 +14,7 @@ export class FiltersView extends View<FiltersDataType> {
      * @todo также объект должен содержать выбранные пользователем фильтры (из GET параметров)
      */
     public render(data: FiltersDataType): string {
-        console.log(data)
+        // console.log(data)
         // language=HTML
         return `
           <div class="filters" xmlns="http://www.w3.org/1999/html">

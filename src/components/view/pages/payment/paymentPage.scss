@@ -158,10 +158,12 @@
     font-size: 24px;
     font-weight: 500;
     height: 50px;
+    transition: all 0.3s;
 
     &:hover {
       cursor: pointer;
-      background-color: #a4b3a9;
+      background-color: $olivaHover;
+      transition: all 0.3s;
     }
   }
 

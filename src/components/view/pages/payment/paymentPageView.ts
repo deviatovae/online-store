@@ -55,7 +55,7 @@ export class PaymentPageView extends View<CartDataType> {
                   </div>
                   <div class="summary-content__total summary-total">
                     <div class="summary-total__name">Order Total</div>
-                    <div class="summary-total__amount">$${formatPrice(cartItems.orderTotal)}</div>
+                    <div class="summary-total__amount">$${formatPrice(cartItems.priceAfterDiscount)}</div>
                   </div>
                   <div class="summary-content__order-btn">Place order now</div>
                 </div>

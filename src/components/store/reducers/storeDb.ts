@@ -7,14 +7,13 @@ export function saveState(store: ToolkitStore) {
     })
 }
 
-export function loadState(name: string) {
+export function loadState<T>(name: string, defaultValue: T): T {
     const json = localStorage.getItem('store');
     if (json) {
         const storeData = JSON.parse(json);
-        if (storeData[name] === undefined) {
-            throw new Error(`Store ${name} is not found`)
+        if (storeData[name] !== undefined) {
+            return storeData[name]
         }
-        return storeData[name]
     }
-    return [];
+    return defaultValue;
 }

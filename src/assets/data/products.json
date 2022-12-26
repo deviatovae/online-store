@@ -347,7 +347,7 @@
   {
     "id": 24,
     "name": "Bead garland",
-    "price": 1,
+    "price": 4.55,
     "stock": 5,
     "collection": 2022,
     "color": "yellow",
@@ -865,8 +865,8 @@
     "favorite": false,
     "category": "Christmas decorations",
     "images": [
-      "/assets/img/products/lying-down-reindeer-grey-10-cm-polyresin(1).jpg",
-      "/assets/img/products/lying-down-reindeer-grey-10-cm-polyresin.jpg"
+      "/assets/img/products/lying-down-reindeer-grey-10-cm-polyresin.jpg",
+      "/assets/img/products/lying-down-reindeer-grey-10-cm-polyresin(1).jpg"
     ]
   },
   {

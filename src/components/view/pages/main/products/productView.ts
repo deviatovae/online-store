@@ -4,6 +4,9 @@ import {Product} from "../../../../types/product";
 import {Controller} from "../../../../controller/controller";
 import {View} from "../../../view";
 
+import {Router} from "../../../../router/router";
+
+
 /**
  * view отвечающий за формирование html для одного товара
  *   - используется в productListView
@@ -11,7 +14,7 @@ import {View} from "../../../view";
 export class ProductView extends View<Product> {
     render(product: Product): string {
         return `
-        <div class="product-item">
+        <div class="product-item" data-id="${product.id}">
           <div class="product-item__img" style="background-image: url('${product.images[0]}')"></div>
           <div class="product-item__text-wrapper">
             <div class="product-item__cart-text" data-id="${product.id}">Add to cart</div>
@@ -45,12 +48,25 @@ export class ProductView extends View<Product> {
     public afterRender(controller: Controller): void {
         super.afterRender(controller);
 
-        document.querySelectorAll('.product-item__cart-text')
+        document.querySelectorAll<HTMLElement>('.product-item__cart-text')
             .forEach((button: Element) => {
                 button.addEventListener('click', (event: Event) => {
-                    const button = event.target as HTMLElement
+                  event.stopPropagation()
+                    const button = event.currentTarget as HTMLElement
                     controller.addProductToCart(Number(button.dataset.id));
                 })
             })
+
+          document.querySelectorAll<HTMLElement>('.product-item')
+          .forEach((button: Element) => {
+              button.addEventListener('click', (event: Event) => {
+                Router.redirectTo('/product');
+              })
+          })    
+
+
+
     }
 }
+
+
