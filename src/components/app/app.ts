@@ -17,7 +17,9 @@ export class App {
     public start(): void {
         this.router.route('/', () => {
             this.pages.main()
-            return store.subscribe(() => this.pages.main())
+            return store.subscribe(() => {
+                this.pages.main()
+            })
         });
 
         this.router.route('/product/:id', (id: string) => {
@@ -31,13 +33,10 @@ export class App {
         });
 
         this.router.route('/payment', () => {
-            console.log(11111111)
             this.pages.payment()
-            console.log(22222222)
             const sub = store.subscribe(() => {
                 this.pages.payment()
             })
-            console.log(33333333)
 
             return sub;
         });
