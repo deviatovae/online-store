@@ -121,6 +121,7 @@
   &__cvv,
   &__date {
     width: 220px;
+    text-align: center;
   }
 }
 
@@ -185,21 +186,25 @@
 
 .bottom-item {
   display: flex;
+  align-items: center;
+  justify-content: center;
 
   &__quantity {
     font-weight: 600;
     margin-right: 30px;
   }
 
+  &__quantity-minus {
+    background: url('https://api.iconify.design/ph/minus-circle.svg?color=%239aab9f&width=20&height=20') no-repeat center center / contain;
+  }
+  &__quantity-plus {
+    background: url('https://api.iconify.design/ph/plus-circle.svg?color=%239aab9f&width=20&height=20') no-repeat center center / contain;
+  }
+
   &__quantity-minus,
   &__quantity-plus {
-    height: 18px;
-    width: 18px;
-    outline: solid 1px $greyBorder;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 10px 0 10px;
+    height: 24px;
+    width: 24px;
 
     &:hover {
       cursor: pointer;
@@ -211,6 +216,10 @@
     margin-left: auto;
     font-weight: 500;
     font-size: 16px;
+  }
+
+  &__count {
+    padding: 0 5px;
   }
 }
 
@@ -224,15 +233,12 @@
 .summary-discount {
   &__name,
   &__amount {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     font-weight: 700;
     font-size: 14px;
-  }
-
-  &__name {
     color: rgb(116, 116, 116);
-  }
-  &__amount {
-    color: $mainBlack;
   }
 }
 .summary-total {

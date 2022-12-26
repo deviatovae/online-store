@@ -4,10 +4,12 @@ import './paymentPage.scss'
 import {PaymentListView} from "./paymentListView";
 import {CartDataType} from "../../../types/cartDataType";
 import {formatPrice} from "../../helpers/helpers";
+import {AppliedPromocodeListView} from "../shoppingCart/appliedPromocodeListView";
+import cart from "../../../store/reducers/cart";
 
 export class PaymentPageView extends View<CartDataType> {
     protected views = {
-        paymentList: new PaymentListView()
+        paymentList: new PaymentListView(),
     };
 
     render(cartItems: CartDataType): string {
@@ -50,8 +52,10 @@ export class PaymentPageView extends View<CartDataType> {
                   <div class="summary-content__list summary-list">${this.views.paymentList.render(cartItems.items)}
                   </div>
                   <div class="summary-content__discount summary-discount">
-                    <div class="summary-discount__name">XMAS2023 -15% OFF</div>
-                    <div class="summary-discount__amount">$-7.20</div>
+                    <div class="summary-discount__name">
+                      ${cartItems.promocodes.applied.map(p => `<div>${p.name}  ${p.discount}% OFF</div>`).join('')}
+                    </div>
+                    <div class="summary-discount__amount">${cartItems.promocodes.applied.map(p => `<div>-$${formatPrice(cartItems.getPriceByPromocodes() - cartItems.getPriceByPromocodes([p]))}</div>`).join('')}</div>
                   </div>
                   <div class="summary-content__total summary-total">
                     <div class="summary-total__name">Order Total</div>
