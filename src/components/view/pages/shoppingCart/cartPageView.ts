@@ -50,7 +50,7 @@ export default class CartPageView extends View<CartDataType> {
             </div>
             <div class="shopping-promo">
               <input class="input-promo" type="text" maxlength="10" placeholder="  Enter promo code">
-              <button class="button-apply" disabled="disabled">Apply</button>
+              <button class="button-apply button" disabled="disabled">Apply</button>
               <div class="ptomo-test">Promo for test: 'RS', 'XMAS2023'</div>
             </div>
         </div>`;
