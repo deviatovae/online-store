@@ -56,7 +56,7 @@
 }
 
 .cart-item {
-  height: 236px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -72,11 +72,7 @@
   }
 
   &__img {
-    // background: url("../../../../assets/img/zaglushka.png") no-repeat center;
-    background-size: contain;
-    width: 157px;
     height: 158px;
-
   }
 
   &__info {

@@ -3,6 +3,7 @@ import {CartItemType} from "../../../types/cartItemType";
 import {formatPrice} from "../../helpers/helpers";
 import {Controller} from "../../../controller/controller";
 
+
 export class CartPageListView extends View<CartItemType[]>{
     protected views = {}
 
@@ -10,7 +11,7 @@ export class CartPageListView extends View<CartItemType[]>{
         return cartItems.map((cartItem) => {
             return `<div class="cart-item">
             <div class="cart-item__content">
-              <div class="cart-item__img" style="background-image: url('${cartItem.product.images[0]}')"></div>
+              <img class="cart-item__img" src="${cartItem.product.images[0]}" alt="product image">
               <div class="cart-item__info">
                 <div class="cart-item-info__name">${cartItem.product.name}</div>
                 <div class="cart-item-info__color">Color: ${cartItem.product.color}</div>

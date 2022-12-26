@@ -11,11 +11,12 @@ import {Router} from "../../../../router/router";
  * view отвечающий за формирование html для одного товара
  *   - используется в productListView
  */
+
 export class ProductView extends View<Product> {
     render(product: Product): string {
         return `
         <div class="product-item" data-id="${product.id}">
-          <div class="product-item__img" style="background-image: url('${product.images[0]}')"></div>
+          <img class="product-item__img" src="${product.images[0]}" alt="product image">
           <div class="product-item__text-wrapper">
             <div class="product-item__cart-text" data-id="${product.id}">Add to cart</div>
           </div>
@@ -28,6 +29,7 @@ export class ProductView extends View<Product> {
             <div class="item-info__colection">Colection: ${product.collection}</div>
             <div class="item-info__size">Size: ${product.size}cm</div>
             <div class="item-info__category">Category: ${product.category}</div>
+            <div class="item-info__in-stock">In stock: ${product.stock}</div>
           </div>
         </div>
     `
