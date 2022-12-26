@@ -20,19 +20,21 @@
   width: 500px;
 
   &__title {
-    font-size: 24px;
-    color: $mainBlack;
+    font-size: 20px;
+    color: rgb(116, 116, 116);
   }
 
   &__info {
     display: flex;
     flex-direction: column;
+    text-align: start;
   }
 
   &__name,
   &__shipping-address,
   &__email,
   &__phone-number {
+    text-align: start;
     height: 40px;
     padding: 10px;
     border: solid $greyBorder 1px;
@@ -64,8 +66,7 @@
     margin-right: 15px;
     color: rgb(116, 116, 116);
     letter-spacing: 1px;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 20px;
   }
   }
 
@@ -110,6 +111,7 @@
 .card-details__card-number,
 .bottom-row__date,
 .bottom-row__cvv {
+  text-align: start;
   padding: 10px;
   border: solid $greyBorder 1px;
   height: 40px;
@@ -133,12 +135,12 @@
 
 
   &__title {
-    font-size: 24px;
+    font-size: 20px;
     color: $oliva;
     text-align: center;
     padding-bottom: 10px;
     border-bottom: solid $greyBorder 1px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   &__list {
@@ -154,7 +156,7 @@
     background-color: $oliva;
     color: white;
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 500;
     height: 50px;
     transition: all 0.3s;
 
@@ -172,7 +174,7 @@
   border-bottom: solid $greyBorder 1px;
 
   &__top{
-    font-size: 16px;
+    font-size: 14px;
     font-family: $Sitara;
     font-weight: 400;
     width: 300px;
@@ -186,13 +188,29 @@
 
   &__quantity {
     font-weight: 600;
-    margin-right: 60px;
+    margin-right: 30px;
+  }
+
+  &__quantity-minus,
+  &__quantity-plus {
+    height: 18px;
+    width: 18px;
+    outline: solid 1px $greyBorder;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px 0 10px;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+    }
   }
 
   &__price {
     margin-left: auto;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 
@@ -207,7 +225,7 @@
   &__name,
   &__amount {
     font-weight: 700;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   &__name {
@@ -221,8 +239,8 @@
 
   &__name,
   &__amount {
-    font-size: 22px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 600;
   }
 
   &__amount {
