@@ -1,6 +1,7 @@
 import {ViewStorage} from "../view/viewStorage";
 import {Controller} from "../controller/controller";
 import {CartDataType} from "../types/cartDataType";
+import {Router} from "../router/router";
 
 /**
  * занимается отрисовкой конкретных страниц
@@ -51,6 +52,9 @@ export class Pages {
         this.controller.cart((cartData) => {
             this.getPageContainer().innerHTML = this.views.paymentPage.render(cartData)
             this.views.paymentPage.afterRender(this.controller);
+            if (!cartData.items.length) {
+                Router.redirectTo('/cart');
+            }
         })
     }
 
