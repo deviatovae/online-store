@@ -37,10 +37,10 @@ export class Pages {
         })
     }
 
-    public product(): void {
+    public product(id: string): void {
         this.init();
-        this.controller.cart((cartData) => {
-           this.getPageContainer().innerHTML = this.views.productPage.render(cartData)
+        this.controller.product(id, (product) => {
+           this.getPageContainer().innerHTML = this.views.productPage.render(product)
            this.views.productPage.afterRender(this.controller);
         })
     }

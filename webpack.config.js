@@ -42,6 +42,7 @@ module.exports = {
         filename: 'index.js',
         path: path.resolve(__dirname, './dist'),
         assetModuleFilename: 'assets/[hash][ext][query]',
+        publicPath: "/"
     },
     devServer: {
         port: 4200,

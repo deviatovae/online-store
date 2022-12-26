@@ -11,6 +11,7 @@ import {CartDataType, GetPriceByPromocodes} from "../types/cartDataType";
 import {MainPageDataType} from "../types/mainPageDataType";
 import {FilterCategoryType, FiltersDataType, MinMaxType} from "../types/filtersDataType";
 import promocode, {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/promocode";
+import {Router} from "../router/router";
 
 /**
  * контроллер получает, изменяет, фильтрует данные, которые потребуются для view
@@ -41,6 +42,14 @@ export class Controller {
             promocodes: store.getState().promocode,
         }
         callback(cartData);
+    }
+
+    public product(id: string, callback: CallbackFn<Product>) {
+        const product = products.find((p) => p.id === Number(id));
+        if (!product) {
+            return Router.redirectTo('/404');
+        }
+        callback(product)
     }
 
     /**

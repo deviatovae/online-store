@@ -58,14 +58,11 @@ export class ProductView extends View<Product> {
             })
 
           document.querySelectorAll<HTMLElement>('.product-item')
-          .forEach((button: Element) => {
+          .forEach((button: HTMLElement) => {
               button.addEventListener('click', (event: Event) => {
-                Router.redirectTo('/product');
+                Router.redirectTo('/product/' + button.dataset.id);
               })
-          })    
-
-
-
+          })
     }
 }
 
