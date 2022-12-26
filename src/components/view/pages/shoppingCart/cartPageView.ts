@@ -16,6 +16,12 @@ export default class CartPageView extends View<CartDataType> {
 
     render(cart: CartDataType): string {
         // language=HTML
+        if(!cart.items.length){
+            return `<div class="shopping-cart__empty">
+                      <div class="shopping-cart__empty-title">SHOPPING CART</div>
+                      <div class="shopping-cart__empty-subtitle">You have no items in your shopping cart.</div>
+                    </div>`
+        }
         return `
           <div class="shopping-cart wrapper">
             <div class="shopping-cart__header">SHOPPING CART</div>
