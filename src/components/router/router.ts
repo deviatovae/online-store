@@ -1,10 +1,8 @@
+import {Unsubscribe} from "@reduxjs/toolkit";
+
 export class Router {
     private routes: { [key: string]: Function; } = {};
-    private fallbackRoute: Function | null;
-
-    constructor() {
-        this.fallbackRoute = null;
-    }
+    private fallbackRoute: Function | null = null;
 
     public static redirectTo(url: string) {
         history.pushState({}, '', url);
@@ -14,7 +12,7 @@ export class Router {
     /**
      * обращается к объекту routes и в поле path присваивает коллбэк
      */
-    public route(path: string, view: Function): void {
+    public route(path: string, view: (...args: string[]) => Unsubscribe): void {
         this.routes[path] = view;
     }
 
@@ -29,6 +27,15 @@ export class Router {
         window.addEventListener('load', () => this.loadRoute());
         window.addEventListener('hashchange', () => this.loadRoute());
         window.addEventListener('popstate', () => this.loadRoute())
+    }
+
+    private call(callback: Function, args: string[] = []) {
+        const urlBeforeCall = window.location.pathname
+        const unsubscribe = callback(...args);
+        const urlAfterCall = window.location.pathname
+        if (urlBeforeCall !== urlAfterCall) {
+            unsubscribe();
+        }
     }
 
     /**
@@ -52,16 +59,15 @@ export class Router {
             });
 
             if (isMatch) {
-                return this.routes[route](...args);
+                return this.call(this.routes[route], args);
             }
         }
 
         if (this.fallbackRoute) {
-            this.fallbackRoute();
+            this.call(this.fallbackRoute);
             return;
         }
 
-        throw new Error(`Page "${url}" not found`);
+        throw new Error(`Page "${window.location.pathname}" not found`);
     }
-    ;
 }
