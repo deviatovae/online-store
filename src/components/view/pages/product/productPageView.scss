@@ -26,16 +26,7 @@
     top: 40px;
 
     &:hover {
-      animation: 0.8s ease-in-out 0s normal none infinite running arrow;
-    }
-
-    @keyframes arrow {
-      0%, 50%, 100% {
-          transform: translateX(0px);
-      }
-      50% {
-          transform: translateX(-7px)
-      }
+      animation: 0.7s ease-in-out 0s normal none infinite running arrow-animation;
     }
 
     @media screen and (max-width: 1070px) {
@@ -203,3 +194,8 @@
   transform: scale(98%);
   transition: all 0.3s;
 }
+
+.shake-product {
+  animation: 1s ease-in-out 0s normal none infinite running shake-animation-product;
+}
+

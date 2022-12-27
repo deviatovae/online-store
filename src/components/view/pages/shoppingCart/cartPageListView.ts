@@ -2,6 +2,7 @@ import {View} from "../../view";
 import {CartItemType} from "../../../types/cartItemType";
 import {formatPrice} from "../../helpers/helpers";
 import {Controller} from "../../../controller/controller";
+import {Router} from "../../../router/router";
 
 
 export class CartPageListView extends View<CartItemType[]>{
@@ -11,7 +12,7 @@ export class CartPageListView extends View<CartItemType[]>{
         return cartItems.map((cartItem) => {
             return `<div class="cart-item">
             <div class="cart-item__content">
-              <img class="cart-item__img" src="${cartItem.product.images[0]}" alt="product image">
+              <img class="cart-item__img" data-id="${cartItem.product.id}" src="${cartItem.product.images[0]}" alt="product image">
               <div class="cart-item__info">
                 <div class="cart-item-info__name">${cartItem.product.name}</div>
                 <div class="cart-item-info__color">Color: ${cartItem.product.color}</div>
@@ -41,7 +42,6 @@ export class CartPageListView extends View<CartItemType[]>{
 
     afterRender(controller: Controller) {
       super.afterRender(controller);
-      let isResizebleClick = false;
 
         document.querySelectorAll<HTMLElement>('.arrow-up').forEach((button: Element) => {
           button.addEventListener('click', (event: Event) => {
@@ -51,15 +51,12 @@ export class CartPageListView extends View<CartItemType[]>{
                 // трести in stock если стрелкой вверх внесено большее количество чем есть
                 document.querySelectorAll<HTMLInputElement>(".quantity-input").forEach((input) => {
                   if (Number(input.value) === (Number(button.dataset.stock))) {
-                    if(!isResizebleClick) {
                       document.querySelectorAll<HTMLElement>(".cart-item-info__instock").forEach((stock: HTMLElement) => {
                         if (Number(button.dataset.id) === Number(stock.dataset.id)) {
-                          stock.classList.add("shake");
-                          setTimeout(() => stock.classList.remove("shake"), 3000);
+                          stock.classList.add("shake-cart");
+                          setTimeout(() => stock.classList.remove("shake-cart"), 3000);
                         }
-                      isResizebleClick = true;
                     })
-                   }
                   }
                })
             })
@@ -82,22 +79,18 @@ export class CartPageListView extends View<CartItemType[]>{
         document.querySelectorAll<HTMLElement>('.quantity-input').forEach((input: HTMLElement) => {
           
           input.addEventListener('input', (event: Event) => {
-            let isResizebleInput = false;
             const input = event.currentTarget as HTMLInputElement
-
             // верификация по in ctock
             if (Number(input.value) > (Number(input.dataset.stock))) {
               input.value = String(input.dataset.stock);
 
               // трести in stock если импутом внесено большее количество чем есть
-              if(!isResizebleInput) {
-                document.querySelectorAll<HTMLElement>(".cart-item-info__instock").forEach((stock: HTMLElement) => {
-                  if (Number(input.dataset.id) == Number(stock.dataset.id)) {
-                    stock.classList.add("shake");
-                    setTimeout(() => stock.classList.remove("shake"), 3000);
-                  }
-                isResizebleInput = true;
-              })}
+              document.querySelectorAll<HTMLElement>(".cart-item-info__instock").forEach((stock: HTMLElement) => {
+                if (Number(input.dataset.id) === Number(stock.dataset.id)) {
+                  stock.classList.add("shake-cart");
+                  setTimeout(() => stock.classList.remove("shake-cart"), 3000);
+                }
+              })
             }
 
             // верификация отрицательных чисел
@@ -112,18 +105,23 @@ export class CartPageListView extends View<CartItemType[]>{
           })
 
           input.addEventListener('change', (event: Event) => {
-            const input = event.currentTarget as HTMLInputElement;
+            const input = event.currentTarget as HTMLInputElement
+
+            // Добавление в корзину любого количества принятого из инпут
+            controller.addProductToCartValueInput(Number(input.dataset.id), Number(input.value));
 
             // удалить товар если в инпут внести 0
             if (Number(input.value) === 0 ) {
               controller.removeProductFromCartAll(Number(input.dataset.id));
             }
-
-            controller.addProductToCartValueInput(Number(input.dataset.id), Number(input.value));
           })
         });
 
+        const cartImg = document.querySelector('.cart-item__img') as HTMLElement;
 
+        cartImg.addEventListener('click', (event: Event) => {
+          Router.redirectTo('/product/' + cartImg.dataset.id);
+        })
 
   }
 }
