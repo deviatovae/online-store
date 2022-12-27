@@ -34,7 +34,7 @@ export default class ProductPageView extends View<ProductPageType> {
                 <div class="product-page__cart-container">
                   <div class="cart-item__qty">
                     <div class="cart-item-qty__value-container">
-                      <input class="cart-item-qty__value-container quantity-input" type="number" value="1">
+                      <input class="cart-item-qty__value-container quantity-input" data-stock="${product.stock}" type="number" value="1">
                     </div>
                     <div class="cart-item-qty__arrow-container arrow-up">
                       <div class="cart-item-qty__arrow-up"></div>
@@ -43,7 +43,7 @@ export default class ProductPageView extends View<ProductPageType> {
                       <div class="cart-item-qty__arrow-down"></div>
                     </div>
                   </div>
-                  <button class="button-add-cart button">ADD TO CART</button>
+                  <button class="button-add-cart button" data-id="${product.id}">ADD TO CART</button>
                 </div>
                 
                   <div class="product-page__specifications-container">
@@ -56,7 +56,7 @@ export default class ProductPageView extends View<ProductPageType> {
                         <div class="specifications__name-title">Price</div>
                         <div class="specifications__name-title">Size</div>
                         <div class="specifications__name-title">Category</div>
-                        <div class="specifications__name-title">In stock</div>
+                        <div class="specifications__name-title in-stock">In stock</div>
                       </div>
                       <div class="specifications__content-container">
                         <div class="specifications__item specifications-item-number">${product.id + 500}</div>
@@ -65,7 +65,7 @@ export default class ProductPageView extends View<ProductPageType> {
                         <div class="specifications__item specifications-price">${product.price}</div>
                         <div class="specifications__item specifications-size">${product.size} cm</div>
                         <div class="specifications__item specifications-category">${product.category}</div>
-                        <div class="specifications__item specifications-In-stock">${product.stock}</div>
+                        <div class="specifications__item specifications-in-stock">${product.stock}</div>
                        </div>
                       </div>
                   <button class="button-buy-now button">BUY NOW</button>
@@ -85,12 +85,6 @@ export default class ProductPageView extends View<ProductPageType> {
             arrowBack.onclick = () => Router.redirectTo('/');
         }
 
-        const buttonAdd = document.querySelector('.button-add-cart') as HTMLElement;
-        buttonAdd.addEventListener('click', (event: Event) => {
-            const button = event.currentTarget as HTMLElement
-            controller.addProductToCart(Number(button.dataset.id));
-        })
-
         // смена картинок
         const buttonImg0 = document.querySelector('.product-page__img-0') as HTMLImageElement;
         const buttonImg1 = document.querySelector('.product-page__img-1') as HTMLImageElement;
@@ -106,6 +100,65 @@ export default class ProductPageView extends View<ProductPageType> {
             buttonMain.src = buttonImg0.src;
             buttonImg1.style.borderBottom = "2px solid #D9D9D9";
             buttonImg0.style.borderBottom = "2px solid #8B9D93"
+        })
+
+        // Добавление в корзину
+        const buttonAdd = document.querySelector('.button-add-cart') as HTMLElement;
+        const arrowUp = document.querySelector('.arrow-up') as HTMLElement
+        const arrowDown = document.querySelector('.arrow-down') as HTMLElement
+        const quantityInput = document.querySelector('.quantity-input') as HTMLInputElement
+        const stock = document.querySelector('.in-stock') as HTMLElement
+        const stockItem = document.querySelector('.specifications-in-stock') as HTMLElement
+
+        quantityInput.addEventListener('input', (event: Event) => {
+          const input = event.currentTarget as HTMLInputElement;
+           // верификация отрицательных чисел
+          if (Number(input.value) < 0) {
+            input.value = "1";
+          }
+          // верификация по целым числам
+          if (Number(input.value) % 1 !== 0) {
+            input.value = String(Math.round(Number(input.value)));
+          }
+          // верификация по in ctock + трести in ctock
+          if (Number(quantityInput.value) > Number(quantityInput.dataset.stock)) {
+            quantityInput.value = String(quantityInput.dataset.stock);
+            stock.classList.add("shake-product");
+            stockItem.classList.add("shake-product");
+            setTimeout(() => stock.classList.remove("shake-product"), 3000);
+            setTimeout(() => stockItem.classList.remove("shake-product"), 3000);
+          }
+        })
+
+        arrowUp.addEventListener('click', (event: Event) => {
+          quantityInput.value = String(Number(quantityInput.value) + 1);
+          // верификация по in ctock
+          if (Number(quantityInput.value) > Number(quantityInput.dataset.stock)) {
+            quantityInput.value = String(quantityInput.dataset.stock);
+          }
+          // трести in stock если импутом внесено большее количество чем есть
+          if (Number(quantityInput.value) == Number(quantityInput.dataset.stock)) {
+            stock.classList.add("shake-product");
+            stockItem.classList.add("shake-product");
+            setTimeout(() => stock.classList.remove("shake-product"), 3000);
+            setTimeout(() => stockItem.classList.remove("shake-product"), 3000);
+          }
+        })
+
+        arrowDown.addEventListener('click', (event: Event) => {
+          if (quantityInput.value > '1') {
+            quantityInput.value = String(Number(quantityInput.value) - 1);
+          }
+        })
+
+        buttonAdd.addEventListener('click', (event: Event) => {
+          controller.addProductToCartValueInput(Number(buttonAdd.dataset.id), Number(quantityInput.value));
+        })
+
+        const buttonBuy = document.querySelector('.button-buy-now') as HTMLElement;
+
+        buttonBuy.addEventListener('click', (event: Event) => {
+          Router.redirectTo('/payment');
         })
 
     }

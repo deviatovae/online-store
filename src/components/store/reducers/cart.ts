@@ -24,7 +24,6 @@ export const slice = createSlice({
       if (product.stock > item.quantity) {
         item.quantity += 1;
       }
-
       return state;
     },
 
@@ -33,8 +32,11 @@ export const slice = createSlice({
      */
     addProductToCartValueInput: (state, { payload: cartItem }: PayloadAction<CartItemType>): CartItemType[] => {
       const item = state.find((item) => item.product.id === cartItem.product.id);
-      if (!item) return state;
-      item.quantity = cartItem.quantity;
+      if (!item) {
+        return [...state, { product: cartItem.product, quantity: cartItem.quantity }];
+      }
+        item.quantity = cartItem.quantity;
+
       return state;
     },
 

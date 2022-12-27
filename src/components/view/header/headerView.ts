@@ -15,6 +15,10 @@ export class HeaderView extends View<CartDataType> {
         // language=HTML
         return `
           <header class="header">
+          <div class="snow-blocks">
+            <div class="snow1"></div>
+            <div class="snow2"></div>
+          </div>
             <div class="header__container wrapper">
               <a class="header-link" href="#">
                   <span class="header-logo">

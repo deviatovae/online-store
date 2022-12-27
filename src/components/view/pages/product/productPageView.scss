@@ -16,7 +16,7 @@
   }
 
   &__arrow-back {
-    background: url("../../../../assets/img/arow_back_product.svg") no-repeat center;
+    background: url("https://api.iconify.design/ic/outline-arrow-back.svg?color=%239aab9f&width=60&height=60") no-repeat center;
     width: 70px;
     height: 70px;
     transition: transform 0.1s;
@@ -26,16 +26,7 @@
     top: 40px;
 
     &:hover {
-      animation: 0.8s ease-in-out 0s normal none infinite running arrow;
-    }
-
-    @keyframes arrow {
-      0%, 50%, 100% {
-          transform: translateX(0px);
-      }
-      50% {
-          transform: translateX(-7px)
-      }
+      animation: 0.7s ease-in-out 0s normal none infinite running arrow-animation;
     }
 
     @media screen and (max-width: 1070px) {
@@ -203,3 +194,8 @@
   transform: scale(98%);
   transition: all 0.3s;
 }
+
+.shake-product {
+  animation: 1s ease-in-out 0s normal none infinite running shake-animation-product;
+}
+
