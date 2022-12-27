@@ -1,4 +1,4 @@
-import './headerCartView.scss';
+import './headerView.scss';
 import {View} from "../view";
 import {Controller} from "../../controller/controller";
 import {Router} from "../../router/router";
@@ -10,15 +10,28 @@ import {CartDataType} from "../../types/cartDataType";
  * принимает список продуктов (временно, лучше принимать уже готовый объект с полями count, и price (sum))
  * возвращает готовый html инонки корзины
  */
-export class HeaderCartView extends View<CartDataType> {
+export class HeaderView extends View<CartDataType> {
     public render(cart: CartDataType): string {
-        return `<div class="header-cart">
-          <div class="header-cart__img"></div>
-          <div class="header-cart__amount-container">
-            <p class="header-cart__amount">${cart.productCount}</p>
-          </div>
-          <div class="header-cart__num">$${cart.priceAfterDiscount.toFixed(2)}</div>
-        </div>`
+        // language=HTML
+        return `
+          <header class="header">
+            <div class="header__container wrapper">
+              <a class="header-link" href="#">
+                  <span class="header-logo">
+                    <span class="header-logo__title">Christmas</span>
+                    <span class="header-logo__img"></span>
+                    <span class="header-logo__subtitle">Decorations</span>
+                  </span>
+              </a>
+              <div class="header-cart">
+                <div class="header-cart__img"></div>
+                <div class="header-cart__amount-container">
+                  <p class="header-cart__amount">${cart.productCount}</p>
+                </div>
+                <div class="header-cart__num">$${cart.priceAfterDiscount.toFixed(2)}</div>
+              </div>
+            </div>
+          </header>`
     }
 
     public afterRender(controller: Controller) {

@@ -12,6 +12,7 @@ import {MainPageDataType} from "../types/mainPageDataType";
 import {FilterCategoryType, FiltersDataType, MinMaxType} from "../types/filtersDataType";
 import promocode, {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/promocode";
 import {Router} from "../router/router";
+import {ProductPageType} from "../types/productPageType";
 
 /**
  * контроллер получает, изменяет, фильтрует данные, которые потребуются для view
@@ -44,12 +45,21 @@ export class Controller {
         callback(cartData);
     }
 
-    public product(id: string, callback: CallbackFn<Product>) {
+    public product(id: string, callback: CallbackFn<ProductPageType>) {
         const product = products.find((p) => p.id === Number(id));
         if (!product) {
             return Router.redirectTo('/404');
         }
-        callback(product)
+
+        let cart: CartDataType|null = null;
+        this.cart((cartData) => {
+            cart = cartData;
+        })
+
+        callback({
+            cart: cart!,
+            product: product,
+        })
     }
 
     /**
@@ -78,10 +88,17 @@ export class Controller {
             stock: products.reduce((minMax, product) => getMinMax(minMax, product.stock), {min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER}),
         }
 
+        let cart: CartDataType|null = null;
+        this.cart((cartData) => {
+            cart = cartData;
+        })
+
         const data: MainPageDataType = {
             products: products,
-            filters: filters
+            filters: filters,
+            cart: cart!,
         }
+
         callback(data);
     }
 

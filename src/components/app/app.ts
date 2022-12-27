@@ -17,27 +17,27 @@ export class App {
     public start(): void {
         this.router.route('/', () => {
             this.pages.main()
-            store.subscribe(() => this.pages.main())
+            return store.subscribe(() => this.pages.main())
         });
 
         this.router.route('/product/:id', (id: string) => {
             this.pages.product(id)
-            store.subscribe(() => this.pages.product(id))
+            return store.subscribe(() => this.pages.product(id))
         });
 
         this.router.route('/cart', () => {
             this.pages.cart()
-            store.subscribe(() => this.pages.cart())
+            return store.subscribe(() => this.pages.cart())
         });
 
         this.router.route('/payment', () => {
             this.pages.payment()
-            store.subscribe(() => this.pages.payment())
+            return store.subscribe(() => this.pages.payment())
         });
 
         this.router.fallback(() => {
             this.pages.notFound()
-            store.subscribe(() => this.pages.notFound())
+            return store.subscribe(() => this.pages.notFound())
         });
 
         this.router.start();

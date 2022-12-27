@@ -1,6 +1,6 @@
 import {ViewStorage} from "../view/viewStorage";
 import {Controller} from "../controller/controller";
-import {CartDataType} from "../types/cartDataType";
+import {Router} from "../router/router";
 
 /**
  * занимается отрисовкой конкретных страниц
@@ -8,6 +8,7 @@ import {CartDataType} from "../types/cartDataType";
 export class Pages {
     private controller: Controller;
     private views: ViewStorage;
+    private container = document.querySelector('#app') as HTMLElement;
 
     constructor() {
         this.controller = new Controller();
@@ -21,61 +22,37 @@ export class Pages {
      * после чего вызываем afterRender, чтобы сооьщить, что в DOM добавились элементы
      */
     public main(): void {
-        this.init();
-
         this.controller.catalog((data) => {
-            this.getPageContainer().innerHTML = this.views.mainPage.render(data)
+            this.container.innerHTML = this.views.mainPage.render(data)
             this.views.mainPage.afterRender(this.controller);
         })
     }
 
     public cart(): void {
-        this.init();
         this.controller.cart((cartData) => {
-           this.getPageContainer().innerHTML = this.views.cartPage.render(cartData)
-           this.views.cartPage.afterRender(this.controller);
+            this.container.innerHTML = this.views.cartPage.render(cartData)
+            this.views.cartPage.afterRender(this.controller);
         })
     }
 
     public product(id: string): void {
-        this.init();
         this.controller.product(id, (product) => {
-           this.getPageContainer().innerHTML = this.views.productPage.render(product)
-           this.views.productPage.afterRender(this.controller);
+            this.container.innerHTML = this.views.productPage.render(product)
+            this.views.productPage.afterRender(this.controller);
         })
     }
 
     public payment(): void {
-        this.init();
-
         this.controller.cart((cartData) => {
-            this.getPageContainer().innerHTML = this.views.paymentPage.render(cartData)
+            this.container.innerHTML = this.views.paymentPage.render(cartData)
             this.views.paymentPage.afterRender(this.controller);
-        })
-    }
-
-    public notFound(): void {
-        this.init();
-
-        this.getPageContainer().innerHTML = this.views.notFoundPage.render();
-    }
-
-    private init() {
-        this.controller.cart((cartData: CartDataType) => {
-            const cartContainer = document.querySelector('#header-cart');
-            if (cartContainer) {
-                cartContainer.innerHTML = this.views.cartHeader.render(cartData);
-                this.views.cartHeader.afterRender(this.controller)
+            if (!cartData.items.length) {
+                Router.redirectTo('/cart');
             }
         })
     }
 
-    private getPageContainer(): HTMLElement {
-        const container = document.querySelector('main');
-        if (!container) {
-            throw new Error('main tag not found');
-        }
-
-        return container;
+    public notFound(): void {
+        this.container.innerHTML = this.views.notFoundPage.render();
     }
 }
