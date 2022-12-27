@@ -38,7 +38,7 @@ export default class ProductPageView extends View<Product> {
                   <div class="cart-item-qty__arrow-down"></div>
                 </div>
               </div>
-              <button class="button-add-cart button">ADD TO CART</button>
+              <button class="button-add-cart button" data-id="${product.id}">ADD TO CART</button>
             </div>
             
               <div class="product-page__specifications-container">
@@ -100,6 +100,17 @@ export default class ProductPageView extends View<Product> {
             buttonImg1.style.borderBottom = "2px solid #D9D9D9";
             buttonImg0.style.borderBottom = "2px solid #8B9D93"
           })
+
+
+          const buttonAddCart = document.querySelector('.button-add-cart') as HTMLElement;
+          buttonAddCart.addEventListener('click', (event: Event) => {
+            controller.addProductToCart(Number(buttonAddCart.dataset.id));
+          })
+
+
+
+
+
 
       }
   }

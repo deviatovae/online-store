@@ -49,10 +49,10 @@ export class CartPageListView extends View<CartItemType[]>{
               controller.addProductToCart(Number(button.dataset.id));
 
                 // трести in stock если стрелкой вверх внесено большее количество чем есть
-                document.querySelectorAll<HTMLElement>(".quantity-input").forEach((input: any) => {
+                document.querySelectorAll<HTMLInputElement>(".quantity-input").forEach((input) => {
                   if (Number(input.value) === (Number(button.dataset.stock))) {
                     if(!isResizebleClick) {
-                      const stock = document.querySelectorAll<HTMLElement>(".cart-item-info__instock").forEach((stock: HTMLElement) => {
+                      document.querySelectorAll<HTMLElement>(".cart-item-info__instock").forEach((stock: HTMLElement) => {
                         if (Number(button.dataset.id) === Number(stock.dataset.id)) {
                           stock.classList.add("shake");
                           setTimeout(() => stock.classList.remove("shake"), 3000);
