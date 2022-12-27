@@ -3,6 +3,7 @@ import {View} from "../../../view";
 import {Controller} from "../../../../controller/controller";
 import noUiSlider from 'nouislider';
 import {FiltersDataType} from "../../../../types/filtersDataType";
+import {Router} from "../../../../router/router";
 
 /**
  * view отвечающий за отрисовку фильтров каталога
@@ -21,8 +22,11 @@ export class FiltersView extends View<FiltersDataType> {
               <div class="filters-item__title">Color</div>
               <div class="filters-item__content item-content">
                 <div class="item-content__colors colors">
-                  <div class="colors__color is-multi"></div>
-                  ${data.colors.map((color) => `<div class="colors__color is-${color}"></div>`).join('')}
+                  ${data.colors?.map((color) => {
+                    const selectedClass = data.selected.colors?.includes(color) ? 'is-selected' : ''
+                    return `<div class="colors__color is-${color} ${selectedClass}" data-color="${color}">
+                       </div>`
+                  }).join('')}
                 </div>
               </div>
             </div>
@@ -30,7 +34,10 @@ export class FiltersView extends View<FiltersDataType> {
               <div class="filters-item__title">Collection</div>
               <div class="filters-item__content item-content">
                 <div class="item-content__collection collection">
-                  ${data.collections.map((collection) => `<div class="collection__year">${collection}</div>`).join('')}
+                  ${data.collections?.map((collection) => {
+                    const selectedClass = data.selected.collections?.includes(collection) ? 'is-selected' : '';
+                    return `<div class="collection__year ${selectedClass}" data-collection="${collection}">${collection}</div>`;
+                  }).join('')}
                 </div>
               </div>
             </div>
@@ -39,16 +46,16 @@ export class FiltersView extends View<FiltersDataType> {
               <div class="filters-item__content item-content">
                 <div class="item-content__price price">
                   <div>
-                    <input type="text" class="box-start" value="${data.price.min}">
+                    <input type="text" class="box-start" value="${data.price?.min}">
                     <span class="price__dollar_start">$</span>
                   </div>
                   <div>
-                    <input type="text" class="box-end" value="${data.price.max}">
+                    <input type="text" class="box-end" value="${data.price?.max}">
                     <span class="price__dollar_end">$</span>
                   </div>
                 </div>
                 <div class="item-content__dual-range dual-range">
-                  <div class="slider" data-min="${data.price.min}" data-max="${data.price.max}"></div>
+                  <div class="slider" data-min="${data.price?.min}" data-max="${data.price?.max}"></div>
                 </div>
               </div>
             </div>
@@ -56,24 +63,25 @@ export class FiltersView extends View<FiltersDataType> {
               <div class="filters-item__title">Size</div>
               <div class="filters-item__content item-content">
                 <div class="item-content__size size">
-                  <input type="text" class="box-start" placeholder="${data.size.min}cm">
-                  <input type="text" class="box-end" placeholder="${data.size.max}cm">
+                  <input type="text" class="box-start" placeholder="${data.size?.min}cm">
+                  <input type="text" class="box-end" placeholder="${data.size?.max}cm">
                 </div>
                 <div class="item-content__dual-range dual-range">
-                  <div class="slider" data-min="${data.size.min}" data-max="${data.size.max}"></div>
+                  <div class="slider" data-min="${data.size?.min}" data-max="${data.size?.max}"></div>
                 </div>
               </div>
             </div>
             <div class="filters__item filters-item">
               <div class="filters-item__title">Category</div>
               <div class="filters-item__content item-content">
-                ${data.categories.map((item) => {
+                ${data.categories?.map((item) => {
                   const id = item.category.toLowerCase().replace(' ', '-')
+                  const checked = data.selected.categories?.some(c => c.category === item.category) ? 'checked="checked"' : '';
                   // language=HTML
                   return `<div class="item-content__category category">
                       <label for="${id}" class="category__label">${item.category}</label>
                       <div class="category__count">(${item.products})</div>
-                      <input id="${id}" type="checkbox" class="category__checkbox" value="">
+                      <input id="${id}" type="checkbox" class="category__checkbox" data-categories="${item.category}" ${checked}>
                   </div>`
                 }).join('')}
               </div>
@@ -82,11 +90,11 @@ export class FiltersView extends View<FiltersDataType> {
               <div class="filters-item__title">In stock</div>
               <div class="filters-item__content item-content">
                 <div class="item-content__stock stock">
-                  <input type="text" class="box-start" placeholder="${data.stock.min}">
-                  <input type="text" class="box-end" placeholder="${data.stock.max}">
+                  <input type="text" class="box-start" placeholder="${data.stock?.min}">
+                  <input type="text" class="box-end" placeholder="${data.stock?.max}">
                 </div>
                 <div class="item-content__dual-range dual-range">
-                  <div class="slider" data-min="${data.stock.min}" data-max="${data.stock.max}"></div>
+                  <div class="slider" data-min="${data.stock?.min}" data-max="${data.stock?.max}"></div>
                 </div>
               </div>
             </div>
@@ -111,6 +119,36 @@ export class FiltersView extends View<FiltersDataType> {
         if (stockFilter) {
             this.initializeSlider(stockFilter);
         }
+
+        const colors = document.querySelectorAll<HTMLElement>('.colors__color')
+        colors.forEach(c => c.addEventListener('click', () => {
+            if (c.classList.contains('is-selected')) {
+                Router.removeUrlParam('colors', c.dataset.color || '');
+            } else {
+                Router.addUrlParamValue('colors', c.dataset.color || '');
+            }
+        }))
+
+        const collections = document.querySelectorAll<HTMLElement>('.collection__year')
+        collections.forEach(c => c.addEventListener('click', () => {
+            if (c.classList.contains('is-selected')) {
+                Router.removeUrlParam('collections', c.dataset.collection || '');
+            } else {
+                Router.addUrlParamValue('collections', c.dataset.collection || '');
+            }
+        }))
+
+        const categories = document.querySelectorAll<HTMLInputElement>('.category__checkbox')
+        categories.forEach(c => c.addEventListener('change', () => {
+            if (!c.checked) {
+                Router.removeUrlParam('categories', c.dataset.categories || '');
+            } else {
+                Router.addUrlParamValue('categories', c.dataset.categories || '');
+            }
+            console.log(c.dataset.category)
+        }))
+
+
     }
 
     private initializeSlider(container: HTMLElement, maxDecimals: number = 0) {

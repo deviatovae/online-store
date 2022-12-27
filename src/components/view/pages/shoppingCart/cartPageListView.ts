@@ -80,7 +80,7 @@ export class CartPageListView extends View<CartItemType[]>{
         });
 
         document.querySelectorAll<HTMLElement>('.quantity-input').forEach((input: HTMLElement) => {
-          
+
           input.addEventListener('input', (event: Event) => {
             let isResizebleInput = false;
             const input = event.currentTarget as HTMLInputElement
@@ -122,9 +122,6 @@ export class CartPageListView extends View<CartItemType[]>{
             controller.addProductToCartValueInput(Number(input.dataset.id), Number(input.value));
           })
         });
-
-
-
   }
 }
 
