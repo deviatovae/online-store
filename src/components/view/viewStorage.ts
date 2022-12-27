@@ -1,4 +1,4 @@
-import {HeaderCartView} from "./cartHeader/headerCartView";
+import {HeaderView} from "./header/headerView";
 import {MainPageView} from "./pages/main/mainPageView";
 import {NotFoundPageView} from "./pages/notFound/notFoundPageView";
 import CartPageView from "./pages/shoppingCart/cartPageView";
@@ -11,7 +11,7 @@ import ProductPageView from "./pages/product/productPageView";
  */
 export class ViewStorage {
 
-    public readonly cartHeader = new HeaderCartView();
+    public readonly cartHeader = new HeaderView();
     public readonly mainPage = new MainPageView();
     public readonly notFoundPage = new NotFoundPageView();
     public readonly cartPage = new CartPageView();

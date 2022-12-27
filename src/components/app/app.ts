@@ -31,15 +31,8 @@ export class App {
         });
 
         this.router.route('/payment', () => {
-            console.log(11111111)
             this.pages.payment()
-            console.log(22222222)
-            const sub = store.subscribe(() => {
-                this.pages.payment()
-            })
-            console.log(33333333)
-
-            return sub;
+            return store.subscribe(() => this.pages.payment())
         });
 
         this.router.fallback(() => {
