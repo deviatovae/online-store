@@ -6,6 +6,44 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 70px 100px;
+    gap: 40px 40px;
+    position: relative;
   }
+}
+
+.view-switching {
+  position: absolute;
+  right: -50px;
+  top: 00px;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+
+
+  &__string {
+    background: url("../../../../../assets/img/view_switching_string.svg") no-repeat center;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+
+    &:hover {
+
+    }
+  }
+
+  &__block {
+    background: url("../../../../../assets/img/view_switching_block.svg") no-repeat center;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+
+    &:hover {
+
+    }
+  }
+}
+
+.switching-active {
+  filter: invert(100%);
 }
