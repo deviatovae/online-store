@@ -152,7 +152,7 @@ export default class ProductPageView extends View<ProductPageType> {
         })
 
         buttonAdd.addEventListener('click', (event: Event) => {
-          controller.addProductToCartValueInput(Number(buttonAdd.dataset.id), Number(quantityInput.value));
+          controller.addProductToCart(Number(buttonAdd.dataset.id), Number(quantityInput.value));
         })
 
         const buttonBuy = document.querySelector('.button-buy-now') as HTMLElement;
@@ -160,6 +160,5 @@ export default class ProductPageView extends View<ProductPageType> {
         buttonBuy.addEventListener('click', (event: Event) => {
           Router.redirectTo('/payment');
         })
-
     }
 }

@@ -77,7 +77,7 @@ export class CartPageListView extends View<CartItemType[]>{
         });
 
         document.querySelectorAll<HTMLElement>('.quantity-input').forEach((input: HTMLElement) => {
-          
+
           input.addEventListener('input', (event: Event) => {
             const input = event.currentTarget as HTMLInputElement
             // верификация по in ctock
@@ -108,7 +108,7 @@ export class CartPageListView extends View<CartItemType[]>{
             const input = event.currentTarget as HTMLInputElement
 
             // Добавление в корзину любого количества принятого из инпут
-            controller.addProductToCartValueInput(Number(input.dataset.id), Number(input.value));
+            controller.setProductQuantityInCart(Number(input.dataset.id), Number(input.value));
 
             // удалить товар если в инпут внести 0
             if (Number(input.value) === 0 ) {

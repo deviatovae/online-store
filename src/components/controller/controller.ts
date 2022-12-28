@@ -4,7 +4,7 @@ import store from "../store/store";
 import {addProductToCart} from "../store/reducers/cart";
 import {removeProductFromCart} from "../store/reducers/cart";
 import {removeProductFromCartAll} from "../store/reducers/cart";
-import {addProductToCartValueInput} from "../store/reducers/cart";
+import {setProductQuantityInCart} from "../store/reducers/cart";
 
 import products from '../../assets/data/products.json'
 import {CartDataType, GetPriceByPromocodes} from "../types/cartDataType";
@@ -105,19 +105,19 @@ export class Controller {
     /**
      * добавление продукта в корзину по идентификатору
      */
-    addProductToCart(id: number) {
+    addProductToCart(id: number, quantity: number = 1) {
         const product = products.find((product: Product) => product.id === id)
         if (product) {
-            store.dispatch(addProductToCart(product))
+            store.dispatch(addProductToCart({product: product, quantity: quantity}))
         }
     }
     /**
      * добавление количества продукта из инпут по идентификатору
      */
-    addProductToCartValueInput(id: number, value: number) {
+    setProductQuantityInCart(id: number, value: number) {
         const product = products.find((product: Product) => product.id === id)
         if (product) {
-            store.dispatch(addProductToCartValueInput({product: product, quantity: value}))
+            store.dispatch(setProductQuantityInCart({product: product, quantity: value}))
         }
     }
 
