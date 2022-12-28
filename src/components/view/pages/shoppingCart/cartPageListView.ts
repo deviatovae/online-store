@@ -117,12 +117,12 @@ export class CartPageListView extends View<CartItemType[]>{
           })
         });
 
-        const cartImg = document.querySelector('.cart-item__img') as HTMLElement;
-
-        cartImg.addEventListener('click', (event: Event) => {
-          Router.redirectTo('/product/' + cartImg.dataset.id);
+        document.querySelectorAll<HTMLElement>('.cart-item__img').forEach((button: HTMLElement) => {
+          button.addEventListener('click', (event: Event) => {
+            const button = event.currentTarget as HTMLElement;
+            Router.redirectTo('/product/' + button.dataset.id);
+          })
         })
-
   }
 }
 
