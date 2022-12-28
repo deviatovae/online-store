@@ -78,6 +78,18 @@ export class Controller {
             colors: params.get('colors')?.split(','),
             collections: params.get('collections')?.split(',').map((s) => Number(s)),
             categories: params.get('categories')?.split(',').map((c => ({category: c, products: 0}))),
+            price: {
+                min: Number(params.get('minPrice')) || 0,
+                max: Number(params.get('maxPrice')) || 0,
+            },
+            size: {
+                min: Number(params.get('minSize')) || 0,
+                max: Number(params.get('maxSize')) || 0,
+            },
+            stock: {
+                min: Number(params.get('minStock')) || 0,
+                max: Number(params.get('maxStock')) || 0,
+            },
         }
 
         const productsList = products.filter(p => {
@@ -90,13 +102,22 @@ export class Controller {
             if (selectedFilters.categories?.some((c) => c.category === p.category) == false) {
                 return false
             }
+            if ((selectedFilters.price?.min || 0) > p.price || (selectedFilters.price?.max || p.price) < p.price) {
+                return false
+            }
+            if ((selectedFilters.size?.min || 0) > p.size || (selectedFilters.size?.max || p.size) < p.size) {
+                return false
+            }
+            if ((selectedFilters.stock?.min || 0) > p.stock || (selectedFilters.stock?.max || p.stock) < p.stock) {
+                return false
+            }
             return true;
         })
 
         const filters: FiltersDataType = {
-            colors: [...productsList.reduce((set, product) => set.add(product.color), new Set<string>())],
-            collections: [...productsList.reduce((set, product) => set.add(product.collection), new Set<number>())].sort(),
-            categories: [...productsList.reduce((map, product) => {
+            colors: [...products.reduce((set, product) => set.add(product.color), new Set<string>())],
+            collections: [...products.reduce((set, product) => set.add(product.collection), new Set<number>())].sort(),
+            categories: [...products.reduce((map, product) => {
                 if (map.has(product.category)) {
                     const type = map.get(product.category) as FilterCategoryType
                     type.products = type.products + 1 || 1;
@@ -105,9 +126,9 @@ export class Controller {
                 }
                 return map;
             }, new Map<string, FilterCategoryType>).values()],
-            price: productsList.reduce((minMax, product) => getMinMax(minMax, product.price), {min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER}),
-            size: productsList.reduce((minMax, product) => getMinMax(minMax, product.size), {min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER}),
-            stock: productsList.reduce((minMax, product) => getMinMax(minMax, product.stock), {min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER}),
+            price: products.reduce((minMax, product) => getMinMax(minMax, product.price), {min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER}),
+            size: products.reduce((minMax, product) => getMinMax(minMax, product.size), {min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER}),
+            stock: products.reduce((minMax, product) => getMinMax(minMax, product.stock), {min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER}),
             selected: selectedFilters,
         }
 
@@ -119,7 +140,6 @@ export class Controller {
         const data: MainPageDataType = {
             products: productsList,
             filters: filters,
-
             cart: cart!,
         }
 

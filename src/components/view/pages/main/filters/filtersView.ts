@@ -55,7 +55,11 @@ export class FiltersView extends View<FiltersDataType> {
                   </div>
                 </div>
                 <div class="item-content__dual-range dual-range">
-                  <div class="slider" data-min="${data.price?.min}" data-max="${data.price?.max}"></div>
+                  <div class="slider" 
+                       data-min_selected="${data.selected.price?.min}" 
+                       data-max_selected="${data.selected.price?.max}" 
+                       data-min="${data.price?.min}" 
+                       data-max="${data.price?.max}"></div>
                 </div>
               </div>
             </div>
@@ -67,7 +71,11 @@ export class FiltersView extends View<FiltersDataType> {
                   <input type="text" class="box-end" placeholder="${data.size?.max}cm">
                 </div>
                 <div class="item-content__dual-range dual-range">
-                  <div class="slider" data-min="${data.size?.min}" data-max="${data.size?.max}"></div>
+                  <div class="slider"
+                       data-min_selected="${data.selected.size?.min}"
+                       data-max_selected="${data.selected.size?.max}"
+                       data-min="${data.size?.min}" 
+                       data-max="${data.size?.max}"></div>
                 </div>
               </div>
             </div>
@@ -94,7 +102,11 @@ export class FiltersView extends View<FiltersDataType> {
                   <input type="text" class="box-end" placeholder="${data.stock?.max}">
                 </div>
                 <div class="item-content__dual-range dual-range">
-                  <div class="slider" data-min="${data.stock?.min}" data-max="${data.stock?.max}"></div>
+                  <div class="slider"
+                       data-min_selected="${data.selected.stock?.min}"
+                       data-max_selected="${data.selected.stock?.max}"
+                       data-min="${data.stock?.min}" 
+                       data-max="${data.stock?.max}"></div>
                 </div>
               </div>
             </div>
@@ -107,17 +119,26 @@ export class FiltersView extends View<FiltersDataType> {
 
         const priceFilter = document.querySelector('.filters-item .price') as HTMLElement | null;
         if (priceFilter) {
-            this.initializeSlider(priceFilter, 2);
+            this.initializeSlider(priceFilter, (start, end) => {
+                Router.setUrlParam('minPrice', start)
+                Router.setUrlParam('maxPrice', end)
+            }, 2);
         }
 
         const sizeFilter = document.querySelector('.filters-item .size') as HTMLElement | null;
         if (sizeFilter) {
-            this.initializeSlider(sizeFilter);
+            this.initializeSlider(sizeFilter, (start, end) => {
+                Router.setUrlParam('minSize', start)
+                Router.setUrlParam('maxSize', end)
+            });
         }
 
         const stockFilter = document.querySelector('.filters-item .stock') as HTMLElement | null;
         if (stockFilter) {
-            this.initializeSlider(stockFilter);
+            this.initializeSlider(stockFilter, (start, end) => {
+                Router.setUrlParam('minStock', start)
+                Router.setUrlParam('maxStock', end)
+            });
         }
 
         const colors = document.querySelectorAll<HTMLElement>('.colors__color')
@@ -145,13 +166,10 @@ export class FiltersView extends View<FiltersDataType> {
             } else {
                 Router.addUrlParamValue('categories', c.dataset.categories || '');
             }
-            console.log(c.dataset.category)
         }))
-
-
     }
 
-    private initializeSlider(container: HTMLElement, maxDecimals: number = 0) {
+    private initializeSlider(container: HTMLElement, onChange: (min: string, max:string) => void, maxDecimals: number = 0) {
         const slider = container.nextElementSibling?.querySelector('.slider') as HTMLElement | null;
         const startInput = container.querySelector('.box-start') as HTMLInputElement | null;
         const endInput = container.querySelector('.box-end') as HTMLInputElement | null;
@@ -162,9 +180,18 @@ export class FiltersView extends View<FiltersDataType> {
 
         const minValue = parseInt(slider.dataset.min ?? '')
         const maxValue = parseInt(slider.dataset.max ?? '')
+        let startMin = maxValue * 0.15
+        let startMax = maxValue * 0.85
+
+        if (Number(slider.dataset.min_selected)) {
+            startMin = Number(slider.dataset.min_selected)
+        }
+        if (Number(slider.dataset.max_selected)) {
+            startMax = Number(slider.dataset.max_selected)
+        }
 
         const api = noUiSlider.create(slider, {
-            start: [maxValue * 0.15, maxValue * 0.85],
+            start: [startMin, startMax],
             connect: true,
             range: {
                 'min': minValue,
@@ -183,6 +210,13 @@ export class FiltersView extends View<FiltersDataType> {
             } else {
                 startInput.value = value;
             }
+        });
+
+        api.on('change', function () {
+            onChange(startInput.value, endInput.value);
+        });
+        api.on('set', function () {
+            onChange(startInput.value, endInput.value);
         });
 
         startInput.addEventListener('change', function () {
