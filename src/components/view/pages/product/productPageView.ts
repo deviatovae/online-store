@@ -82,7 +82,9 @@ export default class ProductPageView extends View<ProductPageType> {
         const arrowBack = document.querySelector('.product-page__arrow-back') as HTMLElement | null;
 
         if (arrowBack) {
-            arrowBack.onclick = () => Router.redirectTo('/');
+            arrowBack.onclick = () => {
+                Router.redirectTo('/');
+            }
         }
 
         // смена картинок
@@ -156,7 +158,6 @@ export default class ProductPageView extends View<ProductPageType> {
         })
 
         const buttonBuy = document.querySelector('.button-buy-now') as HTMLElement;
-
         buttonBuy.addEventListener('click', (event: Event) => {
           Router.redirectTo('/payment');
         })

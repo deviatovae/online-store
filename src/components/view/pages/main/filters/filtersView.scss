@@ -195,15 +195,6 @@ input {
   background-color: saddlebrown;
 }
 
-.is-multi {
-    &:hover{
-      &:after{
-        content: 'multi';
-      }
-    }
-    background-image: url("/src/assets/img/colors/multi.svg");
-}
-
 .collection {
   display: flex;
   gap: 20px;
@@ -223,6 +214,36 @@ input {
       color: white;
 
     }
+  }
+}
+
+.is-selected.collection__year {
+  background-color: $oliva;
+  color: white;
+
+  &:hover{
+    cursor: pointer;
+    background-color: $olivaHover;
+  }
+}
+
+.colors__color.is-selected {
+  &:before {
+    content: url('https://api.iconify.design/material-symbols/check-small-rounded.svg?color=white&width=26&height=26');
+    width: 26px;
+    height: 26px;
+    text-align: center;
+    z-index: 6;
+  }
+}
+
+.colors__color.is-selected.is-white {
+  &:before {
+    content: url('https://api.iconify.design/material-symbols/check-small-rounded.svg?color=black&width=26&height=26');
+    width: 26px;
+    height: 26px;
+    text-align: center;
+    z-index: 6;
   }
 }
 

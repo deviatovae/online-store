@@ -28,6 +28,10 @@ export class MainPageView extends View<MainPageDataType> {
           ${this.views.header.render(data.cart)}
           <main>
             <div class="find-container">
+              <div class="snow-blocks">
+                <div class="snow1"></div>
+                <div class="snow2"></div>
+              </div>
               <div class="find-title">
                 Find Christmas decorations to create
                 a festive atmosphere at your home
