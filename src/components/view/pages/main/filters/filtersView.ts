@@ -178,8 +178,8 @@ export class FiltersView extends View<FiltersDataType> {
             return
         }
 
-        const minValue = parseInt(slider.dataset.min ?? '')
-        const maxValue = parseInt(slider.dataset.max ?? '')
+        const minValue = parseFloat(slider.dataset.min ?? '')
+        const maxValue = parseFloat(slider.dataset.max ?? '')
         let startMin = maxValue * 0.15
         let startMax = maxValue * 0.85
 
@@ -203,12 +203,12 @@ export class FiltersView extends View<FiltersDataType> {
             }
         });
 
-        api.on('update', function (values: any, handle: any) {
+        api.on('update', function (values, handle) {
             const value = values[handle];
             if (handle) {
-                endInput.value = value;
+                endInput.value = value.toString();
             } else {
-                startInput.value = value;
+                startInput.value = value.toString();
             }
         });
 
