@@ -15,14 +15,16 @@ export const slice = createSlice({
     /**
      * добавляет продукт в стейт корзины, при повторном добавлении увеличивает quantity
      */
-    addProductToCart: (state, { payload: product }: PayloadAction<Product>): CartItemType[] => {
-      const item = state.find((item) => item.product.id === product.id);
+    addProductToCart: (state, { payload: cartItem }: PayloadAction<CartItemType>): CartItemType[] => {
+      const item = state.find((item) => item.product.id === cartItem.product.id);
       if (!item) {
-        return [...state, { product: product, quantity: 1 }];
+        return [...state, { product: cartItem.product, quantity: cartItem.quantity }];
       }
-        //  quantity не может быть больше stock
-      if (product.stock > item.quantity) {
-        item.quantity += 1;
+      item.quantity += cartItem.quantity;
+
+      //  quantity не может быть больше stock
+      if (item.quantity > item.product.stock) {
+        item.quantity = item.product.stock
       }
 
       return state;
@@ -31,13 +33,15 @@ export const slice = createSlice({
     /**
      * изменяет quantity на величину value из input
      */
-    addProductToCartValueInput: (state, { payload: cartItem }: PayloadAction<CartItemType>): CartItemType[] => {
+    setProductQuantityInCart: (state, { payload: cartItem }: PayloadAction<CartItemType>): CartItemType[] => {
       const item = state.find((item) => item.product.id === cartItem.product.id);
-      if (!item) return state;
-      item.quantity = cartItem.quantity;
+      if (!item) {
+        return [...state, { product: cartItem.product, quantity: cartItem.quantity }];
+      }
+        item.quantity = cartItem.quantity;
+
       return state;
     },
-
 
     /**
      * удаляет продукт из стейта корзины, если quantity > 1, то просто уменьшает значение этого поля
@@ -70,7 +74,7 @@ export const slice = createSlice({
 /**
  * экспортируем экшены из слайса, чтобы использовать их в контроллере
  */
-export const { addProductToCart, removeProductFromCart, removeProductFromCartAll, addProductToCartValueInput } = slice.actions;
+export const { addProductToCart, removeProductFromCart, removeProductFromCartAll, setProductQuantityInCart } = slice.actions;
 
 /**
  * экспортируем редюсер из слайса, чтобы использовать его для инициализации store

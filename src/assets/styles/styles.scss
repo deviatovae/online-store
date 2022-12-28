@@ -242,3 +242,20 @@ body{
     cursor: pointer;
   }
 }
+
+
+.snow1{
+  background-image: url("./../img/snow1.png");
+  position: absolute;
+  width: 100%;
+  height: 600px;
+  animation: snow1 18s linear infinite;
+}
+
+.snow2{
+  background-image: url("./../img/snow2.png"),url("./../img/snow3.png");
+  animation: snow2 10s linear infinite;
+  width: 100%;
+  height: 600px;
+  position:absolute;
+}
