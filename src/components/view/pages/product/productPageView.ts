@@ -82,7 +82,9 @@ export default class ProductPageView extends View<ProductPageType> {
         const arrowBack = document.querySelector('.product-page__arrow-back') as HTMLElement | null;
 
         if (arrowBack) {
-            arrowBack.onclick = () => Router.redirectTo('/');
+            arrowBack.onclick = () => {
+                Router.redirectTo('/');
+            }
         }
 
         // смена картинок

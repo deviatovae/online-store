@@ -4,8 +4,8 @@
 
   &__products {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     gap: 70px 100px;
+    margin-left: 50px;
   }
 }

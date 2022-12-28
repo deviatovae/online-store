@@ -4,8 +4,44 @@ export class Router {
     private routes: { [key: string]: Function; } = {};
     private fallbackRoute: Function | null = null;
 
-    public static redirectTo(url: string) {
-        history.pushState({}, '', url);
+    public static getUrlParams(): URLSearchParams {
+        return new URLSearchParams(window.location.search)
+    }
+
+    public static setUrlParam(key: string, value: string) {
+        const params = Router.getUrlParams();
+        params.set(key, value)
+        Router.redirectTo('?' + params.toString())
+    }
+
+    public static addUrlParamValue(key: string, value: string) {
+        const params = Router.getUrlParams();
+        const oldValue = params.get(key);
+        if (!oldValue) {
+            return Router.setUrlParam(key, value);
+        }
+        params.set(key, oldValue + ',' + value)
+        Router.redirectTo('?' + params.toString())
+    }
+
+    public static removeUrlParam(key: string, value: string) {
+        const params = Router.getUrlParams();
+        const oldValue = params.get(key)?.split(',');
+        const index = oldValue?.indexOf(value)
+        if (oldValue && index !== undefined && index > -1) {
+            oldValue.splice(index, 1);
+            params.set(key, oldValue.join(','))
+        }
+
+        if (!params.get(key)) {
+            params.delete(key)
+        }
+
+        Router.redirectTo('?' + params.toString())
+    }
+
+    public static redirectTo(url: string): void {
+        history.pushState({previous: window.location.href}, '', url);
         window.dispatchEvent(new Event('popstate'));
     }
 
@@ -23,13 +59,13 @@ export class Router {
     /**
      * при загрузке страницы или при изменении в хэше вызывает loadRoute
      */
-    public start() {
+    public start(): void {
         window.addEventListener('load', () => this.loadRoute());
         window.addEventListener('hashchange', () => this.loadRoute());
         window.addEventListener('popstate', () => this.loadRoute())
     }
 
-    private call(callback: Function, args: string[] = []) {
+    private call(callback: Function, args: string[] = []): void {
         const urlBeforeCall = window.location.pathname
         const unsubscribe = callback(...args);
         const urlAfterCall = window.location.pathname
