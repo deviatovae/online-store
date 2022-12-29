@@ -91,8 +91,8 @@ export class MainPageView extends View<MainPageDataType> {
 }
 
 function mainRowStyle (switchingRow: HTMLElement, switchingBlock: HTMLElement):void {
-  switchingRow.classList.add('switching-active');
-  switchingBlock.classList.remove('switching-active');
+  switchingRow.classList.add('switch-active');
+  switchingBlock.classList.remove('switch-active');
 
   document.querySelectorAll<HTMLElement>('.product-item').forEach((item: Element) => {
     item.classList.add('product-item-row');

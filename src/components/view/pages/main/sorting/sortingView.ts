@@ -37,7 +37,7 @@ export class SortingFiltersView extends View<Product[]> {
                   <option value="10">Show items: 10</option>
                   <option value="20">Show items: 20</option>
                   <option value="30">Show items: 30</option>
-                  <option value="all">Show all</option>
+                  <option value="all">Show items: all</option>
                 </select>
               </div>
               <div class="sorted-filters__switch-view switch-view">

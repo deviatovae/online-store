@@ -1,9 +1,10 @@
-@import '../../../../../assets/styles/common/variables';
+@import '/src/assets/styles/common/variables';
 
 .selected-section {
   display: flex;
   flex-direction: column;
   font-family: $Sitara;
+  padding-top: 10px;
 }
 
 .selected-filters {
@@ -60,7 +61,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  margin-bottom: 25px;
+  margin-bottom: 50px;
   color: $darkGray;
 }
 
@@ -74,18 +75,19 @@
   &__block {
     width: 26px;
     height: 26px;
+    cursor: pointer;
   }
 
   &__line {
-    background: url('https://api.iconify.design/material-symbols/view-agenda-outline-sharp.svg?color=%23747474&width=26&height=26') no-repeat center center / contain;
+    background: url('/src/assets/img/view_switching_string.svg') no-repeat center center / contain;
   }
 
   &__block {
-    background: url('https://api.iconify.design/material-symbols/grid-view-outline.svg?color=%23747474&width=26&height=26') no-repeat center center / contain;
+    background: url('/src/assets/img/view_switching_block.svg') no-repeat center center / contain;
   }
 
-  .switching-active {
-    filter: invert(100%);
+  .switch-active {
+    filter: invert(44%) sepia(10%) saturate(19%) hue-rotate(42deg) brightness(96%) contrast(89%);
   }
 }
 
