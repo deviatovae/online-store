@@ -4,6 +4,9 @@ import {Product} from "../../../../types/product";
 import {ProductView} from "../products/productView";
 import {Controller} from "../../../../controller/controller";
 
+// import {MainPageDataType} from "../../../../types/mainPageDataType";
+
+
 export class SortingFiltersView extends View<Product[]> {
     protected views = {
         product: new ProductView(),
@@ -41,8 +44,8 @@ export class SortingFiltersView extends View<Product[]> {
                 </select>
               </div>
               <div class="sorted-filters__switch-view switch-view">
-                <div class="switch-view__line switch-active"></div>
-                <div class="switch-view__block"></div>
+                <div class="switch-view__line "></div>
+                <div class="switch-view__block switch-active"></div>
               </div>
             </div>`
     }

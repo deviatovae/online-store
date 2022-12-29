@@ -6,6 +6,8 @@ import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {SortingFiltersView} from "./sorting/sortingView";
 import {Controller} from "../../../controller/controller";
+import {Router} from "../../../router/router";
+
 
 /**
  * view-компонент, который возвращает страницу main (фильтры, каталог)
@@ -19,7 +21,6 @@ export class MainPageView extends View<MainPageDataType> {
         productList: new ProductListView(),
         sorting: new SortingFiltersView(),
     }
-
     /**
      * @todo нужно прпнимать здесь объект со всеми данными, требующимися для отрисовки (вызова render) всех компонентов
      */
@@ -53,7 +54,7 @@ export class MainPageView extends View<MainPageDataType> {
                 <div class="main-catalog__center-section main-center-section">
                   ${this.views.sorting.render(data.products)}
                   </div>
-                  <div class="main-catalog__products">
+                  <div class="main-catalog__products ${data.switchType === 'row' ? 'row-view' : ''}">
                     ${this.views.productList.render(data.products)}
                   </div>
                 </div>
@@ -69,73 +70,22 @@ export class MainPageView extends View<MainPageDataType> {
 
       const switchingRow = document.querySelector('.switch-view__line') as HTMLElement;
       const switchingBlock = document.querySelector('.switch-view__block') as HTMLElement;
+      const mainCatalogProducts = document.querySelector('.main-catalog__products') as HTMLElement;
 
       switchingRow.addEventListener('click', (event: Event) => {
-        mainRowStyle(switchingRow, switchingBlock);
-        localStorage.setItem('style', 'row');
+        Router.setUrlParam('switch-view', 'row')
       })
 
       switchingBlock.addEventListener('click', (event: Event) => {
-        mainBlockStyle(switchingRow, switchingBlock);
-        localStorage.setItem('style', 'block');
+        Router.setUrlParam('switch-view', 'block')
       })
 
-      const style = localStorage.getItem("style")
-      if (style === "row") {
-        mainRowStyle(switchingRow, switchingBlock);
+      if (mainCatalogProducts.classList.contains('row-view')) {
+        switchingRow.classList.add('switch-active');
+        switchingBlock.classList.remove('switch-active');
       }
-      if (style === "block") {
-        mainBlockStyle(switchingRow, switchingBlock);
-      }
+
   }
 }
 
-function mainRowStyle (switchingRow: HTMLElement, switchingBlock: HTMLElement):void {
-  switchingRow.classList.add('switch-active');
-  switchingBlock.classList.remove('switch-active');
-
-  document.querySelectorAll<HTMLElement>('.product-item').forEach((item: Element) => {
-    item.classList.add('product-item-row');
-  });
-  document.querySelectorAll<HTMLElement>('.product-item__img').forEach((item: Element) => {
-    item.classList.add('product-item__img-row');
-  });
-  document.querySelectorAll<HTMLElement>('.product-item__info').forEach((item: Element) => {
-    item.classList.add('product-item__info-row');
-  });
-  document.querySelectorAll<HTMLElement>('.item-info__name-price').forEach((item: Element) => {
-    item.classList.add('item-info__name-price-row');
-  });
-  document.querySelectorAll<HTMLElement>('.product-item__text-wrapper').forEach((item: Element) => {
-    item.classList.add('product-item__text-wrapper-row');
-  });
-  document.querySelectorAll<HTMLElement>('.product-item__cart-text').forEach((item: Element) => {
-    item.classList.add('product-item__cart-text-row');
-  });
-}
-
-function mainBlockStyle (switchingRow: HTMLElement, switchingBlock: HTMLElement):void {
-
-  switchingBlock.classList.add('switch-active');
-  switchingRow.classList.remove('switch-active');
-
-  document.querySelectorAll<HTMLElement>('.product-item').forEach((item: Element) => {
-    item.classList.remove('product-item-row');
-  });
-  document.querySelectorAll<HTMLElement>('.product-item__img').forEach((item: Element) => {
-    item.classList.remove('product-item__img-row');
-  });
-  document.querySelectorAll<HTMLElement>('.product-item__info').forEach((item: Element) => {
-    item.classList.remove('product-item__info-row');
-  });
-  document.querySelectorAll<HTMLElement>('.item-info__name-price').forEach((item: Element) => {
-    item.classList.remove('item-info__name-price-row');
-  });
-  document.querySelectorAll<HTMLElement>('.product-item__text-wrapper').forEach((item: Element) => {
-    item.classList.remove('product-item__text-wrapper-row');
-  });
-  document.querySelectorAll<HTMLElement>('.product-item__cart-text').forEach((item: Element) => {
-    item.classList.remove('product-item__cart-text-row');
-  });
-}
 

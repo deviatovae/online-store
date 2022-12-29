@@ -76,7 +76,7 @@
 
 // switching row style
 
-.product-item-row {
+.row-view .product-item {
   height: 200px;
   width: 100%;
   flex-direction: row;
@@ -84,29 +84,29 @@
   margin-bottom: 50px;
 }
 
-.product-item__img-row {
+.row-view .product-item__img {
   width: 200px;
   height: 200px;
 }
 
-.product-item__info-row {
+.row-view .product-item__info {
   width: 100%;
   font-size: 1rem;
 }
 
-.item-info__name-price-row {
+.row-view .item-info__name-price {
   font-size: 1.2rem;
   justify-content: space-between;
   font-weight: bold;
 }
 
-.product-item__text-wrapper-row {
+.row-view .product-item__text-wrapper {
   order: 1;
   height: 55px;
   width: 40%;
 }
 
-.product-item__cart-text-row {
+.row-view .product-item__cart-text {
   height: 50px;
   bottom: 85px;
   font-size: 1.2rem;
