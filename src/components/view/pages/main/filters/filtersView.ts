@@ -144,7 +144,7 @@ export class FiltersView extends View<FiltersDataType> {
         const colors = document.querySelectorAll<HTMLElement>('.colors__color')
         colors.forEach(c => c.addEventListener('click', () => {
             if (c.classList.contains('is-selected')) {
-                Router.removeUrlParam('colors', c.dataset.color || '');
+                Router.removeUrlParamValue('colors', c.dataset.color || '');
             } else {
                 Router.addUrlParamValue('colors', c.dataset.color || '');
             }
@@ -153,7 +153,7 @@ export class FiltersView extends View<FiltersDataType> {
         const collections = document.querySelectorAll<HTMLElement>('.collection__year')
         collections.forEach(c => c.addEventListener('click', () => {
             if (c.classList.contains('is-selected')) {
-                Router.removeUrlParam('collections', c.dataset.collection || '');
+                Router.removeUrlParamValue('collections', c.dataset.collection || '');
             } else {
                 Router.addUrlParamValue('collections', c.dataset.collection || '');
             }
@@ -162,7 +162,7 @@ export class FiltersView extends View<FiltersDataType> {
         const categories = document.querySelectorAll<HTMLInputElement>('.category__checkbox')
         categories.forEach(c => c.addEventListener('change', () => {
             if (!c.checked) {
-                Router.removeUrlParam('categories', c.dataset.categories || '');
+                Router.removeUrlParamValue('categories', c.dataset.categories || '');
             } else {
                 Router.addUrlParamValue('categories', c.dataset.categories || '');
             }

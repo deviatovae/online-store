@@ -52,7 +52,7 @@ export class MainPageView extends View<MainPageDataType> {
                   ${this.views.filters.render(data.filters)}
                 </div>
                 <div class="main-catalog__center-section main-center-section">
-                  ${this.views.sorting.render(data.products)}
+                  ${this.views.sorting.render(data.filters)}
                   </div>
                   <div class="main-catalog__products ${data.switchType === 'row' ? 'row-view' : ''}">
                     ${this.views.productList.render(data.products)}
