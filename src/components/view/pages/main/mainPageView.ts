@@ -4,6 +4,7 @@ import {ProductListView} from "./products/productListView";
 import {MainPageDataType} from "../../../types/mainPageDataType";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
+import {SortingFiltersView} from "./sorting/sortingView";
 
 /**
  * view-компонент, который возвращает страницу main (фильтры, каталог)
@@ -15,6 +16,7 @@ export class MainPageView extends View<MainPageDataType> {
         footer: new FooterView(),
         filters: new FiltersView(),
         productList: new ProductListView(),
+        sorting: new SortingFiltersView(),
     }
 
     /**
@@ -41,12 +43,18 @@ export class MainPageView extends View<MainPageDataType> {
             </div>
             <div class="store-page">
               <section class="main-catalog">
-                <div class="main-catalog__bread-crumbs"></div>
+                <div class="main-catalog__bread-crumbs bread-crumbs">
+                  <div class="bread-crumbs__path">Home</div>
+                </div>
                 <div class="main-catalog__filters">
                   ${this.views.filters.render(data.filters)}
                 </div>
-                <div class="main-catalog__products">
-                  ${this.views.productList.render(data.products)}
+                <div class="main-catalog__center-section main-center-section">
+                  ${this.views.sorting.render(data.products)}
+                  </div>
+                  <div class="main-catalog__products">
+                    ${this.views.productList.render(data.products)}
+                  </div>
                 </div>
               </section>
             </div>
