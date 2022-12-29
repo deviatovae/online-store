@@ -4,8 +4,8 @@ import {ProductListView} from "./products/productListView";
 import {MainPageDataType} from "../../../types/mainPageDataType";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
+import {SortingFiltersView} from "./sorting/sortingView";
 import {Controller} from "../../../controller/controller";
-
 
 /**
  * view-компонент, который возвращает страницу main (фильтры, каталог)
@@ -17,6 +17,7 @@ export class MainPageView extends View<MainPageDataType> {
         footer: new FooterView(),
         filters: new FiltersView(),
         productList: new ProductListView(),
+        sorting: new SortingFiltersView(),
     }
 
     /**
@@ -43,16 +44,18 @@ export class MainPageView extends View<MainPageDataType> {
             </div>
             <div class="store-page">
               <section class="main-catalog">
-                <div class="main-catalog__bread-crumbs"></div>
+                <div class="main-catalog__bread-crumbs bread-crumbs">
+                  <div class="bread-crumbs__path">Home</div>
+                </div>
                 <div class="main-catalog__filters">
                   ${this.views.filters.render(data.filters)}
                 </div>
-                <div class="main-catalog__products">
-                  <div class="view-switching">
-                    <div class="view-switching__string"></div>
-                    <div class="view-switching__block switching-active"></div>
+                <div class="main-catalog__center-section main-center-section">
+                  ${this.views.sorting.render(data.products)}
                   </div>
-                  ${this.views.productList.render(data.products)}
+                  <div class="main-catalog__products">
+                    ${this.views.productList.render(data.products)}
+                  </div>
                 </div>
               </section>
             </div>
@@ -64,9 +67,9 @@ export class MainPageView extends View<MainPageDataType> {
     public afterRender(controller: Controller): void {
       super.afterRender(controller);
 
-      const switchingRow = document.querySelector('.view-switching__string') as HTMLElement;
-      const switchingBlock = document.querySelector('.view-switching__block') as HTMLElement;
-      
+      const switchingRow = document.querySelector('.switch-view__line') as HTMLElement;
+      const switchingBlock = document.querySelector('.switch-view__block') as HTMLElement;
+
       switchingRow.addEventListener('click', (event: Event) => {
         mainRowStyle(switchingRow, switchingBlock);
         localStorage.setItem('style', 'row');
@@ -88,9 +91,8 @@ export class MainPageView extends View<MainPageDataType> {
 }
 
 function mainRowStyle (switchingRow: HTMLElement, switchingBlock: HTMLElement):void {
-
-  switchingRow.classList.add('switching-active');
-  switchingBlock.classList.remove('switching-active');
+  switchingRow.classList.add('switch-active');
+  switchingBlock.classList.remove('switch-active');
 
   document.querySelectorAll<HTMLElement>('.product-item').forEach((item: Element) => {
     item.classList.add('product-item-row');
@@ -114,8 +116,8 @@ function mainRowStyle (switchingRow: HTMLElement, switchingBlock: HTMLElement):v
 
 function mainBlockStyle (switchingRow: HTMLElement, switchingBlock: HTMLElement):void {
 
-  switchingBlock.classList.add('switching-active');
-  switchingRow.classList.remove('switching-active');
+  switchingBlock.classList.add('switch-active');
+  switchingRow.classList.remove('switch-active');
 
   document.querySelectorAll<HTMLElement>('.product-item').forEach((item: Element) => {
     item.classList.remove('product-item-row');
