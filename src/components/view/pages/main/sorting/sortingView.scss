@@ -9,11 +9,12 @@
 
 .selected-filters {
   display: flex;
+  flex-wrap: wrap;
   border-bottom: 1px solid $greyBorder;
   font-size: 0.9rem;
   color: $darkGray;
   align-items: center;
-  padding-bottom: 2px;
+  padding-bottom: 4px;
   margin-bottom: 10px;
   gap: 15px;
 
@@ -45,6 +46,7 @@
 
   &__name {
     margin-right: 15px;
+    text-transform: capitalize;
   }
 
   &__remove-btn {
@@ -61,6 +63,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
+  padding-top: 5px;
   margin-bottom: 50px;
   color: $darkGray;
 }
@@ -94,7 +97,7 @@
 
 .filters-select__form,
 .filters-count-per-page{
-    padding: 0 10px 0 0;
+    padding-right: 5px;
     cursor: pointer;
     font-size: 0.9rem;
     color: $darkGray;

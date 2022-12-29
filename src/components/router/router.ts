@@ -24,7 +24,7 @@ export class Router {
         Router.redirectTo('?' + params.toString())
     }
 
-    public static removeUrlParam(key: string, value: string) {
+    public static removeUrlParamValue(key: string, value: string) {
         const params = Router.getUrlParams();
         const oldValue = params.get(key)?.split(',');
         const index = oldValue?.indexOf(value)
@@ -37,6 +37,12 @@ export class Router {
             params.delete(key)
         }
 
+        Router.redirectTo('?' + params.toString())
+    }
+
+    public static removeUrlParamKey(key: string) {
+        const params = Router.getUrlParams();
+        params.delete(key)
         Router.redirectTo('?' + params.toString())
     }
 
