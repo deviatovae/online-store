@@ -16,7 +16,7 @@ export class ProductView extends View<Product> {
     render(product: Product): string {
         return `
         <div class="product-item" data-id="${product.id}">
-          <img class="product-item__img" src="${product.images[0]}" alt="product image">
+          <img class="product-item__img" data-id="${product.id}" src="${product.images[0]}" alt="product image">
           <div class="product-item__text-wrapper">
             <div class="product-item__cart-text" data-id="${product.id}">Add to cart</div>
           </div>
@@ -59,7 +59,7 @@ export class ProductView extends View<Product> {
                 })
             })
 
-          document.querySelectorAll<HTMLElement>('.product-item')
+          document.querySelectorAll<HTMLElement>('.product-item__img')
           .forEach((button: HTMLElement) => {
               button.addEventListener('click', (event: Event) => {
                 Router.redirectTo('/product/' + button.dataset.id);

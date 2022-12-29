@@ -141,6 +141,7 @@ export class Controller {
             products: productsList,
             filters: filters,
             cart: cart!,
+            switchType: params.get('switch-view')!,
         }
 
         callback(data);

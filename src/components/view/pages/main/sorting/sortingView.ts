@@ -7,7 +7,6 @@ import {FiltersDataType} from "../../../../types/filtersDataType";
 import {Router} from "../../../../router/router";
 
 export class SortingFiltersView extends View<FiltersDataType> {
-
     public render(data: FiltersDataType): string {
         let colorFilter = '';
         if (data.selected.colors) {
@@ -111,8 +110,8 @@ export class SortingFiltersView extends View<FiltersDataType> {
                 </select>
               </div>
               <div class="sorted-filters__switch-view switch-view">
-                <div class="switch-view__line switch-active"></div>
-                <div class="switch-view__block"></div>
+                <div class="switch-view__line "></div>
+                <div class="switch-view__block switch-active"></div>
               </div>
             </div>`
     }

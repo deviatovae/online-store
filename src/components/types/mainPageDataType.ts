@@ -6,4 +6,5 @@ export type MainPageDataType = {
     products: Product[]
     filters: FiltersDataType
     cart: CartDataType
+    switchType: string
 }
