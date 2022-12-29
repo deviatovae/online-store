@@ -7,7 +7,6 @@ import {FooterView} from "../../footer/footerView";
 import {SortingFiltersView} from "./sorting/sortingView";
 import {Controller} from "../../../controller/controller";
 
-
 /**
  * view-компонент, который возвращает страницу main (фильтры, каталог)
  *   - использует (вызывает) внутри себя более мелкие компоненты FiltersView, ProductListView
@@ -68,8 +67,8 @@ export class MainPageView extends View<MainPageDataType> {
     public afterRender(controller: Controller): void {
       super.afterRender(controller);
 
-      const switchingRow = document.querySelector('.view-switching__string') as HTMLElement;
-      const switchingBlock = document.querySelector('.view-switching__block') as HTMLElement;
+      const switchingRow = document.querySelector('.switch-view__line') as HTMLElement;
+      const switchingBlock = document.querySelector('.switch-view__block') as HTMLElement;
 
       switchingRow.addEventListener('click', (event: Event) => {
         mainRowStyle(switchingRow, switchingBlock);
@@ -92,7 +91,6 @@ export class MainPageView extends View<MainPageDataType> {
 }
 
 function mainRowStyle (switchingRow: HTMLElement, switchingBlock: HTMLElement):void {
-
   switchingRow.classList.add('switching-active');
   switchingBlock.classList.remove('switching-active');
 
@@ -118,8 +116,8 @@ function mainRowStyle (switchingRow: HTMLElement, switchingBlock: HTMLElement):v
 
 function mainBlockStyle (switchingRow: HTMLElement, switchingBlock: HTMLElement):void {
 
-  switchingBlock.classList.add('switching-active');
-  switchingRow.classList.remove('switching-active');
+  switchingBlock.classList.add('switch-active');
+  switchingRow.classList.remove('switch-active');
 
   document.querySelectorAll<HTMLElement>('.product-item').forEach((item: Element) => {
     item.classList.remove('product-item-row');
