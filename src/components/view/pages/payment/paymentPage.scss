@@ -39,6 +39,8 @@
     padding: 10px;
     border: solid $greyBorder 1px;
     margin-bottom: 15px;
+
+    outline: 0;
   }
 }
 
@@ -81,13 +83,11 @@
     background-size: contain;
 
     &_visa {
-
       background: url("/src/assets/img/payment/visa.svg") center no-repeat;
     }
 
     &_mastercard {
       background: url("/src/assets/img/payment/mastercard.svg") center no-repeat;
-
     }
 
     &_amex {
@@ -115,6 +115,8 @@
   padding: 10px;
   border: solid $greyBorder 1px;
   height: 40px;
+
+  outline: 0;
 }
 
 .bottom-row {
@@ -253,4 +255,42 @@
     letter-spacing: 1px;
   }
 }
+
+
+
+
+
+.valid:focus {
+  border: 1.5px solid green;
+}
+
+.valid,
+.payment-details__email:valid {
+  border: 1.5px solid green;
+}
+
+// .invalid {
+//   border: 1.5px solid red;
+// }
+
+.invalid {
+  border: 1.5px solid red;
+}
+
+.payment-details__name:focus:invalid,
+.payment-details__phone-number:focus:invalid,
+.payment-details__shipping-address:focus:invalid,
+.payment-details__email:focus:invalid,
+.card-details__card-number:focus:invalid {
+  border: 1.5px solid red;
+}
+
+// .payment-details__name:invalid,
+// .payment-details__phone-number:invalid,
+// .payment-details__shipping-address:invalid,
+// .payment-details__email:invalid {
+//   border: 1px solid red;
+// }
+
+
 
