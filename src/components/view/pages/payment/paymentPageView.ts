@@ -209,8 +209,6 @@ export class PaymentPageView extends View<CartDataType> {
     const dateInput  = document.querySelector(".bottom-row__date") as HTMLInputElement;
     dateInput.addEventListener('input', (event: Event) => {
 
-      dateInput.value = dateInput.value.replace(/[^\0-9]/g, "").substring(0,5);
-
       let value: string | any = dateInput.value.replace(/[^\d]/g, '').substring(0,4);
       if (value != '') {
         value = value.match(/.{1,2}/g).join('/');
