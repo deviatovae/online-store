@@ -44,7 +44,7 @@ export class SortingFiltersView extends View<FiltersDataType> {
         let sizeFilter = '';
         if (data.selected.size?.min || data.selected.size?.max) {
             // language=HTML
-            priceFilter = `
+            sizeFilter = `
               <div class="selected-filters__item selected-item">
                 <div class="selected-item__name">Size: ${data.selected.size.min}cm - ${data.selected.size.max}cm</div>
                 <div class="selected-item__remove-btn" data-params="minSize,maxSize"></div>
