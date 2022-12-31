@@ -1,16 +1,18 @@
 import {CallbackFn} from "../types/callbackFn";
 import {Product} from "../types/product";
 import store from "../store/store";
-import {addProductToCart} from "../store/reducers/cart";
-import {removeProductFromCart} from "../store/reducers/cart";
-import {removeProductFromCartAll} from "../store/reducers/cart";
-import {setProductQuantityInCart} from "../store/reducers/cart";
+import {
+    addProductToCart,
+    removeProductFromCart,
+    removeProductFromCartAll,
+    setProductQuantityInCart
+} from "../store/reducers/cart";
 
 import products from '../../assets/data/products.json'
 import {CartDataType, GetPriceByPromocodes} from "../types/cartDataType";
 import {MainPageDataType} from "../types/mainPageDataType";
 import {FilterCategoryType, FilterList, FiltersDataType, MinMaxType} from "../types/filtersDataType";
-import promocode, {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/promocode";
+import {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/promocode";
 import {Router} from "../router/router";
 import {ProductPageType} from "../types/productPageType";
 
@@ -92,7 +94,7 @@ export class Controller {
             },
         }
 
-        const productsList = products.filter(p => {
+        let productsList = products.filter(p => {
             if (selectedFilters.colors?.indexOf(p.color) === -1) {
                 return false;
             }
@@ -112,7 +114,28 @@ export class Controller {
                 return false
             }
             return true;
-        })
+        });
+
+        productsList.sort((p1, p2) => {
+            const sortByValues = (params.get('sortBy') || '-').split('-')
+            const sortBy = sortByValues[0] as keyof Product;
+            const order = sortByValues[1] === 'desc' ? -1 : 1;
+
+            if (p1.hasOwnProperty(sortBy) && p2.hasOwnProperty(sortBy)) {
+                const p1Value = p1[sortBy];
+                const p2Value = p2[sortBy];
+                if (p1Value > p2Value) {
+                    return order * 1;
+                }
+                return order * -1;
+            }
+
+            return 0;
+        });
+
+        const perPage = params.has('perPage') ? Number(params.get('perPage') || productsList.length) : 10
+        productsList = productsList.slice(0, perPage)
+
 
         const filters: FiltersDataType = {
             colors: [...products.reduce((set, product) => set.add(product.color), new Set<string>())],
@@ -132,7 +155,7 @@ export class Controller {
             selected: selectedFilters,
         }
 
-        let cart: CartDataType|null = null;
+        let cart: CartDataType;
         this.cart((cartData) => {
             cart = cartData;
         })
@@ -141,7 +164,13 @@ export class Controller {
             products: productsList,
             filters: filters,
             cart: cart!,
-            switchType: params.get('switch-view')!,
+            switchType: params.get('switch-view'),
+            view: {
+                filters: selectedFilters,
+                productsCount: productsList.length,
+                sortBy: params.get('sortBy'),
+                perPage: params.get('perPage'),
+            }
         }
 
         callback(data);
