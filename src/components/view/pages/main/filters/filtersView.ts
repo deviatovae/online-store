@@ -9,11 +9,6 @@ import {Router} from "../../../../router/router";
  * view отвечающий за отрисовку фильтров каталога
  */
 export class FiltersView extends View<FiltersDataType> {
-    /**
-     * @todo нужно принимать здесь объект с данными, требующимися для отрисовки фильтров
-     * @todo объект должен содержать все значения фильтров (нужно получать их из списка продуктов)
-     * @todo также объект должен содержать выбранные пользователем фильтры (из GET параметров)
-     */
     public render(data: FiltersDataType): string {
         // language=HTML
         return `
@@ -180,8 +175,8 @@ export class FiltersView extends View<FiltersDataType> {
 
         const minValue = parseFloat(slider.dataset.min ?? '')
         const maxValue = parseFloat(slider.dataset.max ?? '')
-        let startMin = maxValue * 0.15
-        let startMax = maxValue * 0.85
+        let startMin = minValue
+        let startMax = maxValue
 
         if (Number(slider.dataset.min_selected)) {
             startMin = Number(slider.dataset.min_selected)
