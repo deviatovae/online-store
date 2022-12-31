@@ -9,12 +9,6 @@ import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
 import products from '../../../../assets/data/products.json'
 
-
-
-// <div class="cards__img cards__img_mastercard"></div>
-// <div class="cards__img cards__img_amex"></div>
-
-
 export class PaymentPageView extends View<CartDataType> {
     protected views = {
         paymentList: new PaymentListView(),
@@ -84,7 +78,7 @@ export class PaymentPageView extends View<CartDataType> {
         `;
     }
 
-       public afterRender(controller: Controller): void {
+    public afterRender(controller: Controller): void {
     super.afterRender(controller);
 
     let validName:boolean = false;
@@ -167,7 +161,7 @@ export class PaymentPageView extends View<CartDataType> {
       if (arrAddress.length >= 3 && arrAddress.every((el) => el.length >= 5)){
         addressInput.classList.add('valid');
         addressInput.classList.remove('invalid');
-        validAdress = true
+        validAdress = true;
       } else {
         addressInput.classList.remove('valid');
         addressInput.classList.add('invalid');
@@ -190,11 +184,11 @@ export class PaymentPageView extends View<CartDataType> {
       if (numberInput.value.match(/^\+\d{9}/g)){
         numberInput.classList.add('valid');
         numberInput.classList.remove('invalid');
-        validTell = true
+        validTell = true;
       } else {
         numberInput.classList.remove('valid');
         numberInput.classList.add('invalid');
-        validTell = false
+        validTell = false;
       }
     })
 
@@ -287,7 +281,7 @@ export class PaymentPageView extends View<CartDataType> {
       let value: any = dateInput.value.replace(/[^\d]/g, '').substring(0,4);
       if (value != '' ) {
         value = value.match(/.{1,2}/g).join('/');
-      } else value = ''
+      } else value = '';
       dateInput.value = value;
 
       if (Number(dateInput.value.substring(0,2)) >= 12) {
@@ -297,7 +291,7 @@ export class PaymentPageView extends View<CartDataType> {
 
       if (dateInput.value.match(/.{5}/g) && Number(dateInput.value.substring(0,2)) <= 12){
         dateInput.classList.add('valid');
-        dateInput.classList.remove('invalid')
+        dateInput.classList.remove('invalid');
         validCardDate = true;
       }
       else {
@@ -306,7 +300,6 @@ export class PaymentPageView extends View<CartDataType> {
         validCardDate = false;
       }
     })
-
 
     const orderBtn  = document.querySelector(".summary-content__order-btn") as HTMLInputElement;
     orderBtn.addEventListener('click', (event: Event) => {
@@ -332,7 +325,7 @@ export class PaymentPageView extends View<CartDataType> {
         }, 2000);
 
         // Подсвететка не валидных блоков
-        if (!validName) nameInput.classList.add('invalid'); 
+        if (!validName) nameInput.classList.add('invalid');
         else nameInput.classList.remove('invalid');
 
         if (!validAdress) addressInput.classList.add('invalid');
@@ -357,5 +350,5 @@ export class PaymentPageView extends View<CartDataType> {
         else cvvInput.classList.remove('invalid');
       }
     })
-  } 
+  }
 }
