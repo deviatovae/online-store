@@ -6,6 +6,10 @@ import {formatPrice} from "../../helpers/helpers";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {Controller} from "../../../controller/controller"; 
+import {Router} from "../../../router/router";
+import products from '../../../../assets/data/products.json'
+
+
 
 // <div class="cards__img cards__img_mastercard"></div>
 // <div class="cards__img cards__img_amex"></div>
@@ -71,6 +75,7 @@ export class PaymentPageView extends View<CartDataType> {
                     </div>
                     <div class="summary-content__order-btn">Place order now</div>
                   </div>
+                  <div class="payment-test">Test payment data</div>
                 </div>
               </div>
             </div>
@@ -82,18 +87,74 @@ export class PaymentPageView extends View<CartDataType> {
        public afterRender(controller: Controller): void {
     super.afterRender(controller);
 
+    let validName:boolean = false;
+    let validAdress:boolean = false;
+    let validEmail:boolean = false;
+    let validTell:boolean = false;
+    let validCardName:boolean = false;
+    let validCardNumber:boolean = false;
+    let validCardDate:boolean = false;
+    let validCardCvv:boolean = false;
+
+    // обработка кнопки тестовых платежных данных
+    const paymentTest = document.querySelector(".payment-test") as HTMLInputElement;
+    paymentTest.addEventListener('click', (event: Event) => {
+
+      nameInput.value = 'Rubi Rhod';
+      validName = true;
+      nameInput.classList.add('valid');
+      nameInput.classList.remove('invalid');
+
+      addressInput.value = "United States, New-York, Times Square";
+      validAdress = true;
+      addressInput.classList.add('valid');
+      addressInput.classList.remove('invalid');
+
+      emailInput.value = "Rubi_Rohod@icloud.com";
+      validEmail = true;
+
+      numberInput.value = "+7123456789";
+      validTell = true;
+      numberInput.classList.add('valid');
+      numberInput.classList.remove('invalid');
+
+      nameCardInput.value = "RUBI RHOD";
+      validCardName = true;
+      nameCardInput.classList.add('valid');
+      nameCardInput.classList.remove('invalid');
+
+      cardNumberInput.value = "5761 8744 9011 0008";
+      validCardNumber = true;
+      cardNumberInput.classList.add('valid');
+      cardNumberInput.classList.remove('invalid');
+      cardsImg.classList.add("cards__img_mastercard");
+
+      dateInput.value = "04/24";
+      validCardDate = true;
+      dateInput.classList.add('valid');
+      dateInput.classList.remove('invalid');
+
+      cvvInput.value = "344";
+      validCardCvv = true;
+      cvvInput.classList.add('valid');
+      cvvInput.classList.remove('invalid');
+    })
+
+
     // валидация name
     const nameInput  = document.querySelector(".payment-details__name") as HTMLInputElement;
     nameInput.addEventListener('input', (event: Event) => {
 
-      nameInput.value = nameInput.value.replace(/[^\a-z, а-я]/g, "");
+      nameInput.value = nameInput.value.replace(/[^A-Za-z, А-Яа-я]/g, "");
       let arrName = Array.from(nameInput.value.split(' '))
       if (arrName.length >= 2 && arrName.every((el) => el.length >= 3 )){
         nameInput.classList.add('valid');
         nameInput.classList.remove('invalid');
+        validName = true;
       } else {
         nameInput.classList.remove('valid');
         nameInput.classList.add('invalid');
+        validName = false;
       }
     })
 
@@ -101,14 +162,16 @@ export class PaymentPageView extends View<CartDataType> {
     const addressInput = document.querySelector(".payment-details__shipping-address") as HTMLInputElement;
     addressInput.addEventListener('input', (event: Event) => {
 
-      addressInput.value = addressInput.value.replace(/[^\a-z, а-я]/g, "");
+      addressInput.value = addressInput.value.replace(/[^\-\A-Za-z, А-Яа-я]/g, "");
       let arrAddress = Array.from(addressInput.value.split(' '))
       if (arrAddress.length >= 3 && arrAddress.every((el) => el.length >= 5)){
         addressInput.classList.add('valid');
         addressInput.classList.remove('invalid');
+        validAdress = true
       } else {
         addressInput.classList.remove('valid');
         addressInput.classList.add('invalid');
+        validAdress = false;
       }
     })
 
@@ -116,6 +179,7 @@ export class PaymentPageView extends View<CartDataType> {
     const emailInput  = document.querySelector(".payment-details__email") as HTMLInputElement;
     emailInput.addEventListener('input', (event: Event) => {
       emailInput.classList.add('invalid');
+      validEmail = true;
     })
 
     // валидация phone-number
@@ -126,9 +190,11 @@ export class PaymentPageView extends View<CartDataType> {
       if (numberInput.value.match(/^\+\d{9}/g)){
         numberInput.classList.add('valid');
         numberInput.classList.remove('invalid');
+        validTell = true
       } else {
         numberInput.classList.remove('valid');
         numberInput.classList.add('invalid');
+        validTell = false
       }
     })
 
@@ -139,36 +205,41 @@ export class PaymentPageView extends View<CartDataType> {
     cardNumberInput.addEventListener('input', (event: Event) => {
       let arrCardNumber = Array.from(cardNumberInput.value)
 
-      let value: string | any = cardNumberInput.value.replace(/[^\d]/g, '').substring(0,16);
+      let value: any = cardNumberInput.value.replace(/[^\d]/g, '').substring(0,16);
       if (value != '') {
         value = value.match(/.{1,4}/g).join(' ');
-      } else value = ''
+      } else value = '';
       cardNumberInput.value = value;
+      console.log (typeof value)
 
-      if (arrCardNumber[0] === '4') {
-        cardsImg.classList.add("cards__img_visa")
-      } else {
-        cardsImg.classList.remove("cards__img_visa")
-      }
+      switch (arrCardNumber[0]) {
+        case '4':
+          cardsImg.classList.add("cards__img_visa");
+          break;
 
-      if (arrCardNumber[0] === '5') {
-        cardsImg.classList.add("cards__img_mastercard")
-      } else {
-        cardsImg.classList.remove("cards__img_mastercard")
-      }
+        case '5':
+          cardsImg.classList.add("cards__img_mastercard");
+          break;
 
-      if (arrCardNumber[0] === '6') {
-        cardsImg.classList.add("cards__img_amex")
-      } else {
-        cardsImg.classList.remove("cards__img_amex")
+        case '6':
+          cardsImg.classList.add("cards__img_amex");
+          break;
+      
+        default:
+          cardsImg.classList.remove("cards__img_visa");
+          cardsImg.classList.remove("cards__img_mastercard");
+          cardsImg.classList.remove("cards__img_amex");
+          break;
       }
 
       if (arrCardNumber.length >= 19){
         cardNumberInput.classList.add('valid');
         cardNumberInput.classList.remove('invalid');
+        validCardNumber = true;
       } else {
         cardNumberInput.classList.remove('valid');
         cardNumberInput.classList.add('invalid');
+        validCardNumber = false;
       }
     })
 
@@ -176,16 +247,18 @@ export class PaymentPageView extends View<CartDataType> {
     const nameCardInput  = document.querySelector(".card-details__name") as HTMLInputElement;
     nameCardInput.addEventListener('input', (event: Event) => {
 
-      nameCardInput.value = nameCardInput.value.replace(/[^\a-z, а-я]/g, "");
-      let arrName = Array.from(nameCardInput.value.split(' '))
+      nameCardInput.value = nameCardInput.value.replace(/[^\A-Za-z /]/g, "");
+      let arrName = Array.from(nameCardInput.value.split(' '));
 
       if (arrName.length >= 2 && arrName.every((el) => el.length >= 3 )){
         nameCardInput.classList.add('valid');
         nameCardInput.classList.remove('invalid');
+        validCardName = true;
       }
       else { 
         nameCardInput.classList.remove('valid');
         nameCardInput.classList.add('invalid');
+        validCardName = false;
       }
     })
 
@@ -197,11 +270,13 @@ export class PaymentPageView extends View<CartDataType> {
 
       if (cvvInput.value.match(/^\d{3}/g)){
         cvvInput.classList.add('valid');
-        cvvInput.classList.remove('invalid')
+        cvvInput.classList.remove('invalid');
+        validCardCvv = true;
       }
       else {
         cvvInput.classList.remove('valid');
-        cvvInput.classList.add('invalid')
+        cvvInput.classList.add('invalid');
+        validCardCvv = false;
       };
     })
 
@@ -209,8 +284,8 @@ export class PaymentPageView extends View<CartDataType> {
     const dateInput  = document.querySelector(".bottom-row__date") as HTMLInputElement;
     dateInput.addEventListener('input', (event: Event) => {
 
-      let value: string | any = dateInput.value.replace(/[^\d]/g, '').substring(0,4);
-      if (value != '') {
+      let value: any = dateInput.value.replace(/[^\d]/g, '').substring(0,4);
+      if (value != '' ) {
         value = value.match(/.{1,2}/g).join('/');
       } else value = ''
       dateInput.value = value;
@@ -223,10 +298,63 @@ export class PaymentPageView extends View<CartDataType> {
       if (dateInput.value.match(/.{5}/g) && Number(dateInput.value.substring(0,2)) <= 12){
         dateInput.classList.add('valid');
         dateInput.classList.remove('invalid')
+        validCardDate = true;
       }
       else {
-        dateInput.classList.remove('valid')
+        dateInput.classList.remove('valid');
         dateInput.classList.add('invalid');
+        validCardDate = false;
+      }
+    })
+
+
+    const orderBtn  = document.querySelector(".summary-content__order-btn") as HTMLInputElement;
+    orderBtn.addEventListener('click', (event: Event) => {
+
+      if (validName && validAdress && validEmail &&
+          validTell && validCardName && validCardNumber && 
+          validCardDate && validCardCvv) {
+        orderBtn.textContent = "Your order has been placed!";
+        orderBtn.style.color = "green";
+        setTimeout(() => {
+          for (let i = 1 ; i <= products.length; i++) {
+            controller.removeProductFromCartAll(i);
+          }
+          Router.redirectTo('/');
+        }, 3000);
+      }
+      else {
+        orderBtn.textContent = "Check your data";
+        orderBtn.style.color = "red";
+        setTimeout(() => {
+          orderBtn.textContent = "Place order now",
+          orderBtn.style.color = "#eee";
+        }, 2000);
+
+        // Подсвететка не валидных блоков
+        if (!validName) nameInput.classList.add('invalid'); 
+        else nameInput.classList.remove('invalid');
+
+        if (!validAdress) addressInput.classList.add('invalid');
+        else addressInput.classList.remove('invalid');
+
+        if (!validEmail) emailInput.classList.add('invalid');
+        else emailInput.classList.remove('invalid');
+
+        if (!validTell) numberInput.classList.add('invalid');
+        else numberInput.classList.remove('invalid');
+
+        if (!validCardName) nameCardInput.classList.add('invalid');
+        else nameCardInput.classList.remove('invalid');
+
+        if (!validCardNumber) cardNumberInput.classList.add('invalid');
+        else cardNumberInput.classList.remove('invalid');
+
+        if (!validCardDate) dateInput.classList.add('invalid');
+        else dateInput.classList.remove('invalid');
+        
+        if (!validCardCvv) cvvInput.classList.add('invalid');
+        else cvvInput.classList.remove('invalid');
       }
     })
   } 

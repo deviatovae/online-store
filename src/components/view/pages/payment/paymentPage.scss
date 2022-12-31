@@ -5,6 +5,17 @@
   align-items: center;
   justify-content: center;
   padding-bottom: 50px;
+ 
+  &__order-summary .payment-test {
+   display: flex;
+   justify-content: center;
+   cursor: pointer;
+   font-weight: bold;
+   text-decoration: underline;
+   text-transform: uppercase;
+   color: #747474;
+   padding-top: 10px;
+  }
 
   &__container {
     display: flex;
@@ -132,6 +143,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 400px;
+  font: 1rem "Sitara", sans-serif;
   border: solid 1px $greyBorder;
   background-color: #F9F9F9;
   padding: 10px 15px;
@@ -256,10 +268,6 @@
   }
 }
 
-
-
-
-
 .valid:focus {
   border: 1.5px solid green;
 }
@@ -269,28 +277,10 @@
   border: 1.5px solid green;
 }
 
-// .invalid {
-//   border: 1.5px solid red;
-// }
-
 .invalid {
   border: 1.5px solid red;
 }
 
-.payment-details__name:focus:invalid,
-.payment-details__phone-number:focus:invalid,
-.payment-details__shipping-address:focus:invalid,
-.payment-details__email:focus:invalid,
-.card-details__card-number:focus:invalid {
-  border: 1.5px solid red;
-}
-
-// .payment-details__name:invalid,
-// .payment-details__phone-number:invalid,
-// .payment-details__shipping-address:invalid,
-// .payment-details__email:invalid {
-//   border: 1px solid red;
-// }
 
 
 
