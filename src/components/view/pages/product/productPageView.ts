@@ -83,7 +83,7 @@ export default class ProductPageView extends View<ProductPageType> {
 
         if (arrowBack) {
             arrowBack.onclick = () => {
-                Router.redirectTo('/');
+                Router.goBack('/');
             }
         }
 
