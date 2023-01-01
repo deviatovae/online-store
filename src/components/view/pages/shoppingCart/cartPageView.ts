@@ -8,6 +8,7 @@ import {formatPrice} from "../../helpers/helpers";
 import {AppliedPromocodeListView} from "./appliedPromocodeListView";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
+import {PaymentPageView} from "../payment/paymentPageView";
 
 
 export default class CartPageView extends View<CartDataType> {
@@ -16,6 +17,7 @@ export default class CartPageView extends View<CartDataType> {
         appliedPromocodes: new AppliedPromocodeListView(),
         header: new HeaderView(),
         footer: new FooterView(),
+        payment: new PaymentPageView(),
     };
 
     render(cart: CartDataType): string {
@@ -35,6 +37,7 @@ export default class CartPageView extends View<CartDataType> {
         return `
           ${this.views.header.render(cart)}
           <main>
+            ${this.views.payment.render(cart)}
             <div class="shopping-cart wrapper">
               <div class="shopping-cart__header">SHOPPING CART</div>
               <div class="shopping-cart__subheader">
@@ -46,7 +49,7 @@ export default class CartPageView extends View<CartDataType> {
               <div class="shopping-cart__list">
                 ${this.views.cartList.render(cart.items)}
               </div>
-              <div class="shopping-cart__summery">
+              <div class="shopping-cart__summary">
                 <div class="summery-info">
                   <div class="summery-info__header">SUMMARY</div>
                   <div class="summery-info__order-container">
@@ -84,7 +87,9 @@ export default class CartPageView extends View<CartDataType> {
         const order = document.querySelector('.button-order') as HTMLElement | null;
 
         if (order) {
-            order.onclick = () => Router.redirectTo('/payment');
+            order.onclick = () => {
+                this.views.payment.show();
+            }
         }
 
         /**
