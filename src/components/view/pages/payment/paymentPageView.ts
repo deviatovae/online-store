@@ -2,12 +2,12 @@ import {View} from "../../view";
 import './paymentPage.scss'
 import {PaymentListView} from "./paymentListView";
 import {CartDataType} from "../../../types/cartDataType";
-import {formatPrice} from "../../helpers/helpers";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
-import {Controller} from "../../../controller/controller"; 
+import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
 import products from '../../../../assets/data/products.json'
+import {current} from "@reduxjs/toolkit";
 
 export class PaymentPageView extends View<CartDataType> {
     protected views = {
@@ -19,63 +19,58 @@ export class PaymentPageView extends View<CartDataType> {
     render(cart: CartDataType): string {
         // language=HTML
         return `
-          ${this.views.header.render(cart)}
-          <main>
-            <div class="main-catalog__payment-page payment-page">
-              <div class="payment-page__container">
-                <div class="payment-page__payment-details payment-details">
-                  <div class="payment-details__credentials">
-                    <div class="payment-details__title">PAYMENT DETAILS</div>
-                    <div class="payment-details__info">
-                      <input type="text" class="payment-details__name" required="required" placeholder="Name">
-                      <input type="text" class="payment-details__shipping-address" required="required" placeholder="Address">
-                      <input type="email" class="payment-details__email" required="required" placeholder="Email">
-                      <input type="tel" class="payment-details__phone-number" required="required"  placeholder="Phone +7 ...">
+          <div class="main-catalog__payment-page payment-page">
+            <div class="payment-page__container">
+              <div class="payment-page__payment-details payment-details">
+                <div class="payment-details__credentials">
+                  <div class="payment-details__close-btn"></div>
+                  <div class="payment-details__title">PAYMENT DETAILS</div>
+                  <div class="payment-details__info">
+                    <input type="text" class="payment-details__name" required="required" placeholder="Name">
+                    <input type="text" class="payment-details__shipping-address" required="required"
+                           placeholder="Address">
+                    <input type="email" class="payment-details__email" required="required" placeholder="Email">
+                    <input type="tel" class="payment-details__phone-number" required="required"
+                           placeholder="Phone +7 ...">
+                  </div>
+                </div>
+                <div class="payment-details__payment-method payment-method">
+                  <div class="payment-method__top">
+                    <div class="payment-method__title">PAYMENT METHOD</div>
+                    <div class="payment-method__cards cards">
+                      <div class="cards__img"></div>
                     </div>
                   </div>
-                  <div class="payment-details__payment-method payment-method">
-                    <div class="payment-method__top">
-                      <div class="payment-method__title">PAYMENT METHOD</div>
-                      <div class="payment-method__cards cards">
-                        <div class="cards__img"></div>
-                      </div>
-                    </div>
-                    <div class="payment-method__card-details card-details">
-                      <input type="text" class="card-details__name" required="required" placeholder="Name on card">
-                      <input type="text" class="card-details__card-number" required="required" placeholder="хxxx xxxx xxxx xxxx">
-                      <div class="card-details__bottom-row bottom-row">
-                        <input type="text" class="bottom-row__date" required="required" placeholder="MM/YY">
-                        <input type="number" class="bottom-row__cvv" required="required" placeholder="CVV">
-                      </div>
+                  <div class="payment-method__card-details card-details">
+                    <input type="text" class="card-details__name" required="required" placeholder="Name on card">
+                    <input type="text" class="card-details__card-number" required="required"
+                           placeholder="хxxx xxxx xxxx xxxx">
+                    <div class="card-details__bottom-row bottom-row">
+                      <input type="text" class="bottom-row__date" required="required" placeholder="MM/YY">
+                      <input type="number" class="bottom-row__cvv" required="required" placeholder="CVV">
                     </div>
                   </div>
                 </div>
-                <div class="payment-page__order-summary order-summary">
-                  <div class="order-summary__content summary-content">
-                    <div class="summary-content__title">ORDER SUMMARY</div>
-                    <div class="summary-content__list summary-list">${this.views.paymentList.render(cart.items)}
-                    </div>
-                    <div class="summary-content__discount summary-discount">
-                      <div class="summary-discount__name">
-                        ${cart.promocodes.applied.map(p => `<div>${p.name}  ${p.discount}% OFF</div>`).join('')}
-                      </div>
-                      <div class="summary-discount__amount">
-                        ${cart.promocodes.applied.map(p => `<div>-$${formatPrice(cart.getPriceByPromocodes() - cart.getPriceByPromocodes([p]))}</div>`).join('')}
-                      </div>
-                    </div>
-                    <div class="summary-content__total summary-total">
-                      <div class="summary-total__name">Order Total</div>
-                      <div class="summary-total__amount">$${formatPrice(cart.priceAfterDiscount)}</div>
-                    </div>
-                    <div class="summary-content__order-btn">Place order now</div>
-                  </div>
-                  <div class="payment-test">Test payment data</div>
-                </div>
+                <div class="summary-content__order-btn">Place order now</div>
+                <div class="payment-test">Test payment data</div>
               </div>
             </div>
-          </main>
-          ${this.views.footer.render()}
+          </div>
         `;
+    }
+
+    public show() {
+        const container = document.querySelector<HTMLElement>('.payment-page');
+        if (container) {
+            container.style.display = 'flex';
+        }
+    }
+
+    public hide() {
+        const container = document.querySelector<HTMLElement>('.payment-page');
+        if (container) {
+            container.style.display = 'none';
+        }
     }
 
     public afterRender(controller: Controller): void {
@@ -218,7 +213,7 @@ export class PaymentPageView extends View<CartDataType> {
         case '6':
           cardsImg.classList.add("cards__img_amex");
           break;
-      
+
         default:
           cardsImg.classList.remove("cards__img_visa");
           cardsImg.classList.remove("cards__img_mastercard");
@@ -244,16 +239,15 @@ export class PaymentPageView extends View<CartDataType> {
       nameCardInput.value = nameCardInput.value.replace(/[^\A-Za-z /]/g, "");
       let arrName = Array.from(nameCardInput.value.split(' '));
 
-      if (arrName.length >= 2 && arrName.every((el) => el.length >= 3 )){
-        nameCardInput.classList.add('valid');
-        nameCardInput.classList.remove('invalid');
-        validCardName = true;
-      }
-      else { 
-        nameCardInput.classList.remove('valid');
-        nameCardInput.classList.add('invalid');
-        validCardName = false;
-      }
+        if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
+            nameCardInput.classList.add('valid');
+            nameCardInput.classList.remove('invalid');
+            validCardName = true;
+        } else {
+            nameCardInput.classList.remove('valid');
+            nameCardInput.classList.add('invalid');
+            validCardName = false;
+        }
     })
 
     // валидация CVV
@@ -301,11 +295,35 @@ export class PaymentPageView extends View<CartDataType> {
       }
     })
 
+    const closeButton = document.querySelector<HTMLElement>('.payment-details__close-btn')
+    closeButton?.addEventListener('click', () => {
+        this.hide()
+    })
+
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+            this.hide()
+        }
+    })
+
+    const paymentPage =  document.querySelector<HTMLElement>('.payment-page')
+        paymentPage?.addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                this.hide()
+            } else {
+                return
+            }
+        })
+
     const orderBtn  = document.querySelector(".summary-content__order-btn") as HTMLInputElement;
+    if (!orderBtn) {
+        return;
+    }
+
     orderBtn.addEventListener('click', (event: Event) => {
 
       if (validName && validAdress && validEmail &&
-          validTell && validCardName && validCardNumber && 
+          validTell && validCardName && validCardNumber &&
           validCardDate && validCardCvv) {
         orderBtn.textContent = "Your order has been placed!";
         orderBtn.style.color = "green";
@@ -345,8 +363,8 @@ export class PaymentPageView extends View<CartDataType> {
 
         if (!validCardDate) dateInput.classList.add('invalid');
         else dateInput.classList.remove('invalid');
-        
-        if (!validCardCvv) cvvInput.classList.add('invalid');
+
+          if (!validCardCvv) cvvInput.classList.add('invalid');
         else cvvInput.classList.remove('invalid');
       }
     })
