@@ -92,6 +92,10 @@ export default class CartPageView extends View<CartDataType> {
             }
         }
 
+        if (Router.getUrlParams().has('buy-now')) {
+            this.views.payment.show();
+        }
+
         /**
          * promocode
          */
