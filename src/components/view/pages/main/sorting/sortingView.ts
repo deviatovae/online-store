@@ -168,5 +168,12 @@ export class SortingFiltersView extends View<ProductViewDataType> {
                 Router.setUrlParam(select.dataset.param || '', select.value)
             })
         })
+
+        const copyLink = document.querySelector<HTMLElement>('.selected-filters__copy-link')
+        copyLink?.addEventListener('click', () => {
+            navigator.clipboard.writeText(window.location.href).then(function() {
+                copyLink.textContent = 'Copied'
+            });
+        })
     }
 }
