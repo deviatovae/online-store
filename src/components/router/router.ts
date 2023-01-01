@@ -47,8 +47,12 @@ export class Router {
     }
 
     public static redirectTo(url: string): void {
-        history.pushState({previous: window.location.href}, '', url);
+        history.pushState({previousUrl: window.location.href}, '', url);
         window.dispatchEvent(new Event('popstate'));
+    }
+
+    public static goBack(fallbackUrl: string): void {
+        Router.redirectTo(window.history.state.previousUrl ?? fallbackUrl);
     }
 
     /**
