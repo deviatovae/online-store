@@ -194,9 +194,9 @@ export class PaymentPageView extends View<CartDataType> {
     cardNumberInput.addEventListener('input', (event: Event) => {
       let arrCardNumber = Array.from(cardNumberInput.value)
 
-      let value: any = cardNumberInput.value.replace(/[^\d]/g, '').substring(0,16);
+      let value = cardNumberInput.value.replace(/[^\d]/g, '').substring(0,16);
       if (value != '') {
-        value = value.match(/.{1,4}/g).join(' ');
+        value = value.match(/.{1,4}/g)?.join(' ') || '';
       } else value = '';
       cardNumberInput.value = value;
       console.log (typeof value)
@@ -272,9 +272,9 @@ export class PaymentPageView extends View<CartDataType> {
     const dateInput  = document.querySelector(".bottom-row__date") as HTMLInputElement;
     dateInput.addEventListener('input', (event: Event) => {
 
-      let value: any = dateInput.value.replace(/[^\d]/g, '').substring(0,4);
+      let value = dateInput.value.replace(/[^\d]/g, '').substring(0,4);
       if (value != '' ) {
-        value = value.match(/.{1,2}/g).join('/');
+        value = value.match(/.{1,2}/g)?.join('/') || '';
       } else value = '';
       dateInput.value = value;
 
