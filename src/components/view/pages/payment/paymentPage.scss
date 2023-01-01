@@ -5,6 +5,17 @@
   align-items: center;
   justify-content: center;
   padding-bottom: 50px;
+ 
+  &__order-summary .payment-test {
+   display: flex;
+   justify-content: center;
+   cursor: pointer;
+   font-weight: bold;
+   text-decoration: underline;
+   text-transform: uppercase;
+   color: #747474;
+   padding-top: 10px;
+  }
 
   &__container {
     display: flex;
@@ -39,6 +50,8 @@
     padding: 10px;
     border: solid $greyBorder 1px;
     margin-bottom: 15px;
+
+    outline: 0;
   }
 }
 
@@ -81,13 +94,11 @@
     background-size: contain;
 
     &_visa {
-
       background: url("/src/assets/img/payment/visa.svg") center no-repeat;
     }
 
     &_mastercard {
       background: url("/src/assets/img/payment/mastercard.svg") center no-repeat;
-
     }
 
     &_amex {
@@ -115,6 +126,8 @@
   padding: 10px;
   border: solid $greyBorder 1px;
   height: 40px;
+
+  outline: 0;
 }
 
 .bottom-row {
@@ -130,6 +143,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 400px;
+  font: 1rem "Sitara", sans-serif;
   border: solid 1px $greyBorder;
   background-color: #F9F9F9;
   padding: 10px 15px;
@@ -253,4 +267,20 @@
     letter-spacing: 1px;
   }
 }
+
+.valid:focus {
+  border: 1.5px solid green;
+}
+
+.valid,
+.payment-details__email:valid {
+  border: 1.5px solid green;
+}
+
+.invalid {
+  border: 1.5px solid red;
+}
+
+
+
 

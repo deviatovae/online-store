@@ -214,7 +214,6 @@ export class Controller {
             store.dispatch(removeProductFromCartAll(product))
         }
     }
-
     /**
      * проверка промокода
      */
