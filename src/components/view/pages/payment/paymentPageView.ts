@@ -70,6 +70,9 @@ export class PaymentPageView extends View<CartDataType> {
         const container = document.querySelector<HTMLElement>('.payment-page');
         if (container) {
             container.style.display = 'none';
+            if (Router.getUrlParams().has('buy-now')) {
+                Router.removeUrlParamKey('buy-now');
+            }
         }
     }
 
@@ -285,8 +288,8 @@ export class PaymentPageView extends View<CartDataType> {
       } else dateInput.classList.remove('invalid');
 
       if (dateInput.value.match(/.{5}/g) &&
-      Number(dateInput.value.substring(0,2)) <= 12 &&
-      Number(dateInput.value.substring(3,5)) >= +thisYear){
+          Number(dateInput.value.substring(0,2)) <= 12 &&
+          Number(dateInput.value.substring(3,5)) >= +thisYear) {
         dateInput.classList.add('valid');
         dateInput.classList.remove('invalid');
         validCardDate = true;
