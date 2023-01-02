@@ -2,7 +2,7 @@ import {CallbackFn} from "../types/callbackFn";
 import {Product} from "../types/product";
 import store from "../store/store";
 import {
-    addProductToCart,
+    addProductToCart, clearCart,
     removeProductFromCart,
     removeProductFromCartAll,
     setProductQuantityInCart
@@ -206,6 +206,10 @@ export class Controller {
         if (product) {
             store.dispatch(removeProductFromCartAll(product))
         }
+    }
+
+    async clearCart() {
+        store.dispatch(clearCart());
     }
 
     /**
