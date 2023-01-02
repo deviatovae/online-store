@@ -70,6 +70,9 @@ export class PaymentPageView extends View<CartDataType> {
         const container = document.querySelector<HTMLElement>('.payment-page');
         if (container) {
             container.style.display = 'none';
+            if (Router.getUrlParams().has('buy-now')) {
+                Router.removeUrlParamKey('buy-now');
+            }
         }
     }
 
