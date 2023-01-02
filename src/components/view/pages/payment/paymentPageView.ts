@@ -199,7 +199,6 @@ export class PaymentPageView extends View<CartDataType> {
         value = value.match(/.{1,4}/g)?.join(' ') || '';
       } else value = '';
       cardNumberInput.value = value;
-      console.log (typeof value)
 
       switch (arrCardNumber[0]) {
         case '4':
@@ -364,7 +363,7 @@ export class PaymentPageView extends View<CartDataType> {
         if (!validCardDate) dateInput.classList.add('invalid');
         else dateInput.classList.remove('invalid');
 
-          if (!validCardCvv) cvvInput.classList.add('invalid');
+        if (!validCardCvv) cvvInput.classList.add('invalid');
         else cvvInput.classList.remove('invalid');
       }
     })
