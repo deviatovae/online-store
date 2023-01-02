@@ -46,21 +46,21 @@ export class SortingFiltersView extends View<ProductViewDataType> {
         }
 
         let priceFilter = '';
-        if (data.filters.price?.min || data.filters.price?.max) {
+        if (data.filters.price?.selectedMin || data.filters.price?.selectedMax) {
             // language=HTML
             priceFilter = `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">Price: $${data.filters.price.min} - $${data.filters.price.max}</div>
+                <div class="selected-item__name">Price: $${data.filters.price.selectedMin} - $${data.filters.price.selectedMax}</div>
                 <div class="selected-item__remove-btn" data-params="minPrice,maxPrice"></div>
               </div>`;
         }
 
         let sizeFilter = '';
-        if (data.filters.size?.min || data.filters.size?.max) {
+        if (data.filters.size?.selectedMin || data.filters.size?.selectedMax) {
             // language=HTML
             sizeFilter = `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">Size: ${data.filters.size.min}cm - ${data.filters.size.max}cm</div>
+                <div class="selected-item__name">Size: ${data.filters.size.selectedMin}cm - ${data.filters.size.selectedMax}cm</div>
                 <div class="selected-item__remove-btn" data-params="minSize,maxSize"></div>
               </div>`;
         }
@@ -78,11 +78,11 @@ export class SortingFiltersView extends View<ProductViewDataType> {
         }
 
         let stockFilter = '';
-        if (data.filters.stock?.min || data.filters.stock?.max) {
+        if (data.filters.stock?.selectedMin || data.filters.stock?.selectedMax) {
             // language=HTML
             stockFilter = `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">Stock: ${data.filters.stock.min} - ${data.filters.stock.max}</div>
+                <div class="selected-item__name">Stock: ${data.filters.stock.selectedMin} - ${data.filters.stock.selectedMax}</div>
                 <div class="selected-item__remove-btn" data-params="minStock,maxStock"></div>
               </div>`;
         }
