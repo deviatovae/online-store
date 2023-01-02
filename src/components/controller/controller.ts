@@ -2,7 +2,7 @@ import {CallbackFn} from "../types/callbackFn";
 import {Product} from "../types/product";
 import store from "../store/store";
 import {
-    addProductToCart,
+    addProductToCart, clearCart,
     removeProductFromCart,
     removeProductFromCartAll,
     setProductQuantityInCart
@@ -71,8 +71,12 @@ export class Controller {
         const params = Router.getUrlParams()
 
         const getMinMax = (minMax: MinMaxType, value: number) =>  {
-            minMax.min = minMax.min > value ? value : minMax.min
-            minMax.max = minMax.max < value ? value : minMax.max
+            if (minMax.min) {
+                minMax.min = minMax.min > value ? value : minMax.min
+            }
+            if (minMax.max) {
+                minMax.max = minMax.max < value ? value : minMax.max
+            }
             return minMax;
         }
 
@@ -81,42 +85,23 @@ export class Controller {
             collections: params.get('collections')?.split(',').map((s) => Number(s)),
             categories: params.get('categories')?.split(',').map((c => ({category: c, products: 0}))),
             price: {
-                min: Number(params.get('minPrice')) || 0,
-                max: Number(params.get('maxPrice')) || 0,
+                selectedMin: Number(params.get('minPrice')) || 0,
+                selectedMax: Number(params.get('maxPrice')) || 0,
             },
             size: {
-                min: Number(params.get('minSize')) || 0,
-                max: Number(params.get('maxSize')) || 0,
+                selectedMin: Number(params.get('minSize')) || 0,
+                selectedMax: Number(params.get('maxSize')) || 0,
             },
             stock: {
-                min: Number(params.get('minStock')) || 0,
-                max: Number(params.get('maxStock')) || 0,
+                selectedMin: Number(params.get('minStock')) || 0,
+                selectedMax: Number(params.get('maxStock')) || 0,
             },
         }
 
-        let productsList = products.filter(p => {
-            if (selectedFilters.colors?.indexOf(p.color) === -1) {
-                return false;
-            }
-            if (selectedFilters.collections?.indexOf(p.collection) === -1) {
-                return false
-            }
-            if (selectedFilters.categories?.some((c) => c.category === p.category) == false) {
-                return false
-            }
-            if ((selectedFilters.price?.min || 0) > p.price || (selectedFilters.price?.max || p.price) < p.price) {
-                return false
-            }
-            if ((selectedFilters.size?.min || 0) > p.size || (selectedFilters.size?.max || p.size) < p.size) {
-                return false
-            }
-            if ((selectedFilters.stock?.min || 0) > p.stock || (selectedFilters.stock?.max || p.stock) < p.stock) {
-                return false
-            }
-            return true;
-        });
+        const getProductsBySelectedFilters = this.getProductsFunc(products, selectedFilters);
 
-        productsList.sort((p1, p2) => {
+        let filteredProducts = getProductsBySelectedFilters();
+        filteredProducts.sort((p1, p2) => {
             const sortByValues = (params.get('sortBy') || '-').split('-')
             const sortBy = sortByValues[0] as keyof Product;
             const order = sortByValues[1] === 'desc' ? -1 : 1;
@@ -133,14 +118,10 @@ export class Controller {
             return 0;
         });
 
-        const perPage = params.has('perPage') ? Number(params.get('perPage') || productsList.length) : 10
-        productsList = productsList.slice(0, perPage)
-
-
         const filters: FiltersDataType = {
-            colors: [...products.reduce((set, product) => set.add(product.color), new Set<string>())],
-            collections: [...products.reduce((set, product) => set.add(product.collection), new Set<number>())].sort(),
-            categories: [...products.reduce((map, product) => {
+            colors: [...getProductsBySelectedFilters(['colors']).reduce((set, product) => set.add(product.color), new Set<string>())],
+            collections: [...getProductsBySelectedFilters(['collections']).reduce((set, product) => set.add(product.collection), new Set<number>())].sort(),
+            categories: [...getProductsBySelectedFilters(['categories']).reduce((map, product) => {
                 if (map.has(product.category)) {
                     const type = map.get(product.category) as FilterCategoryType
                     type.products = type.products + 1 || 1;
@@ -149,11 +130,23 @@ export class Controller {
                 }
                 return map;
             }, new Map<string, FilterCategoryType>).values()],
-            price: products.reduce((minMax, product) => getMinMax(minMax, product.price), {min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER}),
-            size: products.reduce((minMax, product) => getMinMax(minMax, product.size), {min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER}),
-            stock: products.reduce((minMax, product) => getMinMax(minMax, product.stock), {min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER}),
+            price: getProductsBySelectedFilters(['price']).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.price), {
+                min: Number.MAX_SAFE_INTEGER,
+                max: Number.MIN_SAFE_INTEGER
+            }),
+            size: getProductsBySelectedFilters(['size']).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.size), {
+                min: Number.MAX_SAFE_INTEGER,
+                max: Number.MIN_SAFE_INTEGER
+            }),
+            stock: getProductsBySelectedFilters(['stock']).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.stock), {
+                min: Number.MAX_SAFE_INTEGER,
+                max: Number.MIN_SAFE_INTEGER
+            }),
             selected: selectedFilters,
         }
+
+        const perPage = params.has('perPage') ? Number(params.get('perPage') || filteredProducts.length) : 10
+        filteredProducts = filteredProducts.slice(0, perPage)
 
         let cart: CartDataType;
         this.cart((cartData) => {
@@ -161,13 +154,13 @@ export class Controller {
         })
 
         const data: MainPageDataType = {
-            products: productsList,
+            products: filteredProducts,
             filters: filters,
             cart: cart!,
             switchType: params.get('switch-view'),
             view: {
                 filters: selectedFilters,
-                productsCount: productsList.length,
+                productsCount: filteredProducts.length,
                 sortBy: params.get('sortBy'),
                 perPage: params.get('perPage'),
             }
@@ -213,6 +206,10 @@ export class Controller {
         if (product) {
             store.dispatch(removeProductFromCartAll(product))
         }
+    }
+
+    async clearCart() {
+        store.dispatch(clearCart());
     }
     /**
      * проверка промокода

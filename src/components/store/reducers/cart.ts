@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Product } from '../../types/product';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {Product} from '../../types/product';
 import {CartItemType} from "../../types/cartItemType";
 import {loadState} from "./storeDb";
 
@@ -61,20 +61,30 @@ export const slice = createSlice({
     /**
      * удаляет продукт с любым количеством из стейта корзины
      */
-    removeProductFromCartAll: (state, { payload: product }: PayloadAction<Product>): CartItemType[] => {
+    removeProductFromCartAll: (state, {payload: product}: PayloadAction<Product>): CartItemType[] => {
       const item = state.find((item) => item.product.id === product.id);
       if (item) {
         return state.filter((stateItem) => stateItem !== item);
       }
       return state;
     },
+
+    clearCart: (state): CartItemType[] => {
+      return [];
+    }
   },
 });
 
 /**
  * экспортируем экшены из слайса, чтобы использовать их в контроллере
  */
-export const { addProductToCart, removeProductFromCart, removeProductFromCartAll, setProductQuantityInCart } = slice.actions;
+export const {
+  addProductToCart,
+  removeProductFromCart,
+  removeProductFromCartAll,
+  setProductQuantityInCart,
+  clearCart
+} = slice.actions;
 
 /**
  * экспортируем редюсер из слайса, чтобы использовать его для инициализации store
