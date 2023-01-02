@@ -6,8 +6,6 @@ import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
-import products from '../../../../assets/data/products.json'
-import {current} from "@reduxjs/toolkit";
 
 export class PaymentPageView extends View<CartDataType> {
     protected views = {
@@ -77,229 +75,183 @@ export class PaymentPageView extends View<CartDataType> {
     }
 
     public afterRender(controller: Controller): void {
-    super.afterRender(controller);
+        super.afterRender(controller);
 
-    let validName:boolean = false;
-    let validAdress:boolean = false;
-    let validEmail:boolean = false;
-    let validTell:boolean = false;
-    let validCardName:boolean = false;
-    let validCardNumber:boolean = false;
-    let validCardDate:boolean = false;
-    let validCardCvv:boolean = false;
+        let validName: boolean = false;
+        let validAddress: boolean = false;
+        let validEmail: boolean = false;
+        let validTell: boolean = false;
+        let validCardName: boolean = false;
+        let validCardNumber: boolean = false;
+        let validCardDate: boolean = false;
+        let validCardCvv: boolean = false
 
-    // обработка кнопки тестовых платежных данных
-    const paymentTest = document.querySelector(".payment-test") as HTMLInputElement;
-    paymentTest.addEventListener('click', (event: Event) => {
+        // валидация name
+        const nameInput = document.querySelector<HTMLInputElement>(".payment-details__name");
+        nameInput?.addEventListener('input', (event: Event) => {
 
-      nameInput.value = 'Rubi Rhod';
-      validName = true;
-      nameInput.classList.add('valid');
-      nameInput.classList.remove('invalid');
+            nameInput.value = nameInput.value.replace(/[^A-Za-z, А-Яа-я]/g, "");
+            let arrName = Array.from(nameInput.value.split(' '))
+            if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
+                nameInput.classList.add('valid');
+                nameInput.classList.remove('invalid');
+                validName = true;
+            } else {
+                nameInput.classList.remove('valid');
+                nameInput.classList.add('invalid');
+                validName = false;
+            }
+        })
 
-      addressInput.value = "United States, New-York, Times Square";
-      validAdress = true;
-      addressInput.classList.add('valid');
-      addressInput.classList.remove('invalid');
+        // валидация address
+        const addressInput = document.querySelector<HTMLInputElement>(".payment-details__shipping-address");
+        addressInput?.addEventListener('input', (event: Event) => {
 
-      emailInput.value = "Rubi_Rohod@icloud.com";
-      validEmail = true;
+            addressInput.value = addressInput.value.replace(/[^\-\A-Za-z, А-Яа-я]/g, "");
+            let arrAddress = Array.from(addressInput.value.split(' '))
+            if (arrAddress.length >= 3 && arrAddress.every((el) => el.length >= 5)) {
+                addressInput.classList.add('valid');
+                addressInput.classList.remove('invalid');
+                validAddress = true;
+            } else {
+                addressInput.classList.remove('valid');
+                addressInput.classList.add('invalid');
+                validAddress = false;
+            }
+        })
 
-      numberInput.value = "+7123456789";
-      validTell = true;
-      numberInput.classList.add('valid');
-      numberInput.classList.remove('invalid');
+        // валидация email
+        const emailInput = document.querySelector<HTMLInputElement>(".payment-details__email");
+        emailInput?.addEventListener('input', (event: Event) => {
+            emailInput.classList.add('invalid');
+            validEmail = true;
+        })
 
-      nameCardInput.value = "RUBI RHOD";
-      validCardName = true;
-      nameCardInput.classList.add('valid');
-      nameCardInput.classList.remove('invalid');
+        // валидация phone-number
+        const numberInput = document.querySelector<HTMLInputElement>(".payment-details__phone-number");
+        numberInput?.addEventListener('input', (event: Event) => {
 
-      cardNumberInput.value = "5761 8744 9011 0008";
-      validCardNumber = true;
-      cardNumberInput.classList.add('valid');
-      cardNumberInput.classList.remove('invalid');
-      cardsImg.classList.add("cards__img_mastercard");
+            numberInput.value = numberInput.value.replace(/[^\0-9]/g, "").substring(0, 16);
+            if (numberInput.value.match(/^\+\d{9}/g)) {
+                numberInput.classList.add('valid');
+                numberInput.classList.remove('invalid');
+                validTell = true;
+            } else {
+                numberInput.classList.remove('valid');
+                numberInput.classList.add('invalid');
+                validTell = false;
+            }
+        })
 
-      dateInput.value = "04/24";
-      validCardDate = true;
-      dateInput.classList.add('valid');
-      dateInput.classList.remove('invalid');
+        // валидация card number
+        const cardNumberInput = document.querySelector<HTMLInputElement>(".card-details__card-number");
+        const cardsImg = document.querySelector<HTMLElement>(".cards__img");
 
-      cvvInput.value = "344";
-      validCardCvv = true;
-      cvvInput.classList.add('valid');
-      cvvInput.classList.remove('invalid');
-    })
+        cardNumberInput?.addEventListener('input', (event: Event) => {
+            let arrCardNumber = Array.from(cardNumberInput.value)
 
+            let value = cardNumberInput.value.replace(/[^\d]/g, '').substring(0, 16);
+            if (value != '') {
+                value = value.match(/.{1,4}/g)?.join(' ') || '';
+            } else value = '';
+            cardNumberInput.value = value;
 
-    // валидация name
-    const nameInput  = document.querySelector(".payment-details__name") as HTMLInputElement;
-    nameInput.addEventListener('input', (event: Event) => {
+            switch (arrCardNumber[0]) {
+                case '4':
+                    cardsImg?.classList.add("cards__img_visa");
+                    break;
 
-      nameInput.value = nameInput.value.replace(/[^A-Za-z, А-Яа-я]/g, "");
-      let arrName = Array.from(nameInput.value.split(' '))
-      if (arrName.length >= 2 && arrName.every((el) => el.length >= 3 )){
-        nameInput.classList.add('valid');
-        nameInput.classList.remove('invalid');
-        validName = true;
-      } else {
-        nameInput.classList.remove('valid');
-        nameInput.classList.add('invalid');
-        validName = false;
-      }
-    })
+                case '5':
+                    cardsImg?.classList.add("cards__img_mastercard");
+                    break;
 
-    // валидация adress
-    const addressInput = document.querySelector(".payment-details__shipping-address") as HTMLInputElement;
-    addressInput.addEventListener('input', (event: Event) => {
+                case '6':
+                    cardsImg?.classList.add("cards__img_amex");
+                    break;
 
-      addressInput.value = addressInput.value.replace(/[^\-\A-Za-z, А-Яа-я]/g, "");
-      let arrAddress = Array.from(addressInput.value.split(' '))
-      if (arrAddress.length >= 3 && arrAddress.every((el) => el.length >= 5)){
-        addressInput.classList.add('valid');
-        addressInput.classList.remove('invalid');
-        validAdress = true;
-      } else {
-        addressInput.classList.remove('valid');
-        addressInput.classList.add('invalid');
-        validAdress = false;
-      }
-    })
+                default:
+                    cardsImg?.classList.remove("cards__img_visa");
+                    cardsImg?.classList.remove("cards__img_mastercard");
+                    cardsImg?.classList.remove("cards__img_amex");
+                    break;
+            }
 
-    // валидация email
-    const emailInput  = document.querySelector(".payment-details__email") as HTMLInputElement;
-    emailInput.addEventListener('input', (event: Event) => {
-      emailInput.classList.add('invalid');
-      validEmail = true;
-    })
+            if (arrCardNumber.length >= 19) {
+                cardNumberInput.classList.add('valid');
+                cardNumberInput.classList.remove('invalid');
+                validCardNumber = true;
+            } else {
+                cardNumberInput.classList.remove('valid');
+                cardNumberInput.classList.add('invalid');
+                validCardNumber = false;
+            }
+        })
 
-    // валидация phone-number
-    const numberInput  = document.querySelector(".payment-details__phone-number") as HTMLInputElement;
-    numberInput.addEventListener('input', (event: Event) => {
+        // валидация name on card
+        const nameCardInput = document.querySelector<HTMLInputElement>(".card-details__name");
+        nameCardInput?.addEventListener('input', (event: Event) => {
 
-      numberInput.value = numberInput.value.replace(/[^\0-9]/g, "").substring(0,16);
-      if (numberInput.value.match(/^\+\d{9}/g)){
-        numberInput.classList.add('valid');
-        numberInput.classList.remove('invalid');
-        validTell = true;
-      } else {
-        numberInput.classList.remove('valid');
-        numberInput.classList.add('invalid');
-        validTell = false;
-      }
-    })
+            nameCardInput.value = nameCardInput.value.replace(/[^\A-Za-z /]/g, "");
+            let arrName = Array.from(nameCardInput.value.split(' '));
 
-    // валидация card number
-    const cardNumberInput  = document.querySelector(".card-details__card-number") as HTMLInputElement;
-    const cardsImg  = document.querySelector(".cards__img") as HTMLElement;
+            if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
+                nameCardInput.classList.add('valid');
+                nameCardInput.classList.remove('invalid');
+                validCardName = true;
+            } else {
+                nameCardInput.classList.remove('valid');
+                nameCardInput.classList.add('invalid');
+                validCardName = false;
+            }
+        })
 
-    cardNumberInput.addEventListener('input', (event: Event) => {
-      let arrCardNumber = Array.from(cardNumberInput.value)
+        // валидация CVV
+        const cvvInput = document.querySelector<HTMLInputElement>(".bottom-row__cvv");
+        cvvInput?.addEventListener('input', (event: Event) => {
 
-      let value = cardNumberInput.value.replace(/[^\d]/g, '').substring(0,16);
-      if (value != '') {
-        value = value.match(/.{1,4}/g)?.join(' ') || '';
-      } else value = '';
-      cardNumberInput.value = value;
+            cvvInput.value = cvvInput.value.replace(/[^\0-9]/g, "").substring(0, 3);
 
-      switch (arrCardNumber[0]) {
-        case '4':
-          cardsImg.classList.add("cards__img_visa");
-          break;
+            if (cvvInput.value.match(/^\d{3}/g)) {
+                cvvInput.classList.add('valid');
+                cvvInput.classList.remove('invalid');
+                validCardCvv = true;
+            } else {
+                cvvInput.classList.remove('valid');
+                cvvInput.classList.add('invalid');
+                validCardCvv = false;
+            }
+            ;
+        })
 
-        case '5':
-          cardsImg.classList.add("cards__img_mastercard");
-          break;
+        // валидация MM/YY
+        const dateInput = document.querySelector<HTMLInputElement>(".bottom-row__date");
+        dateInput?.addEventListener('input', (event: Event) => {
 
-        case '6':
-          cardsImg.classList.add("cards__img_amex");
-          break;
+            const thisYear = new Date().getFullYear().toString().substring(2, 4)
+            let value = dateInput.value.replace(/[^\d]/g, '').substring(0, 4);
 
-        default:
-          cardsImg.classList.remove("cards__img_visa");
-          cardsImg.classList.remove("cards__img_mastercard");
-          cardsImg.classList.remove("cards__img_amex");
-          break;
-      }
+            if (value != '') {
+                value = value.match(/.{1,2}/g)?.join('/') || '';
+            } else value = '';
+            dateInput.value = value;
 
-      if (arrCardNumber.length >= 19){
-        cardNumberInput.classList.add('valid');
-        cardNumberInput.classList.remove('invalid');
-        validCardNumber = true;
-      } else {
-        cardNumberInput.classList.remove('valid');
-        cardNumberInput.classList.add('invalid');
-        validCardNumber = false;
-      }
-    })
+            if (Number(dateInput.value.substring(0, 2)) >= 12) {
 
-    // валидация name on card
-    const nameCardInput  = document.querySelector(".card-details__name") as HTMLInputElement;
-    nameCardInput.addEventListener('input', (event: Event) => {
+                dateInput.classList.add('invalid');
+            } else dateInput.classList.remove('invalid');
 
-      nameCardInput.value = nameCardInput.value.replace(/[^\A-Za-z /]/g, "");
-      let arrName = Array.from(nameCardInput.value.split(' '));
-
-        if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
-            nameCardInput.classList.add('valid');
-            nameCardInput.classList.remove('invalid');
-            validCardName = true;
-        } else {
-            nameCardInput.classList.remove('valid');
-            nameCardInput.classList.add('invalid');
-            validCardName = false;
-        }
-    })
-
-    // валидация CVV
-    const cvvInput  = document.querySelector(".bottom-row__cvv") as HTMLInputElement;
-    cvvInput.addEventListener('input', (event: Event) => {
-
-      cvvInput.value = cvvInput.value.replace(/[^\0-9]/g, "").substring(0,3);
-
-      if (cvvInput.value.match(/^\d{3}/g)){
-        cvvInput.classList.add('valid');
-        cvvInput.classList.remove('invalid');
-        validCardCvv = true;
-      }
-      else {
-        cvvInput.classList.remove('valid');
-        cvvInput.classList.add('invalid');
-        validCardCvv = false;
-      };
-    })
-
-    // валидация MM/YY
-    const dateInput  = document.querySelector(".bottom-row__date") as HTMLInputElement;
-    dateInput.addEventListener('input', (event: Event) => {
-
-      const thisYear = new Date().getFullYear().toString().substring(2,4)
-      let value = dateInput.value.replace(/[^\d]/g, '').substring(0,4);
-
-      if (value != '' ) {
-        value = value.match(/.{1,2}/g)?.join('/') || '';
-      } else value = '';
-      dateInput.value = value;
-
-      if (Number(dateInput.value.substring(0,2)) >= 12) {
-
-        dateInput.classList.add('invalid');
-      } else dateInput.classList.remove('invalid');
-
-      if (dateInput.value.match(/.{5}/g) &&
-          Number(dateInput.value.substring(0,2)) <= 12 &&
-          Number(dateInput.value.substring(3,5)) >= +thisYear) {
-        dateInput.classList.add('valid');
-        dateInput.classList.remove('invalid');
-        validCardDate = true;
-      }
-      else {
-        dateInput.classList.remove('valid');
-        dateInput.classList.add('invalid');
-        validCardDate = false;
-      }
-    })
+            if (dateInput.value.match(/.{5}/g) &&
+                Number(dateInput.value.substring(0, 2)) <= 12 &&
+                Number(dateInput.value.substring(3, 5)) >= +thisYear) {
+                dateInput.classList.add('valid');
+                dateInput.classList.remove('invalid');
+                validCardDate = true;
+            } else {
+                dateInput.classList.remove('valid');
+                dateInput.classList.add('invalid');
+                validCardDate = false;
+            }
+        })
 
     const closeButton = document.querySelector<HTMLElement>('.payment-details__close-btn')
     closeButton?.addEventListener('click', () => {
@@ -312,7 +264,7 @@ export class PaymentPageView extends View<CartDataType> {
         }
     })
 
-    const paymentPage =  document.querySelector<HTMLElement>('.payment-page')
+        const paymentPage = document.querySelector<HTMLElement>('.payment-page')
         paymentPage?.addEventListener('click', (e) => {
             if (e.target === e.currentTarget) {
                 this.hide()
@@ -321,58 +273,110 @@ export class PaymentPageView extends View<CartDataType> {
             }
         })
 
-    const orderBtn  = document.querySelector(".summary-content__order-btn") as HTMLInputElement;
-    if (!orderBtn) {
-        return;
+        const orderBtn = document.querySelector<HTMLInputElement>(".summary-content__order-btn");
+        orderBtn?.addEventListener('click', (event: Event) => {
+
+            if (validName && validAddress && validEmail &&
+                validTell && validCardName && validCardNumber &&
+                validCardDate && validCardCvv) {
+                orderBtn.textContent = "Your order has been placed!";
+                orderBtn.style.color = "green";
+                setTimeout(() => {
+                    controller.clearCart().then(() => Router.redirectTo('/'))
+                }, 3000);
+            } else {
+                orderBtn.textContent = "Check your data";
+                orderBtn.style.color = "red";
+                setTimeout(() => {
+                    orderBtn.textContent = "Place order now",
+                        orderBtn.style.color = "#eee";
+                }, 2000);
+
+                // Подсвететка не валидных блоков
+                if (!validName) nameInput?.classList.add('invalid');
+                else nameInput?.classList.remove('invalid');
+
+                if (!validAddress) addressInput?.classList.add('invalid');
+                else addressInput?.classList.remove('invalid');
+
+                if (!validEmail) emailInput?.classList.add('invalid');
+                else emailInput?.classList.remove('invalid');
+
+                if (!validTell) numberInput?.classList.add('invalid');
+                else numberInput?.classList.remove('invalid');
+
+                if (!validCardName) nameCardInput?.classList.add('invalid');
+                else nameCardInput?.classList.remove('invalid');
+
+                if (!validCardNumber) cardNumberInput?.classList.add('invalid');
+                else cardNumberInput?.classList.remove('invalid');
+
+                if (!validCardDate) dateInput?.classList.add('invalid');
+                else dateInput?.classList.remove('invalid');
+
+                if (!validCardCvv) cvvInput?.classList.add('invalid');
+                else cvvInput?.classList.remove('invalid');
+            }
+        })
+
+        // обработка кнопки тестовых платежных данных
+        const paymentTest = document.querySelector<HTMLInputElement>(".payment-test");
+        paymentTest?.addEventListener('click', (event: Event) => {
+            if (nameInput) {
+                nameInput.value = 'Rubi Rhod';
+                validName = true;
+                nameInput.classList.add('valid');
+                nameInput.classList.remove('invalid');
+            }
+
+            if (addressInput) {
+                addressInput.value = "United States, New-York, Times Square";
+                validAddress = true;
+                addressInput.classList.add('valid');
+                addressInput.classList.remove('invalid');
+            }
+
+            if (emailInput) {
+                emailInput.value = "Rubi_Rohod@icloud.com";
+                validEmail = true;
+            }
+
+            if (numberInput) {
+                numberInput.value = "+7123456789";
+                validTell = true;
+                numberInput.classList.add('valid');
+                numberInput.classList.remove('invalid');
+            }
+
+            if (nameCardInput) {
+                nameCardInput.value = "RUBI RHOD";
+                validCardName = true;
+                nameCardInput.classList.add('valid');
+                nameCardInput.classList.remove('invalid');
+            }
+
+            if (cardNumberInput && cardsImg) {
+                cardNumberInput.value = "5761 8744 9011 0008";
+                validCardNumber = true;
+                cardNumberInput.classList.add('valid');
+                cardNumberInput.classList.remove('invalid');
+                cardsImg.classList.add("cards__img_mastercard");
+            }
+
+            if (dateInput) {
+                dateInput.value = "04/24";
+                validCardDate = true;
+                dateInput.classList.add('valid');
+                dateInput.classList.remove('invalid');
+            }
+
+            if (cvvInput) {
+                cvvInput.value = "344";
+                validCardCvv = true;
+                cvvInput.classList.add('valid');
+                cvvInput.classList.remove('invalid');
+            }
+
+        })
     }
-
-    orderBtn.addEventListener('click', (event: Event) => {
-
-      if (validName && validAdress && validEmail &&
-          validTell && validCardName && validCardNumber &&
-          validCardDate && validCardCvv) {
-        orderBtn.textContent = "Your order has been placed!";
-        orderBtn.style.color = "green";
-        setTimeout(() => {
-          for (let i = 1 ; i <= products.length; i++) {
-            controller.removeProductFromCartAll(i);
-          }
-          Router.redirectTo('/');
-        }, 3000);
-      }
-      else {
-        orderBtn.textContent = "Check your data";
-        orderBtn.style.color = "red";
-        setTimeout(() => {
-          orderBtn.textContent = "Place order now",
-          orderBtn.style.color = "#eee";
-        }, 2000);
-
-        // Подсвететка не валидных блоков
-        if (!validName) nameInput.classList.add('invalid');
-        else nameInput.classList.remove('invalid');
-
-        if (!validAdress) addressInput.classList.add('invalid');
-        else addressInput.classList.remove('invalid');
-
-        if (!validEmail) emailInput.classList.add('invalid');
-        else emailInput.classList.remove('invalid');
-
-        if (!validTell) numberInput.classList.add('invalid');
-        else numberInput.classList.remove('invalid');
-
-        if (!validCardName) nameCardInput.classList.add('invalid');
-        else nameCardInput.classList.remove('invalid');
-
-        if (!validCardNumber) cardNumberInput.classList.add('invalid');
-        else cardNumberInput.classList.remove('invalid');
-
-        if (!validCardDate) dateInput.classList.add('invalid');
-        else dateInput.classList.remove('invalid');
-
-        if (!validCardCvv) cvvInput.classList.add('invalid');
-        else cvvInput.classList.remove('invalid');
-      }
-    })
-  }
 }
