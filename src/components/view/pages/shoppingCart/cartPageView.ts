@@ -53,10 +53,16 @@ export default class CartPageView extends View<CartDataType> {
                 <div class="summery-info">
                   <div class="summery-info__header">SUMMARY</div>
                   <div class="summery-info__order-container">
-                    <div class="order-container__text-value">
-                      <div class="order-container__text">Order Total</div>
-                      <div class="order-container__total-value ${cart.promocodes.applied.length ? 'discount' : ''}">
-                          $${formatPrice(cart.getPriceByPromocodes())}
+                    <div class="order-container__content">
+                      <div class="order-container__items-count items-count">
+                        <div class="items-count__title">Items Total</div>
+                        <div class="items-count__count">${cart.productCount}</div>
+                      </div>
+                      <div class="order-container__total-count total-count">
+                        <div class="total-count__text">Order Total</div>
+                        <div class="total-count__total-value ${cart.promocodes.applied.length ? 'discount' : ''}">
+                            $${formatPrice(cart.getPriceByPromocodes())}
+                        </div>
                       </div>
                     </div>
                     <div class="order-container__promocode promocode-order">
