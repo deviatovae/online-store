@@ -119,9 +119,9 @@ export class Controller {
         });
 
         const filters: FiltersDataType = {
-            colors: [...getProductsBySelectedFilters(['colors']).reduce((set, product) => set.add(product.color), new Set<string>())],
-            collections: [...getProductsBySelectedFilters(['collections']).reduce((set, product) => set.add(product.collection), new Set<number>())].sort(),
-            categories: [...getProductsBySelectedFilters(['categories']).reduce((map, product) => {
+            colors: [...getProductsBySelectedFilters(['colors'], products).reduce((set, product) => set.add(product.color), new Set<string>())],
+            collections: [...getProductsBySelectedFilters(['collections'], products).reduce((set, product) => set.add(product.collection), new Set<number>())].sort(),
+            categories: [...getProductsBySelectedFilters(['categories'], products).reduce((map, product) => {
                 if (map.has(product.category)) {
                     const type = map.get(product.category) as FilterCategoryType
                     type.products = type.products + 1 || 1;
@@ -130,15 +130,15 @@ export class Controller {
                 }
                 return map;
             }, new Map<string, FilterCategoryType>).values()],
-            price: getProductsBySelectedFilters(['price']).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.price), {
+            price: getProductsBySelectedFilters(['price'], products).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.price), {
                 min: Number.MAX_SAFE_INTEGER,
                 max: Number.MIN_SAFE_INTEGER
             }),
-            size: getProductsBySelectedFilters(['size']).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.size), {
+            size: getProductsBySelectedFilters(['size'], products).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.size), {
                 min: Number.MAX_SAFE_INTEGER,
                 max: Number.MIN_SAFE_INTEGER
             }),
-            stock: getProductsBySelectedFilters(['stock']).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.stock), {
+            stock: getProductsBySelectedFilters(['stock'], products).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.stock), {
                 min: Number.MAX_SAFE_INTEGER,
                 max: Number.MIN_SAFE_INTEGER
             }),
@@ -234,7 +234,7 @@ export class Controller {
     }
 
     private getProductsFunc(products: Product[], selectedFilters: FilterList) {
-        return (except: (keyof FilterList)[] = []): Product[] => {
+        return (except: (keyof FilterList)[] = [], fallbackResult: Product[] = []): Product[] => {
             const filters: FilterList = JSON.parse(JSON.stringify(selectedFilters))
             let key: keyof FilterList;
             for (key in filters) {
@@ -264,7 +264,7 @@ export class Controller {
                 return true;
             })
 
-            return result;
+            return result.length ? result : fallbackResult;
         }
     }
 }
