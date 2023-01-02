@@ -178,7 +178,7 @@
 .cart-item-info {
 
   &__name {
-    font: 1.2rem $Sitara;
+    font: 1.1rem $Sitara;
     padding-bottom: 10px;
   }
 }
@@ -257,7 +257,7 @@ input[type=number]::-webkit-outer-spin-button {
 .summery-info {
   background: #F9F9F9;
   border: 1px solid $greyBorder;
-  height: 300px;
+  height: 320px;
 
   &__header {
     font: 1.5rem $Sitara;
@@ -269,7 +269,7 @@ input[type=number]::-webkit-outer-spin-button {
   }
 
   &__order-container {
-    height: 220px;
+    height: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -279,22 +279,13 @@ input[type=number]::-webkit-outer-spin-button {
 
 .order-container {
 
-    &__text-value {
+    &__content {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       width: 90%;
       border-top: 1px solid $greyBorder;
       margin-bottom: 7px;
     }
-
-    &__text,
-    &__total-value {
-      font: 1.2rem $Sitara;
-      color: #000;
-      font-weight: 600;
-      padding-top: 10px;
-    }
-
 
     &__text-value-promo {
       visibility: hidden;
@@ -303,6 +294,24 @@ input[type=number]::-webkit-outer-spin-button {
       justify-content: space-between;
       align-items: center;
     }
+}
+
+.total-count__text,
+.total-count__total-value,
+.items-count__title,
+.items-count__count,
+.cart-item-info__name {
+  font: 1.1rem $Sitara;
+  color: $mainBlack;
+  font-weight: 600;
+  padding: 10px 0;
+}
+
+.items-count,
+.total-count {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid $greyBorder;
 }
 
 .promocode-order {
