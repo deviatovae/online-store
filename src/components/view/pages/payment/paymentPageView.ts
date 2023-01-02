@@ -274,7 +274,9 @@ export class PaymentPageView extends View<CartDataType> {
     const dateInput  = document.querySelector(".bottom-row__date") as HTMLInputElement;
     dateInput.addEventListener('input', (event: Event) => {
 
+      const thisYear = new Date().getFullYear().toString().substring(2,4)
       let value = dateInput.value.replace(/[^\d]/g, '').substring(0,4);
+
       if (value != '' ) {
         value = value.match(/.{1,2}/g)?.join('/') || '';
       } else value = '';
@@ -285,7 +287,9 @@ export class PaymentPageView extends View<CartDataType> {
         dateInput.classList.add('invalid');
       } else dateInput.classList.remove('invalid');
 
-      if (dateInput.value.match(/.{5}/g) && Number(dateInput.value.substring(0,2)) <= 12){
+      if (dateInput.value.match(/.{5}/g) &&
+          Number(dateInput.value.substring(0,2)) <= 12 &&
+          Number(dateInput.value.substring(3,5)) >= +thisYear) {
         dateInput.classList.add('valid');
         dateInput.classList.remove('invalid');
         validCardDate = true;
