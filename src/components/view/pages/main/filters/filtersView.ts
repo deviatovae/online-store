@@ -41,18 +41,18 @@ export class FiltersView extends View<FiltersDataType> {
               <div class="filters-item__content item-content">
                 <div class="item-content__price price">
                   <div>
-                    <input type="text" class="box-start" value="${data.price?.min}">
+                    <input type="text" class="box-start" value="${data.price?.selectedMin}">
                     <span class="price__dollar_start">$</span>
                   </div>
                   <div>
-                    <input type="text" class="box-end" value="${data.price?.max}">
+                    <input type="text" class="box-end" value="${data.price?.selectedMax}">
                     <span class="price__dollar_end">$</span>
                   </div>
                 </div>
                 <div class="item-content__dual-range dual-range">
                   <div class="slider" 
-                       data-min_selected="${data.selected.price?.min}" 
-                       data-max_selected="${data.selected.price?.max}" 
+                       data-min_selected="${data.selected.price?.selectedMin}" 
+                       data-max_selected="${data.selected.price?.selectedMax}" 
                        data-min="${data.price?.min}" 
                        data-max="${data.price?.max}"></div>
                 </div>
@@ -62,13 +62,13 @@ export class FiltersView extends View<FiltersDataType> {
               <div class="filters-item__title">Size</div>
               <div class="filters-item__content item-content">
                 <div class="item-content__size size">
-                  <input type="text" class="box-start" placeholder="${data.size?.min}cm">
-                  <input type="text" class="box-end" placeholder="${data.size?.max}cm">
+                  <input type="text" class="box-start" placeholder="${data.size?.selectedMin}cm">
+                  <input type="text" class="box-end" placeholder="${data.size?.selectedMax}cm">
                 </div>
                 <div class="item-content__dual-range dual-range">
                   <div class="slider"
-                       data-min_selected="${data.selected.size?.min}"
-                       data-max_selected="${data.selected.size?.max}"
+                       data-min_selected="${data.selected.size?.selectedMin}"
+                       data-max_selected="${data.selected.size?.selectedMax}"
                        data-min="${data.size?.min}" 
                        data-max="${data.size?.max}"></div>
                 </div>
@@ -93,13 +93,13 @@ export class FiltersView extends View<FiltersDataType> {
               <div class="filters-item__title">In stock</div>
               <div class="filters-item__content item-content">
                 <div class="item-content__stock stock">
-                  <input type="text" class="box-start" placeholder="${data.stock?.min}">
-                  <input type="text" class="box-end" placeholder="${data.stock?.max}">
+                  <input type="text" class="box-start" placeholder="${data.stock?.selectedMin}">
+                  <input type="text" class="box-end" placeholder="${data.stock?.selectedMax}">
                 </div>
                 <div class="item-content__dual-range dual-range">
                   <div class="slider"
-                       data-min_selected="${data.selected.stock?.min}"
-                       data-max_selected="${data.selected.stock?.max}"
+                       data-min_selected="${data.selected.stock?.selectedMin}"
+                       data-max_selected="${data.selected.stock?.selectedMax}"
                        data-min="${data.stock?.min}" 
                        data-max="${data.stock?.max}"></div>
                 </div>

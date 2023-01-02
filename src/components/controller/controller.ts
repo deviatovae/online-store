@@ -119,9 +119,9 @@ export class Controller {
         });
 
         const filters: FiltersDataType = {
-            colors: [...getProductsBySelectedFilters(['colors']).reduce((set, product) => set.add(product.color), new Set<string>())],
-            collections: [...getProductsBySelectedFilters(['collections']).reduce((set, product) => set.add(product.collection), new Set<number>())].sort(),
-            categories: [...getProductsBySelectedFilters(['categories']).reduce((map, product) => {
+            colors: [...getProductsBySelectedFilters(['colors'], products).reduce((set, product) => set.add(product.color), new Set<string>())],
+            collections: [...getProductsBySelectedFilters(['collections'], products).reduce((set, product) => set.add(product.collection), new Set<number>())].sort(),
+            categories: [...getProductsBySelectedFilters(['categories'], products).reduce((map, product) => {
                 if (map.has(product.category)) {
                     const type = map.get(product.category) as FilterCategoryType
                     type.products = type.products + 1 || 1;
@@ -130,15 +130,15 @@ export class Controller {
                 }
                 return map;
             }, new Map<string, FilterCategoryType>).values()],
-            price: getProductsBySelectedFilters(['price']).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.price), {
+            price: getProductsBySelectedFilters(['price'], products).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.price), {
                 min: Number.MAX_SAFE_INTEGER,
                 max: Number.MIN_SAFE_INTEGER
             }),
-            size: getProductsBySelectedFilters(['size']).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.size), {
+            size: getProductsBySelectedFilters(['size'], products).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.size), {
                 min: Number.MAX_SAFE_INTEGER,
                 max: Number.MIN_SAFE_INTEGER
             }),
-            stock: getProductsBySelectedFilters(['stock']).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.stock), {
+            stock: getProductsBySelectedFilters(['stock'], products).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.stock), {
                 min: Number.MAX_SAFE_INTEGER,
                 max: Number.MIN_SAFE_INTEGER
             }),
@@ -211,6 +211,7 @@ export class Controller {
     async clearCart() {
         store.dispatch(clearCart());
     }
+
     /**
      * проверка промокода
      */
@@ -229,6 +230,41 @@ export class Controller {
         const promo = store.getState().promocode.applied.find(code => code.id === id)
         if (promo) {
             store.dispatch(removeAppliedPromocode(promo.id))
+        }
+    }
+
+    private getProductsFunc(products: Product[], selectedFilters: FilterList) {
+        return (except: (keyof FilterList)[] = [], fallbackResult: Product[] = []): Product[] => {
+            const filters: FilterList = JSON.parse(JSON.stringify(selectedFilters))
+            let key: keyof FilterList;
+            for (key in filters) {
+                if (except.includes(key)) {
+                    delete filters[key]
+                }
+            }
+            const result = products.filter(p => {
+                if (filters.colors?.indexOf(p.color) === -1) {
+                    return false;
+                }
+                if (filters.collections?.indexOf(p.collection) === -1) {
+                    return false
+                }
+                if (filters.categories?.some((c) => c.category === p.category) == false) {
+                    return false
+                }
+                if ((filters.price?.selectedMin || 0) > p.price || (filters.price?.selectedMax || p.price) < p.price) {
+                    return false
+                }
+                if ((filters.size?.selectedMin || 0) > p.size || (filters.size?.selectedMax || p.size) < p.size) {
+                    return false
+                }
+                if ((filters.stock?.selectedMin || 0) > p.stock || (filters.stock?.selectedMax || p.stock) < p.stock) {
+                    return false
+                }
+                return true;
+            })
+
+            return result.length ? result : fallbackResult;
         }
     }
 }
