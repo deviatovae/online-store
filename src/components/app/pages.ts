@@ -42,16 +42,6 @@ export class Pages {
         })
     }
 
-    public payment(): void {
-        this.controller.cart((cartData) => {
-            this.container.innerHTML = this.views.paymentPage.render(cartData)
-            this.views.paymentPage.afterRender(this.controller);
-            if (!cartData.items.length) {
-                Router.redirectTo('/cart');
-            }
-        })
-    }
-
     public notFound(): void {
         this.container.innerHTML = this.views.notFoundPage.render();
     }
