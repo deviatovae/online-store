@@ -222,6 +222,7 @@
 .cart-item-qty {
 
   &__value-container {
+    text-align: center;
     grid-column: 1 / 2;
     grid-row: 1 / 3;
     width: 50px;

@@ -8,6 +8,10 @@ export class Router {
         return new URLSearchParams(window.location.search)
     }
 
+    public static getUrlParam(key: string, defaultValue: string): string {
+        return this.getUrlParams().get(key) || defaultValue;
+    }
+
     public static setUrlParam(key: string, value: string) {
         const params = Router.getUrlParams();
         params.set(key, value)
