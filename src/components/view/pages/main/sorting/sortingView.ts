@@ -161,6 +161,7 @@ export class SortingFiltersView extends View<ProductViewDataType> {
                     Router.removeUrlParamKey(p)
                 })
             })
+            Router.removeUrlParamKey('q')
         })
 
         filterSelects.forEach((select) => {

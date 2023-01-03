@@ -15,7 +15,11 @@ export class ProductListView extends View<Product[]> {
     }
 
     public render(products: Product[]): string {
-        return products.map((product) => this.views.product.render(product)).join('')
+        if(products.length) {
+            return products.map((product) => this.views.product.render(product)).join('')
+        }
+
+        return `<div class="empty-catalog">No items found</div>`
     }
 }
 
