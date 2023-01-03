@@ -85,18 +85,18 @@ export class Controller {
             colors: params.get('colors')?.split(','),
             collections: params.get('collections')?.split(',').map((s) => Number(s)),
             categories: params.get('categories')?.split(',').map((c => ({category: c, products: 0}))),
-            price: {
-                selectedMin: Number(params.get('minPrice')) || 0,
-                selectedMax: Number(params.get('maxPrice')) || 0,
-            },
-            size: {
-                selectedMin: Number(params.get('minSize')) || 0,
-                selectedMax: Number(params.get('maxSize')) || 0,
-            },
-            stock: {
-                selectedMin: Number(params.get('minStock')) || 0,
-                selectedMax: Number(params.get('maxStock')) || 0,
-            },
+            price: params.has('minPrice') ? {
+                selectedMin: Number(params.get('minPrice')),
+                selectedMax: Number(params.get('maxPrice')),
+            } : undefined,
+            size: params.has('minSize') ? {
+                selectedMin: Number(params.get('minSize')),
+                selectedMax: Number(params.get('maxSize')),
+            } : undefined,
+            stock: params.has('minStock') ? {
+                selectedMin: Number(params.get('minStock')),
+                selectedMax: Number(params.get('maxStock')),
+            } : undefined,
         }
 
         const getProductsBySelectedFilters = this.getProductsFunc(products, selectedFilters, params.get('q'));
@@ -144,6 +144,7 @@ export class Controller {
                 max: Number.MIN_SAFE_INTEGER
             }),
             selected: selectedFilters,
+            showFilters: params.get('showFilters') === 'true'
         }
 
         const perPage = params.has('perPage') ? Number(params.get('perPage') || filteredProducts.length) : 10
@@ -164,6 +165,16 @@ export class Controller {
                 productsCount: filteredProducts.length,
                 sortBy: params.get('sortBy'),
                 perPage: params.get('perPage'),
+                selectedFilters: (Object.keys(selectedFilters) as Array<keyof FilterList>).reduce((count, key) => {
+                    const filter = selectedFilters[key];
+                    if (!filter) {
+                        return count;
+                    }
+                    if (Array.isArray(filter)) {
+                        return count + filter.length;
+                    }
+                    return count + 1;
+                }, 0)
             }
         }
 
