@@ -40,6 +40,11 @@ export default class CartPageView extends View<CartDataType> {
             ${this.views.payment.render(cart)}
             <div class="shopping-cart wrapper">
               <div class="shopping-cart__header">SHOPPING CART</div>
+              <div class="shopping-cart__pagination">
+              
+              Тут пагинация
+              
+              </div>
               <div class="shopping-cart__subheader">
                 <span>№</span>
                 <span>Item</span>
