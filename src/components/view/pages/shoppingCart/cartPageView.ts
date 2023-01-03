@@ -41,6 +41,7 @@ export default class CartPageView extends View<CartDataType> {
             <div class="shopping-cart wrapper">
               <div class="shopping-cart__header">SHOPPING CART</div>
               <div class="shopping-cart__subheader">
+                <span>№</span>
                 <span>Item</span>
                 <span>Price</span>
                 <span>Qty</span>
