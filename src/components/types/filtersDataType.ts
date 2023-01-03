@@ -21,4 +21,5 @@ export type FilterList = {
 
 export type FiltersDataType = FilterList & {
     selected: FilterList
+    showFilters: boolean
 }

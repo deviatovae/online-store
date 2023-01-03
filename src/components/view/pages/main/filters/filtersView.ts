@@ -12,16 +12,16 @@ export class FiltersView extends View<FiltersDataType> {
     public render(data: FiltersDataType): string {
         // language=HTML
         return `
-          <div class="filters" xmlns="http://www.w3.org/1999/html">
+            <div class="filters" xmlns="http://www.w3.org/1999/html" data-show="${data.showFilters ? 'true' : ''}">
             <div class="filters__item filters-item">
               <div class="filters-item__title">Color</div>
               <div class="filters-item__content item-content">
                 <div class="item-content__colors colors">
                   ${data.colors?.map((color) => {
-                    const selectedClass = data.selected.colors?.includes(color) ? 'is-selected' : ''
-                    return `<div class="colors__color is-${color} ${selectedClass}" data-color="${color}">
+            const selectedClass = data.selected.colors?.includes(color) ? 'is-selected' : ''
+            return `<div class="colors__color is-${color} ${selectedClass}" data-color="${color}">
                        </div>`
-                  }).join('')}
+        }).join('')}
                 </div>
               </div>
             </div>
@@ -30,9 +30,9 @@ export class FiltersView extends View<FiltersDataType> {
               <div class="filters-item__content item-content">
                 <div class="item-content__collection collection">
                   ${data.collections?.map((collection) => {
-                    const selectedClass = data.selected.collections?.includes(collection) ? 'is-selected' : '';
-                    return `<div class="collection__year ${selectedClass}" data-collection="${collection}">${collection}</div>`;
-                  }).join('')}
+            const selectedClass = data.selected.collections?.includes(collection) ? 'is-selected' : '';
+            return `<div class="collection__year ${selectedClass}" data-collection="${collection}">${collection}</div>`;
+        }).join('')}
                 </div>
               </div>
             </div>
@@ -78,15 +78,15 @@ export class FiltersView extends View<FiltersDataType> {
               <div class="filters-item__title">Category</div>
               <div class="filters-item__content item-content">
                 ${data.categories?.map((item) => {
-                  const id = item.category.toLowerCase().replace(' ', '-')
-                  const checked = data.selected.categories?.some(c => c.category === item.category) ? 'checked="checked"' : '';
-                  // language=HTML
-                  return `<div class="item-content__category category">
+            const id = item.category.toLowerCase().replace(' ', '-')
+            const checked = data.selected.categories?.some(c => c.category === item.category) ? 'checked="checked"' : '';
+            // language=HTML
+            return `<div class="item-content__category category">
                       <label for="${id}" class="category__label">${item.category}</label>
                       <div class="category__count">(${item.products})</div>
                       <input id="${id}" type="checkbox" class="category__checkbox" data-categories="${item.category}" ${checked}>
                   </div>`
-                }).join('')}
+        }).join('')}
               </div>
             </div>
             <div class="filters__item filters-item">
@@ -105,6 +105,7 @@ export class FiltersView extends View<FiltersDataType> {
                 </div>
               </div>
             </div>
+              <div class="filters__close-btn"></div>
           </div>
         `
     }
@@ -162,6 +163,11 @@ export class FiltersView extends View<FiltersDataType> {
                 Router.addUrlParamValue('categories', c.dataset.categories || '');
             }
         }))
+
+        const closeButton = document.querySelector<HTMLElement>('.filters__close-btn')
+        closeButton?.addEventListener('click', () => {
+            Router.removeUrlParamKey('showFilters')
+        })
     }
 
     private initializeSlider(container: HTMLElement, onChange: (min: string, max:string) => void, maxDecimals: number = 0) {

@@ -1,11 +1,16 @@
 @import '/src/assets/styles/common/variables';
 
 .main-catalog {
+
   &__products {
     display: flex;
     flex-wrap: wrap;
-    position: relative;
-    gap: 50px 50px;
+    align-items: center;
+    gap: 50px 60px;
+
+    @media screen and (max-width: 768px) {
+      justify-content: space-evenly;
+    }
   }
 }
 

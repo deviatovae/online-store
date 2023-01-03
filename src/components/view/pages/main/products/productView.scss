@@ -1,7 +1,7 @@
 @import '../../../../../assets/styles/common/variables';
 
 .product-item {
-  width: 215px;
+  width: 225px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -11,8 +11,8 @@
 
   &__img {
     background-repeat: no-repeat;
-    width: 215px;
-    height: 215px;
+    width: 225px;
+    height: 225px;
     transition: box-shadow 0.3s;
 
 
