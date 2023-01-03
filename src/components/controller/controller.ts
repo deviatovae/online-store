@@ -17,9 +17,6 @@ import {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/pro
 import {Router} from "../router/router";
 import {ProductPageType} from "../types/productPageType";
 
-
-import {PaginationDataType} from "../types/paginationDataType";
-
 /**
  * контроллер получает, изменяет, фильтрует данные, которые потребуются для view
  * нужно доделать редакс и роутер чтобы получить все данные, сейчас мы может прокинуть только весь массив с товарами
@@ -28,7 +25,7 @@ export class Controller {
     /**
      * возвращает данные для корзины / иконки в хэдере
      */
-    public cart(callback: CallbackFn<PaginationDataType>): void {
+    public cart(callback: CallbackFn<CartDataType>): void {
         const cartItems = store.getState().cart
         const promocodes = store.getState().promocode;
 
@@ -41,21 +38,13 @@ export class Controller {
             return price;
         };
 
-        const cartDat: CartDataType = {
+        const cartData: CartDataType = {
             items: cartItems,
             priceAfterDiscount: priceByPromocodes(promocodes.applied),
             getPriceByPromocodes: priceByPromocodes,
             productCount: cartItems.reduce((count, cartItem) => count + cartItem.quantity, 0),
             promocodes: store.getState().promocode,
-            
         }
-
-        const cartData: PaginationDataType = {
-            carts: cartDat,
-            pagecount: "",
-            perPage: "",
-        }
-
         callback(cartData);
     }
 
@@ -67,7 +56,7 @@ export class Controller {
 
         let cart: CartDataType|null = null;
         this.cart((cartData) => {
-            cart = cartData.carts;
+            cart = cartData;
         })
 
         callback({
@@ -96,18 +85,18 @@ export class Controller {
             colors: params.get('colors')?.split(','),
             collections: params.get('collections')?.split(',').map((s) => Number(s)),
             categories: params.get('categories')?.split(',').map((c => ({category: c, products: 0}))),
-            price: params.has('minPrice') ? {
-                selectedMin: Number(params.get('minPrice')),
-                selectedMax: Number(params.get('maxPrice')),
-            } : undefined,
-            size: params.has('minSize') ? {
-                selectedMin: Number(params.get('minSize')),
-                selectedMax: Number(params.get('maxSize')),
-            } : undefined,
-            stock: params.has('minStock') ? {
-                selectedMin: Number(params.get('minStock')),
-                selectedMax: Number(params.get('maxStock')),
-            } : undefined,
+            price: {
+                selectedMin: Number(params.get('minPrice')) || 0,
+                selectedMax: Number(params.get('maxPrice')) || 0,
+            },
+            size: {
+                selectedMin: Number(params.get('minSize')) || 0,
+                selectedMax: Number(params.get('maxSize')) || 0,
+            },
+            stock: {
+                selectedMin: Number(params.get('minStock')) || 0,
+                selectedMax: Number(params.get('maxStock')) || 0,
+            },
         }
 
         const getProductsBySelectedFilters = this.getProductsFunc(products, selectedFilters, params.get('q'));
@@ -155,7 +144,6 @@ export class Controller {
                 max: Number.MIN_SAFE_INTEGER
             }),
             selected: selectedFilters,
-            showFilters: params.get('showFilters') === 'true'
         }
 
         const perPage = params.has('perPage') ? Number(params.get('perPage') || filteredProducts.length) : 10
@@ -163,7 +151,7 @@ export class Controller {
 
         let cart: CartDataType;
         this.cart((cartData) => {
-            cart = cartData.carts;
+            cart = cartData;
         })
 
         const data: MainPageDataType = {
@@ -176,16 +164,6 @@ export class Controller {
                 productsCount: filteredProducts.length,
                 sortBy: params.get('sortBy'),
                 perPage: params.get('perPage'),
-                selectedFilters: (Object.keys(selectedFilters) as Array<keyof FilterList>).reduce((count, key) => {
-                    const filter = selectedFilters[key];
-                    if (!filter) {
-                        return count;
-                    }
-                    if (Array.isArray(filter)) {
-                        return count + filter.length;
-                    }
-                    return count + 1;
-                }, 0)
             }
         }
 
