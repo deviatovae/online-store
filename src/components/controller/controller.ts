@@ -2,7 +2,8 @@ import {CallbackFn} from "../types/callbackFn";
 import {Product} from "../types/product";
 import store from "../store/store";
 import {
-    addProductToCart, clearCart,
+    addProductToCart,
+    clearCart,
     removeProductFromCart,
     removeProductFromCartAll,
     setProductQuantityInCart
@@ -98,7 +99,7 @@ export class Controller {
             },
         }
 
-        const getProductsBySelectedFilters = this.getProductsFunc(products, selectedFilters);
+        const getProductsBySelectedFilters = this.getProductsFunc(products, selectedFilters, params.get('q'));
 
         let filteredProducts = getProductsBySelectedFilters();
         filteredProducts.sort((p1, p2) => {
@@ -233,7 +234,7 @@ export class Controller {
         }
     }
 
-    private getProductsFunc(products: Product[], selectedFilters: FilterList) {
+    private getProductsFunc(products: Product[], selectedFilters: FilterList, query: string | null) {
         return (except: (keyof FilterList)[] = [], fallbackResult: Product[] = []): Product[] => {
             const filters: FilterList = JSON.parse(JSON.stringify(selectedFilters))
             let key: keyof FilterList;
@@ -261,6 +262,25 @@ export class Controller {
                 if ((filters.stock?.selectedMin || 0) > p.stock || (filters.stock?.selectedMax || p.stock) < p.stock) {
                     return false
                 }
+
+                if (query) {
+                    const queries = query.split(' ');
+                    const isMatch = (q: string) => {
+                        const nameMatch = p.name.toLowerCase().includes(q.toLowerCase())
+                        const colorMatch = p.color.toLowerCase().includes(q.toLowerCase())
+                        const categoryMatch = p.category.toLowerCase().includes(q.toLowerCase());
+                        const sizeMatch = p.size === parseInt(q)
+                        const stockMatch = p.stock === parseInt(q)
+                        const collectionMatch = p.collection === parseInt(q)
+
+                        return nameMatch || colorMatch || sizeMatch || stockMatch || collectionMatch || categoryMatch
+                    }
+
+                    if (!isMatch(query) && !queries.every((q) => isMatch(q))) {
+                        return false
+                    }
+                }
+
                 return true;
             })
 
