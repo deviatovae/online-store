@@ -17,6 +17,9 @@ import {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/pro
 import {Router} from "../router/router";
 import {ProductPageType} from "../types/productPageType";
 
+
+import {PaginationDataType} from "../types/paginationDataType";
+
 /**
  * контроллер получает, изменяет, фильтрует данные, которые потребуются для view
  * нужно доделать редакс и роутер чтобы получить все данные, сейчас мы может прокинуть только весь массив с товарами
@@ -25,7 +28,7 @@ export class Controller {
     /**
      * возвращает данные для корзины / иконки в хэдере
      */
-    public cart(callback: CallbackFn<CartDataType>): void {
+    public cart(callback: CallbackFn<PaginationDataType>): void {
         const cartItems = store.getState().cart
         const promocodes = store.getState().promocode;
 
@@ -38,13 +41,21 @@ export class Controller {
             return price;
         };
 
-        const cartData: CartDataType = {
+        const cartDat: CartDataType = {
             items: cartItems,
             priceAfterDiscount: priceByPromocodes(promocodes.applied),
             getPriceByPromocodes: priceByPromocodes,
             productCount: cartItems.reduce((count, cartItem) => count + cartItem.quantity, 0),
             promocodes: store.getState().promocode,
+            
         }
+
+        const cartData: PaginationDataType = {
+            carts: cartDat,
+            pagecount: "",
+            perPage: "",
+        }
+
         callback(cartData);
     }
 
@@ -56,7 +67,7 @@ export class Controller {
 
         let cart: CartDataType|null = null;
         this.cart((cartData) => {
-            cart = cartData;
+            cart = cartData.carts;
         })
 
         callback({
@@ -151,7 +162,7 @@ export class Controller {
 
         let cart: CartDataType;
         this.cart((cartData) => {
-            cart = cartData;
+            cart = cartData.carts;
         })
 
         const data: MainPageDataType = {
