@@ -7,6 +7,7 @@ import {FooterView} from "../../footer/footerView";
 import {SortingFiltersView} from "./sorting/sortingView";
 import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
+import {TimeoutId} from "@reduxjs/toolkit/dist/query/core/buildMiddleware/types";
 
 
 /**
@@ -39,8 +40,9 @@ export class MainPageView extends View<MainPageDataType> {
                 a festive atmosphere at your home
               </div>
               <div class="find-input-wrapper">
-                <input class="find-input" type="text" placeholder="Search..."/>
-                <div class="find-input-img"></div>
+                <input class="find-input" type="search" value="${Router.getUrlParam('q', '')}" placeholder="Search..."/>
+                <div class="find-input-img_search"></div>
+                <div class="find-input-img_clear"></div>
               </div>
             </div>
             <div class="store-page">
@@ -66,26 +68,49 @@ export class MainPageView extends View<MainPageDataType> {
     }
 
     public afterRender(controller: Controller): void {
-      super.afterRender(controller);
+        super.afterRender(controller);
 
-      const switchingRow = document.querySelector('.switch-view__line') as HTMLElement;
-      const switchingBlock = document.querySelector('.switch-view__block') as HTMLElement;
-      const mainCatalogProducts = document.querySelector('.main-catalog__products') as HTMLElement;
+        const switchingRow = document.querySelector('.switch-view__line') as HTMLElement;
+        const switchingBlock = document.querySelector('.switch-view__block') as HTMLElement;
+        const mainCatalogProducts = document.querySelector('.main-catalog__products') as HTMLElement;
+        const inputSearch = document.querySelector('.find-input') as HTMLInputElement;
+        const clearButton = document.querySelector('.find-input-img_clear') as HTMLElement;
 
-      switchingRow.addEventListener('click', (event: Event) => {
-        Router.setUrlParam('switch-view', 'row')
-      })
+        switchingRow.addEventListener('click', () => {
+            Router.setUrlParam('switch-view', 'row')
+        })
 
-      switchingBlock.addEventListener('click', (event: Event) => {
-        Router.setUrlParam('switch-view', 'block')
-      })
+        switchingBlock.addEventListener('click', () => {
+            Router.setUrlParam('switch-view', 'block')
+        })
 
-      if (mainCatalogProducts.classList.contains('row-view')) {
-        switchingRow.classList.add('switch-active');
-        switchingBlock.classList.remove('switch-active');
-      }
+        if (mainCatalogProducts.classList.contains('row-view')) {
+            switchingRow.classList.add('switch-active');
+            switchingBlock.classList.remove('switch-active');
+        }
 
-  }
+        clearButton.addEventListener('click', () => {
+            Router.removeUrlParamKey('q')
+        })
+
+        let timeouts: TimeoutId[] = []
+        inputSearch.addEventListener('input', () => {
+            timeouts.forEach((timeout) => clearTimeout(timeout))
+            timeouts.push(
+                setTimeout(() => {
+                    timeouts.push(
+                        setTimeout(() => {
+                            const newInputSearch = document.querySelector('.find-input') as HTMLInputElement;
+                            newInputSearch.focus();
+                            newInputSearch.setSelectionRange(inputSearch.selectionStart, inputSearch.selectionEnd)
+                        }, 1)
+                    );
+
+                    inputSearch.value ? Router.setUrlParam('q', inputSearch.value) : Router.removeUrlParamKey('q');
+                }, 1000)
+            );
+        })
+    }
 }
 
 
