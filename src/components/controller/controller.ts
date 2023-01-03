@@ -272,8 +272,10 @@ export class Controller {
                         const sizeMatch = p.size === parseInt(q)
                         const stockMatch = p.stock === parseInt(q)
                         const collectionMatch = p.collection === parseInt(q)
+                        const priceMatch = p.price === parseFloat(q)
 
-                        return nameMatch || colorMatch || sizeMatch || stockMatch || collectionMatch || categoryMatch
+                        return nameMatch || colorMatch || sizeMatch || stockMatch ||
+                            collectionMatch || categoryMatch || priceMatch
                     }
 
                     if (!isMatch(query) && !queries.every((q) => isMatch(q))) {
