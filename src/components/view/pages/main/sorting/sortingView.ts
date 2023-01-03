@@ -3,6 +3,7 @@ import {View} from "../../../view";
 import {Controller} from "../../../../controller/controller";
 import {Router} from "../../../../router/router";
 import {ProductViewDataType} from "../../../../types/sortDataType";
+import {FiltersView} from "../filters/filtersView";
 
 export class SortingFiltersView extends View<ProductViewDataType> {
     private readonly sortOptions: { [key: string]: string } = {
@@ -118,6 +119,11 @@ export class SortingFiltersView extends View<ProductViewDataType> {
           <div class="main-center-section__selected selected-section">
             ${selectedFiltersBar}
             <div class="main-center-section__sorted sorted-filters">
+              <div class="sorted-filters__filters-menu filters-menu">
+                <div class="filters-menu__icon"></div>
+                <div class="filters-menu__title">Show filters</div>
+                <div class="filters-menu__count">${data.selectedFilters}</div>
+              </div>
               <div class="sorted-filters__item-count">${data.productsCount} items</div>
               <div class="sorted-filters__select">
                 <select class="filters-select" data-param="sortBy">
@@ -175,6 +181,11 @@ export class SortingFiltersView extends View<ProductViewDataType> {
             navigator.clipboard.writeText(window.location.href).then(function() {
                 copyLink.textContent = 'Copied'
             });
+        })
+
+        const filtersIcon = document.querySelector<HTMLElement>('.filters-menu__icon')
+        filtersIcon?.addEventListener('click', () => {
+            Router.setUrlParam('showFilters', 'true')
         })
     }
 }

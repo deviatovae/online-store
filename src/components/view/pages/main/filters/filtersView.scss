@@ -17,7 +17,11 @@
   margin-bottom: 50px;
   display: grid;
   grid-template-columns: 1fr 4fr;
-  column-gap: 57px;
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 
   &__bread-crumbs {
     margin: 20px 0 40px 0;
@@ -25,6 +29,10 @@
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 3;
+
+    @media screen and (max-width: 768px) {
+      margin: 20px 0 20px 0;
+    }
   }
 }
 
@@ -69,6 +77,50 @@
   display: flex;
   flex-direction: column;
   padding-top: 20px;
+  margin-right: 20px;
+  position: relative;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+    align-items: center;
+    padding-top: 25px;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(255,255,255);
+    margin-right: 0;
+  }
+
+  &[data-show="true"] {
+    display: flex;
+  }
+
+  &__close-btn {
+    @media screen and (max-width: 768px) {
+      width: 36px;
+      height: 36px;
+      position: absolute;
+      background: white url('https://api.iconify.design/typcn/delete-outline.svg?color=%238b9d93&width=36&height=36') no-repeat center;
+      right: 25px;
+      top: 5px;
+      display: none;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &[data-show="true"] &__close-btn {
+    @media screen and (max-width: 768px) {
+      display: block;
+    }
+  }
 }
 
 .filters-item {
@@ -76,7 +128,10 @@
   flex-direction: column;
   width: 250px;
   border-top: solid 1px $greyBorder;
-  margin-bottom: 30px;
+
+  &:not(:last-child) {
+      margin-bottom: 30px;
+  }
 
   &__title {
     font-family: $Sitara;
