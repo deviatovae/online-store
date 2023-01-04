@@ -25,9 +25,6 @@ export class MainPageView extends View<MainPageDataType> {
         sorting: new SortingFiltersView(),
         paginationPages: new PaginationPagesView(),
     }
-    /**
-     * @todo нужно прпнимать здесь объект со всеми данными, требующимися для отрисовки (вызова render) всех компонентов
-     */
     public render(data: MainPageDataType): string {
         // language=HTML
         return `
@@ -60,7 +57,10 @@ export class MainPageView extends View<MainPageDataType> {
                   ${this.views.sorting.render(data.view)}
                   </div>
                   <div class="main-catalog__products ${data.switchType === 'row' ? 'row-view' : ''}">
-                    ${this.views.productList.render(data.products)}
+                    ${this.views.productList.render({
+                      cart: data.cart,
+                      products: data.products
+                    })}
                   </div>
                   ${this.views.paginationPages.render({
                     selectedPage: data.view.pagination.page,
