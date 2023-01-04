@@ -8,6 +8,8 @@ import {SortingFiltersView} from "./sorting/sortingView";
 import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
 import {TimeoutId} from "@reduxjs/toolkit/dist/query/core/buildMiddleware/types";
+import {PaginationPerPageView} from "../../common/pagination/paginationPerPageView";
+import {PaginationPagesView} from "../../common/pagination/paginationPagesView";
 
 
 /**
@@ -21,6 +23,7 @@ export class MainPageView extends View<MainPageDataType> {
         filters: new FiltersView(),
         productList: new ProductListView(),
         sorting: new SortingFiltersView(),
+        paginationPages: new PaginationPagesView(),
     }
     /**
      * @todo нужно прпнимать здесь объект со всеми данными, требующимися для отрисовки (вызова render) всех компонентов
@@ -59,6 +62,10 @@ export class MainPageView extends View<MainPageDataType> {
                   <div class="main-catalog__products ${data.switchType === 'row' ? 'row-view' : ''}">
                     ${this.views.productList.render(data.products)}
                   </div>
+                  ${this.views.paginationPages.render({
+                    selectedPage: data.view.pagination.page,
+                    pageCount: data.view.pagination.pageCount,
+                  })}
                 </div>
               </section>
             </div>
@@ -106,6 +113,7 @@ export class MainPageView extends View<MainPageDataType> {
                         }, 1)
                     );
 
+                    Router.removeUrlParamKey('page');
                     inputSearch.value ? Router.setUrlParam('q', inputSearch.value) : Router.removeUrlParamKey('q');
                 }, 1000)
             );

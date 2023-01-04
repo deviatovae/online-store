@@ -15,7 +15,7 @@ export class PaginationPerPageView extends View<PaginationPerPageViewDataType> {
             <select class="pagination-select" data-param="perPage">
               ${data.values.map((value) => {
                 const selectedAttr = data.selectedPerPage === value ? 'selected="selected"' : '';
-                return `<option ${selectedAttr} value="${value}">Show items: ${value}</option>`
+                return `<option ${selectedAttr} value="${value || 'all'}">Show items: ${value || 'All'}</option>`
               })}
             </select>
           </div>

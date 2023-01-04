@@ -48,7 +48,7 @@ export default class CartPageView extends View<CartDataType> {
               <div class="shopping-cart__pagination">
                 ${this.views.paginationPerPage.render({
                   selectedPerPage: cart.pagination.perPage,
-                  values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20],
+                  values: [1, 3, 5, 10, 0],
                 })}
               </div>
               <div class="shopping-cart__subheader">

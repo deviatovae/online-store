@@ -3,7 +3,7 @@ import {View} from "../../../view";
 import {Controller} from "../../../../controller/controller";
 import {Router} from "../../../../router/router";
 import {ProductViewDataType} from "../../../../types/sortDataType";
-import {FiltersView} from "../filters/filtersView";
+import {PaginationPerPageView} from "../../../common/pagination/paginationPerPageView";
 
 export class SortingFiltersView extends View<ProductViewDataType> {
     private readonly sortOptions: { [key: string]: string } = {
@@ -15,11 +15,8 @@ export class SortingFiltersView extends View<ProductViewDataType> {
         'stock-desc': 'Stock descending',
     }
 
-    private readonly perPageOptions: { [key: string]: string } = {
-        '': 'All',
-        '10': 'Show items: 10',
-        '20': 'Show items: 20',
-        '30': 'Show items: 30',
+    protected views = {
+        paginationPerPage: new PaginationPerPageView(),
     }
 
     public render(data: ProductViewDataType): string {
@@ -109,11 +106,6 @@ export class SortingFiltersView extends View<ProductViewDataType> {
             return `<option ${selectedAttr} value="${value}">${this.sortOptions[value]}</option>`
         }).join('')
 
-        const perPageByOptions = Object.keys(this.perPageOptions).map((value) => {
-            const selectedAttr = data.perPage === value ? 'selected="selected"' : '';
-            return `<option ${selectedAttr} value="${value}">${this.perPageOptions[value]}</option>`
-        }).join('')
-
         // language=HTML
         return `
           <div class="main-center-section__selected selected-section">
@@ -131,9 +123,10 @@ export class SortingFiltersView extends View<ProductViewDataType> {
                 </select>
               </div>
               <div class="sorted-filters__select">
-                <select class="filters-select" data-param="perPage">
-                  ${perPageByOptions}
-                </select>
+                ${this.views.paginationPerPage.render({
+                  selectedPerPage: data.pagination.perPage,
+                  values: [5, 10, 20, 30, 0],
+                })}
               </div>
               <div class="sorted-filters__switch-view switch-view">
                 <div class="switch-view__line"></div>
@@ -157,6 +150,7 @@ export class SortingFiltersView extends View<ProductViewDataType> {
                     } else {
                         Router.removeUrlParamKey(p)
                     }
+                    Router.removeUrlParamKey('page');
                 })
             })
         })
@@ -168,10 +162,12 @@ export class SortingFiltersView extends View<ProductViewDataType> {
                 })
             })
             Router.removeUrlParamKey('q')
+            Router.removeUrlParamKey('page');
         })
 
         filterSelects.forEach((select) => {
             select.addEventListener('change', () => {
+                Router.removeUrlParamKey('page')
                 Router.setUrlParam(select.dataset.param || '', select.value)
             })
         })
