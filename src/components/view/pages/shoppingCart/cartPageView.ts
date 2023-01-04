@@ -9,6 +9,8 @@ import {AppliedPromocodeListView} from "./appliedPromocodeListView";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {PaymentPageView} from "../payment/paymentPageView";
+import {PaginationPerPageView} from "../../common/pagination/paginationPerPageView";
+import {PaginationPagesView} from "../../common/pagination/paginationPagesView";
 
 
 export default class CartPageView extends View<CartDataType> {
@@ -18,6 +20,8 @@ export default class CartPageView extends View<CartDataType> {
         header: new HeaderView(),
         footer: new FooterView(),
         payment: new PaymentPageView(),
+        paginationPerPage: new PaginationPerPageView(),
+        paginationPages: new PaginationPagesView(),
     };
 
     render(cart: CartDataType): string {
@@ -33,6 +37,7 @@ export default class CartPageView extends View<CartDataType> {
               </main>
               ${this.views.footer.render()}`
         }
+
         // language=HTML
         return `
           ${this.views.header.render(cart)}
@@ -40,7 +45,14 @@ export default class CartPageView extends View<CartDataType> {
             ${this.views.payment.render(cart)}
             <div class="shopping-cart wrapper">
               <div class="shopping-cart__header">SHOPPING CART</div>
+              <div class="shopping-cart__pagination">
+                ${this.views.paginationPerPage.render({
+                  selectedPerPage: cart.pagination.perPage,
+                  values: [1, 3, 5, 10, 0],
+                })}
+              </div>
               <div class="shopping-cart__subheader">
+                <span>№</span>
                 <span>Item</span>
                 <span>Price</span>
                 <span>Qty</span>
@@ -82,7 +94,12 @@ export default class CartPageView extends View<CartDataType> {
                   </div>
                 </div>
               </div>
+              ${this.views.paginationPages.render({
+                pageCount: cart.pagination.pageCount,
+                selectedPage: cart.pagination.page
+              })}
             </div>
+
           </main>
           ${this.views.footer.render()}
         `;

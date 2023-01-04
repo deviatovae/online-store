@@ -16,6 +16,7 @@ import {FilterCategoryType, FilterList, FiltersDataType, MinMaxType} from "../ty
 import {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/promocode";
 import {Router} from "../router/router";
 import {ProductPageType} from "../types/productPageType";
+import {PaginationDataType} from "../types/paginationDataType";
 
 /**
  * контроллер получает, изменяет, фильтрует данные, которые потребуются для view
@@ -26,6 +27,7 @@ export class Controller {
      * возвращает данные для корзины / иконки в хэдере
      */
     public cart(callback: CallbackFn<CartDataType>): void {
+        const params = Router.getUrlParams()
         const cartItems = store.getState().cart
         const promocodes = store.getState().promocode;
 
@@ -38,12 +40,15 @@ export class Controller {
             return price;
         };
 
+        const pagination = this.getPagination(cartItems.length, 3);
+
         const cartData: CartDataType = {
-            items: cartItems,
+            items: cartItems.slice(pagination.offset, pagination.offset + pagination.limit),
             priceAfterDiscount: priceByPromocodes(promocodes.applied),
             getPriceByPromocodes: priceByPromocodes,
             productCount: cartItems.reduce((count, cartItem) => count + cartItem.quantity, 0),
             promocodes: store.getState().promocode,
+            pagination:  pagination
         }
         callback(cartData);
     }
@@ -147,8 +152,8 @@ export class Controller {
             showFilters: params.get('showFilters') === 'true'
         }
 
-        const perPage = params.has('perPage') ? Number(params.get('perPage') || filteredProducts.length) : 10
-        filteredProducts = filteredProducts.slice(0, perPage)
+        const pagination = this.getPagination(filteredProducts.length, 20);
+        const slicedProducts = filteredProducts.slice(pagination.offset, pagination.offset + pagination.limit)
 
         let cart: CartDataType;
         this.cart((cartData) => {
@@ -156,7 +161,7 @@ export class Controller {
         })
 
         const data: MainPageDataType = {
-            products: filteredProducts,
+            products: slicedProducts,
             filters: filters,
             cart: cart!,
             switchType: params.get('switch-view'),
@@ -164,7 +169,7 @@ export class Controller {
                 filters: selectedFilters,
                 productsCount: filteredProducts.length,
                 sortBy: params.get('sortBy'),
-                perPage: params.get('perPage'),
+                pagination: pagination,
                 selectedFilters: (Object.keys(selectedFilters) as Array<keyof FilterList>).reduce((count, key) => {
                     const filter = selectedFilters[key];
                     if (!filter) {
@@ -298,6 +303,23 @@ export class Controller {
             })
 
             return result.length ? result : fallbackResult;
+        }
+    }
+
+    private getPagination(count: number, defaultPerPage: number): PaginationDataType {
+        const params = Router.getUrlParams();
+        const page = Number(params.get('page') || 1)
+        const perPage = params.get('perPage') === 'all' ? 0 : Number(params.get('perPage') || defaultPerPage)
+        const limit = perPage || count
+        const pageCount = Math.ceil(count / limit)
+        const offset = (page - 1) * limit
+
+        return {
+            offset,
+            limit,
+            pageCount,
+            perPage,
+            page,
         }
     }
 }

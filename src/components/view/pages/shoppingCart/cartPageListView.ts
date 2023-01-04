@@ -9,9 +9,10 @@ export class CartPageListView extends View<CartItemType[]>{
     protected views = {}
 
     public render(cartItems: CartItemType[]): string {
-        return cartItems.map((cartItem) => {
+        return cartItems.map((cartItem, index) => {
             return `<div class="cart-item">
             <div class="cart-item__content">
+              <div class="cart-item__number">${index +1}</div>
               <img class="cart-item__img" data-id="${cartItem.product.id}" src="${cartItem.product.images[0]}" alt="product image">
               <div class="cart-item__info">
                 <div class="cart-item-info__name">${cartItem.product.name}</div>

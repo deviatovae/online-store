@@ -116,6 +116,7 @@ export class FiltersView extends View<FiltersDataType> {
         const priceFilter = document.querySelector('.filters-item .price') as HTMLElement | null;
         if (priceFilter) {
             this.initializeSlider(priceFilter, (start, end) => {
+                Router.removeUrlParamKey('page');
                 Router.setUrlParam('minPrice', start)
                 Router.setUrlParam('maxPrice', end)
             }, 2);
@@ -124,6 +125,7 @@ export class FiltersView extends View<FiltersDataType> {
         const sizeFilter = document.querySelector('.filters-item .size') as HTMLElement | null;
         if (sizeFilter) {
             this.initializeSlider(sizeFilter, (start, end) => {
+                Router.removeUrlParamKey('page');
                 Router.setUrlParam('minSize', start)
                 Router.setUrlParam('maxSize', end)
             });
@@ -132,6 +134,7 @@ export class FiltersView extends View<FiltersDataType> {
         const stockFilter = document.querySelector('.filters-item .stock') as HTMLElement | null;
         if (stockFilter) {
             this.initializeSlider(stockFilter, (start, end) => {
+                Router.removeUrlParamKey('page');
                 Router.setUrlParam('minStock', start)
                 Router.setUrlParam('maxStock', end)
             });
@@ -139,6 +142,7 @@ export class FiltersView extends View<FiltersDataType> {
 
         const colors = document.querySelectorAll<HTMLElement>('.colors__color')
         colors.forEach(c => c.addEventListener('click', () => {
+            Router.removeUrlParamKey('page');
             if (c.classList.contains('is-selected')) {
                 Router.removeUrlParamValue('colors', c.dataset.color || '');
             } else {
@@ -148,6 +152,7 @@ export class FiltersView extends View<FiltersDataType> {
 
         const collections = document.querySelectorAll<HTMLElement>('.collection__year')
         collections.forEach(c => c.addEventListener('click', () => {
+            Router.removeUrlParamKey('page');
             if (c.classList.contains('is-selected')) {
                 Router.removeUrlParamValue('collections', c.dataset.collection || '');
             } else {
@@ -157,6 +162,7 @@ export class FiltersView extends View<FiltersDataType> {
 
         const categories = document.querySelectorAll<HTMLInputElement>('.category__checkbox')
         categories.forEach(c => c.addEventListener('change', () => {
+            Router.removeUrlParamKey('page');
             if (!c.checked) {
                 Router.removeUrlParamValue('categories', c.dataset.categories || '');
             } else {
