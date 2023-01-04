@@ -51,6 +51,7 @@ export class PaymentPageView extends View<CartDataType> {
                 </div>
                 <div class="summary-content__order-btn">Place order now</div>
                 <div class="payment-test">Test payment data</div>
+                <div class="loading-spinner"></div>
               </div>
             </div>
           </div>
@@ -273,6 +274,7 @@ export class PaymentPageView extends View<CartDataType> {
             }
         })
 
+        const loadingSpinner = document.querySelector<HTMLInputElement>(".loading-spinner");
         const orderBtn = document.querySelector<HTMLInputElement>(".summary-content__order-btn");
         orderBtn?.addEventListener('click', (event: Event) => {
 
@@ -281,6 +283,8 @@ export class PaymentPageView extends View<CartDataType> {
                 validCardDate && validCardCvv) {
                 orderBtn.textContent = "Your order has been placed!";
                 orderBtn.style.color = "green";
+                paymentTest!.style.display = "none";
+                loadingSpinner!.style.display = "block";
                 setTimeout(() => {
                     controller.clearCart().then(() => Router.redirectTo('/'))
                 }, 3000);

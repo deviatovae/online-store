@@ -310,7 +310,8 @@
   border: 1.5px solid red;
 }
 
-.payment-test{
+.payment-test {
+  margin-top: 15px;
   display: flex;
   justify-content: center;
   cursor: pointer;
@@ -320,4 +321,15 @@
   color: rgb(116, 116, 116);
 }
 
+.loading-spinner {
+  display: none;
+  margin: 0 auto;
+  height: 35px;
+  width: 35px;
+  border-left: 7px solid $oliva;
+  border-bottom: 7px solid $olivaHover;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spinner 0.8s linear infinite;
+}
 
