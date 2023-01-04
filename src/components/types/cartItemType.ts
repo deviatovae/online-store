@@ -1,9 +1,8 @@
-import {Product} from "./product";
+import {CartItemArgType} from "./cartItemArgType";
 
 /**
  * Данные корзины
  */
-export type CartItemType = {
-    product: Product,
-    quantity: number,
+export type CartItemType = CartItemArgType & {
+    id: number,
 }

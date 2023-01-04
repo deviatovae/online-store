@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Product} from '../../types/product';
 import {CartItemType} from "../../types/cartItemType";
 import {loadState} from "./storeDb";
+import {CartItemArgType} from "../../types/cartItemArgType";
 
 /**
  * начальное состояние стейта
@@ -15,10 +16,14 @@ export const slice = createSlice({
     /**
      * добавляет продукт в стейт корзины, при повторном добавлении увеличивает quantity
      */
-    addProductToCart: (state, { payload: cartItem }: PayloadAction<CartItemType>): CartItemType[] => {
+    addProductToCart: (state, { payload: cartItem }: PayloadAction<CartItemArgType>): CartItemType[] => {
       const item = state.find((item) => item.product.id === cartItem.product.id);
       if (!item) {
-        return [...state, { product: cartItem.product, quantity: cartItem.quantity }];
+        return [...state, {
+          id: state.length + 1,
+          product: cartItem.product,
+          quantity: cartItem.quantity
+        }];
       }
       item.quantity += cartItem.quantity;
 
@@ -33,10 +38,14 @@ export const slice = createSlice({
     /**
      * изменяет quantity на величину value из input
      */
-    setProductQuantityInCart: (state, { payload: cartItem }: PayloadAction<CartItemType>): CartItemType[] => {
+    setProductQuantityInCart: (state, { payload: cartItem }: PayloadAction<CartItemArgType>): CartItemType[] => {
       const item = state.find((item) => item.product.id === cartItem.product.id);
       if (!item) {
-        return [...state, { product: cartItem.product, quantity: cartItem.quantity }];
+        return [...state, {
+          id: state.length + 1,
+          product: cartItem.product,
+          quantity: cartItem.quantity
+        }];
       }
         item.quantity = cartItem.quantity;
 
@@ -50,7 +59,10 @@ export const slice = createSlice({
       const item = state.find((item) => item.product.id === product.id);
       if (item) {
         if (item.quantity <= 1 ) {
-          return state.filter((stateItem) => stateItem !== item);
+          return state.filter((stateItem) => stateItem !== item).map((p, i) => {
+            p.id = i + 1;
+            return p;
+          });
         }
 
         item.quantity -= 1;
@@ -64,7 +76,10 @@ export const slice = createSlice({
     removeProductFromCartAll: (state, {payload: product}: PayloadAction<Product>): CartItemType[] => {
       const item = state.find((item) => item.product.id === product.id);
       if (item) {
-        return state.filter((stateItem) => stateItem !== item);
+        return state.filter((stateItem) => stateItem !== item).map((p, i) => {
+          p.id = i + 1;
+          return p;
+        });
       }
       return state;
     },
