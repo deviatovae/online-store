@@ -334,10 +334,9 @@
   margin: 0 auto;
   height: 35px;
   width: 35px;
-  border-left: 7px solid $oliva;
-  border-bottom: 7px solid $olivaHover;
-  border-top: 3px solid transparent;
+  border: 5px solid $greyBorder;
+  border-top: 5px solid green;
   border-radius: 50%;
-  animation: spinner 0.8s linear infinite;
+  animation: spinner 0.7s linear infinite;
 }
 
