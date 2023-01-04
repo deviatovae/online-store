@@ -159,6 +159,7 @@ export default class ProductPageView extends View<ProductPageType> {
 
         const buttonBuy = document.querySelector('.button-buy-now') as HTMLElement;
         buttonBuy.addEventListener('click', (event: Event) => {
+          controller.addProductToCart(Number(buttonAdd.dataset.id), Number(quantityInput.value));
           Router.redirectTo('/cart?buy-now');
         })
     }
