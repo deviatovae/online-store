@@ -9,6 +9,8 @@ import {AppliedPromocodeListView} from "./appliedPromocodeListView";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {PaymentPageView} from "../payment/paymentPageView";
+import {PaginationPerPageView} from "../../common/pagination/paginationPerPageView";
+import {PaginationPagesView} from "../../common/pagination/paginationPagesView";
 
 
 export default class CartPageView extends View<CartDataType> {
@@ -18,6 +20,8 @@ export default class CartPageView extends View<CartDataType> {
         header: new HeaderView(),
         footer: new FooterView(),
         payment: new PaymentPageView(),
+        paginationPerPage: new PaginationPerPageView(),
+        paginationPages: new PaginationPagesView(),
     };
 
     render(cart: CartDataType): string {
@@ -33,6 +37,7 @@ export default class CartPageView extends View<CartDataType> {
               </main>
               ${this.views.footer.render()}`
         }
+
         // language=HTML
         return `
           ${this.views.header.render(cart)}
@@ -41,16 +46,10 @@ export default class CartPageView extends View<CartDataType> {
             <div class="shopping-cart wrapper">
               <div class="shopping-cart__header">SHOPPING CART</div>
               <div class="shopping-cart__pagination">
-              
-                <div class="pagination__select">
-                 <select class="pagination-select" data-param="">
-                 
-                 <option value="value">Show items: 5</option>
-                 <option value="value">Show items: 10</option>
-                 <option value="value">Show items: 15</option>
-                </select>
-                </div>
-              
+                ${this.views.paginationPerPage.render({
+                  selectedPerPage: cart.pagination.perPage,
+                  values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20],
+                })}
               </div>
               <div class="shopping-cart__subheader">
                 <span>№</span>
@@ -95,11 +94,10 @@ export default class CartPageView extends View<CartDataType> {
                   </div>
                 </div>
               </div>
-
-              <div class="shopping-cart__pagination-botton-container">
-                <div class="pagination-botton pagination-botton-active">1</div>
-                <div class="pagination-botton">2</div>
-              </div>
+              ${this.views.paginationPages.render({
+                pageCount: cart.pagination.pageCount,
+                selectedPage: cart.pagination.page
+              })}
             </div>
 
           </main>

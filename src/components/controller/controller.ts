@@ -26,6 +26,7 @@ export class Controller {
      * возвращает данные для корзины / иконки в хэдере
      */
     public cart(callback: CallbackFn<CartDataType>): void {
+        const params = Router.getUrlParams()
         const cartItems = store.getState().cart
         const promocodes = store.getState().promocode;
 
@@ -38,12 +39,22 @@ export class Controller {
             return price;
         };
 
+        const page = Number(params.get('page') || 1)
+        const perPage = Number(params.get('perPage') || 3)
+        const pageCount = Math.ceil(cartItems.length / perPage)
+        const offset = (page - 1) * perPage
+
         const cartData: CartDataType = {
-            items: cartItems,
+            items: cartItems.slice(offset, offset + perPage),
             priceAfterDiscount: priceByPromocodes(promocodes.applied),
             getPriceByPromocodes: priceByPromocodes,
             productCount: cartItems.reduce((count, cartItem) => count + cartItem.quantity, 0),
             promocodes: store.getState().promocode,
+            pagination:  {
+                page: page,
+                perPage: perPage,
+                pageCount: pageCount
+            }
         }
         callback(cartData);
     }
