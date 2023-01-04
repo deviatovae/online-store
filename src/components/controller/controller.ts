@@ -177,7 +177,7 @@ export class Controller {
                 }, 0)
             }
         }
-
+    
         callback(data);
     }
 
