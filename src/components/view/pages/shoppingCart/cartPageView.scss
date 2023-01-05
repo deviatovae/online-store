@@ -244,6 +244,7 @@
     text-align: left;
     font: 1rem $Sitara;
     color: $darkGray;
+    padding-left: 5px;
 
     @media screen and (max-width: 670px) {
       font: 0.6rem $Sitara;
@@ -266,9 +267,9 @@
     align-items: center;
     gap: 6px;
 
-    @media screen and (max-width: 670px) {
-      grid-template-columns: 20px 10px;
-      grid-template-rows: 10px 10px;
+    @media screen and (max-width: 767px) {
+      grid-template-columns: 30px 10px;
+      grid-template-rows: 18px 18px;
     }
   }
 
@@ -334,9 +335,9 @@
     align-items: center;
     justify-content: center;
 
-    @media screen and (max-width: 670px) {
-      width: 20px;
-      height: 27px;
+    @media screen and (max-width: 767px) {
+      width: 30px;
+      height: 42px;
       border-radius: 2px;
       font: 0.8rem $Sitara;
     }
@@ -344,7 +345,7 @@
 
   &__arrow-container {
     width: 25px;
-    height: 25px;
+    height: 27px;
     border: 1px solid $greyBorder;
     border-radius: 3px;
     display: flex;
@@ -352,9 +353,9 @@
     justify-content: center;
     transition: transform 0.15s;
 
-    @media screen and (max-width: 670px) {
-      width: 10px;
-      height: 12px;
+    @media screen and (max-width: 767px) {
+      width: 15px;
+      height: 20px;
       border-radius: 2px;
     }
 
