@@ -88,6 +88,11 @@
 .row-view .product-item__img {
   width: 200px;
   height: 200px;
+
+  @media screen and (max-width: 850px) {
+    width: 150px;
+    height: 150px;
+  }
 }
 
 .row-view .product-item__info {
@@ -99,6 +104,11 @@
   font-size: 1.2rem;
   justify-content: space-between;
   font-weight: bold;
+
+  @media screen and (max-width: 850px) {
+    font-size: 1rem;
+  }
+
 }
 
 .row-view .product-item__text-wrapper {
@@ -111,4 +121,9 @@
   height: 50px;
   bottom: 0;
   font-size: 1.2rem;
+
+  @media screen and (max-width: 850px) {
+    height: 30px;
+    font-size: 0.9rem;
+  }
 }
