@@ -1,5 +1,31 @@
 @import 'src/assets/styles/common/variables';
 
+a {
+  text-decoration: none;
+}
+.product-page__bread-crumbs.bread-crumbs {
+  align-items: center;
+  padding: 30px 0 0 20px;
+  margin-bottom: 30px;
+}
+
+.bread-crumbs {
+
+  &__home-link {
+    font-family: $Sitara;
+    color: $mainBlack;
+    display: flex;
+    align-items: center;
+    line-height: 18px;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      scale: 1.1;
+    }
+  }
+}
+
 .product-page {
   height: 650px;
   width: 80%;
@@ -87,7 +113,7 @@
       grid-row: 4 / 5;
     }
   }
-  
+
   &__specifications-container {
     grid-column: 2 / 3;
     grid-row: 3 / 4;

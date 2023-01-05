@@ -47,9 +47,6 @@ export class MainPageView extends View<MainPageDataType> {
             </div>
             <div class="store-page">
               <section class="main-catalog">
-                <div class="main-catalog__bread-crumbs bread-crumbs">
-                  <div class="bread-crumbs__path">Home</div>
-                </div>
                 <div class="main-catalog__filters">
                   ${this.views.filters.render(data.filters)}
                 </div>
