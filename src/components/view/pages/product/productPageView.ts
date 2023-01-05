@@ -17,9 +17,15 @@ export default class ProductPageView extends View<ProductPageType> {
         return `
           ${this.views.header.render(cart)}
           <main>
+            <div class="product-page__bread-crumbs bread-crumbs">
+                  <div class="bread-crumbs__path">
+                  <a class="bread-crumbs__home-link" data-href="/">Home</a>
+                  </div>
+                  <div class="bread-crumbs__path">${product.category}</div>
+                  <div class="bread-crumbs__path">${product.name}</div>
+            </div>
             <div class="product-page wrapper">
                 <div class="product-page__arrow-back"></div>
-    
                 <div class="product-page__img-container">
                   <div class="img-container__slider">
                     <img class="product-page-img-min product-page__img-0" src="${product.images[0]}" alt="product image">
@@ -161,6 +167,13 @@ export default class ProductPageView extends View<ProductPageType> {
         buttonBuy.addEventListener('click', (event: Event) => {
           controller.addProductToCart(Number(buttonAdd.dataset.id), Number(quantityInput.value));
           Router.redirectTo('/cart?buy-now');
+        })
+
+        document.querySelectorAll<HTMLLinkElement>('.bread-crumbs__path > a').forEach((link) => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                Router.redirectTo(link.dataset.href ?? '')
+            })
         })
     }
 }
