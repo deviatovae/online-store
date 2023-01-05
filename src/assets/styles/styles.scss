@@ -93,6 +93,10 @@ body{
 
 }
 
+.header-logo:hover > .header-logo__img {
+  animation: 1s ease-in-out 0s normal none running shake-animation-cart;
+}
+
 .find-container {
   background-color: $oliva;
   height: 152px;
