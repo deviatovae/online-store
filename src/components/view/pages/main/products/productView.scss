@@ -1,7 +1,7 @@
 @import '../../../../../assets/styles/common/variables';
 
 .product-item {
-  width: 225px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -11,8 +11,8 @@
 
   &__img {
     background-repeat: no-repeat;
-    width: 225px;
-    height: 225px;
+    width: 250px;
+    height: 250px;
     transition: box-shadow 0.3s;
 
 
@@ -65,6 +65,7 @@
 .item-info {
 
   &__name-price {
+    height: 45px;
     display: flex;
     align-items: start;
     justify-content: center;
@@ -74,7 +75,6 @@
     margin-bottom: 15px;
   }
 }
-
 
 // switching row style
 
@@ -89,15 +89,24 @@
   width: 200px;
   height: 200px;
 
-  @media screen and (max-width: 850px) {
+  @media screen and (max-width: 900px) {
     width: 150px;
     height: 150px;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 120px;
+    height: 120px;
   }
 }
 
 .row-view .product-item__info {
   width: 100%;
   font-size: 1rem;
+
+  @media screen and (max-width: 500px) {
+    font-size: 0.8rem;
+  }
 }
 
 .row-view .item-info__name-price {
@@ -120,10 +129,10 @@
 .row-view .product-item__cart-add, .row-view .product-item__cart-added  {
   height: 50px;
   bottom: 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
 
-  @media screen and (max-width: 850px) {
+  @media screen and (max-width: 900px) {
     height: 30px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 }
