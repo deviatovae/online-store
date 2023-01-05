@@ -26,6 +26,11 @@ export class PaginationPagesView extends View<PaginationPagesViewDataType> {
         paginationButtons.forEach((button) => {
             button?.addEventListener('click', () => {
                 Router.setUrlParam('page', button.textContent || '1')
+                window.scroll({
+                    top: 150,
+                    left: 0,
+                    behavior: "smooth"
+                })
             })
         })
     }

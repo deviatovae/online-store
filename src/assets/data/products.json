@@ -52,7 +52,7 @@
     "collection": 2021,
     "color": "red",
     "size": 12,
-    "favorite": false,
+    "favorite": true,
     "category": "Tree decorations",
     "images": [
       "/assets/img/products/popcorn-machine-glass-hanging-figurine-12cm-red.jpg",
@@ -67,7 +67,7 @@
     "collection": 2023,
     "color": "silver",
     "size": 270,
-    "favorite": true,
+    "favorite": false,
     "category": "Garland & Wreath",
     "images": [
       "/assets/img/products/christmas-garland-with-stars-silver-270x6cm-shiny.jpg",
@@ -97,7 +97,7 @@
     "collection": 2022,
     "color": "silver",
     "size": 8,
-    "favorite": true,
+    "favorite": false,
     "category": "Do It Yourself",
     "images": [
       "/assets/img/products/3-diy-silver-christmas-baubles-8-cm-with-markers.jpg",
@@ -142,7 +142,7 @@
     "collection": 2022,
     "color": "green",
     "size": 24,
-    "favorite": false,
+    "favorite": true,
     "category": "Christmas decorations",
     "images": [
       "/assets/img/products/gnome-with-led-hat-eucalyptus-24-cm-porcelain.jpg",
@@ -172,7 +172,7 @@
     "collection": 2021,
     "color": "green",
     "size": 35,
-    "favorite": false,
+    "favorite": true,
     "category": "Christmas decorations",
     "images": [
       "/assets/img/products/led-christmas-tree-figurine-35-cm-magnesia.jpg",
@@ -187,7 +187,7 @@
     "collection": 2021,
     "color": "blue",
     "size": 15,
-    "favorite": true,
+    "favorite": false,
     "category": "Christmas decorations",
     "images": [
       "/assets/img/products/deco-christmas-tree-15cm-night-blue.jpg",
@@ -217,7 +217,7 @@
     "collection": 2023,
     "color": "blue",
     "size": 20,
-    "favorite": false,
+    "favorite": true,
     "category": "Christmas decorations",
     "images": [
       "/assets/img/products/nutcracker-polyresin-20-cm.jpg",
@@ -262,7 +262,7 @@
     "collection": 2022,
     "color": "yellow",
     "size": 500,
-    "favorite": true,
+    "favorite": false,
     "category": "Christmas lights",
     "images": [
       "/assets/img/products/50-led-light-chain-warm-white-battery-operated-indoor-use.jpg",
@@ -307,7 +307,7 @@
     "collection": 2023,
     "color": "yellow",
     "size": 8,
-    "favorite": true,
+    "favorite": false,
     "category": "Tree decorations",
     "images": [
       "/assets/img/products/onion-glass-bauble-lampion-champagne-8-cm.jpg",
@@ -442,7 +442,7 @@
     "collection": 2021,
     "color": "red",
     "size": 200,
-    "favorite": true,
+    "favorite": false,
     "category": "Garland & Wreath",
     "images": [
       "/assets/img/products/feather-garland-200cm-dark-red.jpg",
@@ -457,7 +457,7 @@
     "collection": 2023,
     "color": "pink",
     "size": 10,
-    "favorite": false,
+    "favorite": true,
     "category": "Tree decorations",
     "images": [
       "/assets/img/products/pink-donut-christmas-ornament-glass-10-cm.jpg",
@@ -487,7 +487,7 @@
     "collection": 2023,
     "color": "pink",
     "size": 9,
-    "favorite": false,
+    "favorite": true,
     "category": "Tree decorations",
     "images": [
       "/assets/img/products/shatterproof-christmas-ornament-cupcake-macroon-9-cm.jpg",
@@ -532,7 +532,7 @@
     "collection": 2023,
     "color": "brown",
     "size": 150,
-    "favorite": false,
+    "favorite": true,
     "category": "Garland & Wreath",
     "images": [
       "/assets/img/products/pinecone-garland-brown-snowy-150cm.jpg",
@@ -622,7 +622,7 @@
     "collection": 2022,
     "color": "pink",
     "size": 8,
-    "favorite": false,
+    "favorite": true,
     "category": "Tree decorations",
     "images": [
       "/assets/img/products/2-glitter-balls-of-petals-8-cm-soft-pink.jpg",
@@ -652,11 +652,11 @@
     "collection": 2023,
     "color": "red",
     "size": 25,
-    "favorite": true,
+    "favorite": false,
     "category": "Tree decorations",
     "images": [
-      "/assets/img/products/set-of-4-metallic-red-twist-candles-25-cm.jpg",
-      "/assets/img/products/set-of-4-metallic-red-twist-candles-25-cm(1).jpg"
+      "/assets/img/products/set-of-4-metallic-red-twist-candles-25-cm(1).jpg",
+      "/assets/img/products/set-of-4-metallic-red-twist-candles-25-cm.jpg"
     ]
   },
   {
@@ -817,7 +817,7 @@
     "collection": 2023,
     "color": "purple",
     "size": 45,
-    "favorite": false,
+    "favorite": true,
     "category": "Christmas decorations",
     "images": [
       "/assets/img/products/Gnome-with-sequin-hat(1).jpg",
@@ -847,7 +847,7 @@
     "collection": 2023,
     "color": "brown",
     "size": 26,
-    "favorite": false,
+    "favorite": true,
     "category": "Garland & Wreath",
     "images": [
       "/assets/img/products/floral-hoop-wreath-26cm.jpg",

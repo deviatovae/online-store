@@ -6,9 +6,9 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 50px 60px;
+    gap: 50px 30px;
 
-    @media screen and (max-width: 820px) {
+    @media screen and (max-width: 1145px) {
       justify-content: center;
     }
 

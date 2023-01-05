@@ -136,7 +136,7 @@ a {
     }
 
     @media screen and (max-width: 767px) {
-      font: 0.8rem $Sitara;
+      font: 1.2rem $Sitara;
     }
 
   }
@@ -250,9 +250,8 @@ a {
   cursor: pointer;
   transition: all 0.3s;
 
-  @media screen and (max-width: 670px) {
-    height: 35px;
-    font: 0.7rem $Sitara;
+  @media screen and (max-width: 768px) {
+    height: 45px;
   }
 }
 
@@ -268,9 +267,8 @@ a {
   cursor: pointer;
   transition: all 0.3s;
 
-  @media screen and (max-width: 670px) {
-    height: 35px;
-    font: 0.7rem $Sitara;
+  @media screen and (max-width: 768px) {
+    height: 45px;
   }
 }
 
