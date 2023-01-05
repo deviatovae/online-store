@@ -54,9 +54,9 @@ a {
   }
 
   @media screen and (max-width: 767px) {
-    padding: 0px 10px;
-    width: 90%;
-    height: 900px;
+    padding: 0px 5px;
+    width: 95%;
+    height: 860px;
 
   }
 
@@ -85,7 +85,7 @@ a {
     @media screen and (max-width: 767px) {
       width: 35px;
       height: 35px;
-      top: 28px;
+      top: 25px;
       left: 5px;
       background-size: contain;
     }
@@ -137,7 +137,7 @@ a {
     }
 
     @media screen and (max-width: 767px) {
-      font: 0.9rem $Sitara;
+      font: 0.8rem $Sitara;
     }
 
   }
