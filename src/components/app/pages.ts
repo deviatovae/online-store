@@ -1,6 +1,5 @@
 import {ViewStorage} from "../view/viewStorage";
 import {Controller} from "../controller/controller";
-import {Router} from "../router/router";
 
 /**
  * занимается отрисовкой конкретных страниц
