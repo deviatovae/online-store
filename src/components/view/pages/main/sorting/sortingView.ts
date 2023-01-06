@@ -168,7 +168,12 @@ export class SortingFiltersView extends View<ProductViewDataType> {
         filterSelects.forEach((select) => {
             select.addEventListener('change', () => {
                 Router.removeUrlParamKey('page')
-                Router.setUrlParam(select.dataset.param || '', select.value)
+                const key = select.dataset.param || ''
+                Router.setUrlParam(key, select.value)
+
+                if (!select.value) {
+                    Router.removeUrlParamKey(key)
+                }
             })
         })
 
