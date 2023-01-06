@@ -8,7 +8,6 @@ import {SortingFiltersView} from "./sorting/sortingView";
 import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
 import {TimeoutId} from "@reduxjs/toolkit/dist/query/core/buildMiddleware/types";
-import {PaginationPerPageView} from "../../common/pagination/paginationPerPageView";
 import {PaginationPagesView} from "../../common/pagination/paginationPagesView";
 
 
