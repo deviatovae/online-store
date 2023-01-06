@@ -144,7 +144,7 @@ export class Controller {
         }
 
         const pagination = this.getPagination(filteredProducts.length, 20);
-        if(!params.has('sortBy')) {
+        if(!params.get('sortBy')) {
             filteredProducts.sort((item) => item.favorite ? -1 : 1)
         }
         const slicedProducts = filteredProducts.slice(pagination.offset, pagination.offset + pagination.limit)
