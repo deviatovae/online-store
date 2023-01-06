@@ -29,13 +29,17 @@ export default class CartPageView extends View<CartDataType> {
         if (!cart.items.length) {
             return `
               ${this.views.header.render(cart)}
-              <main">
-              <div class="shopping-cart__empty">
-                <div class="shopping-cart__empty-title">SHOPPING CART</div>
-                <div class="shopping-cart__empty-subtitle">You have no items in your shopping cart.</div>
-              </div>
+              <main>
+                <div class="shopping-cart__empty">
+                  <div class="shopping-cart__empty-title">SHOPPING CART</div>
+                  <div class="shopping-cart__empty-subtitle">
+                    You have no items in your shopping cart.<br>
+                    Click <a data-href="/">here</a> to continue shopping.
+                  </div>
+                </div>
               </main>
-              ${this.views.footer.render()}`
+              ${this.views.footer.render()}
+            `
         }
 
         // language=HTML
@@ -99,7 +103,6 @@ export default class CartPageView extends View<CartDataType> {
                 selectedPage: cart.pagination.page
               })}
             </div>
-
           </main>
           ${this.views.footer.render()}
         `;
@@ -118,6 +121,13 @@ export default class CartPageView extends View<CartDataType> {
         if (Router.getUrlParams().has('buy-now')) {
             this.views.payment.show();
         }
+
+        document.querySelectorAll<HTMLLinkElement>('.shopping-cart__empty-subtitle > a').forEach((link) => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                Router.redirectTo(link.dataset.href ?? '')
+            })
+        })
 
         /**
          * promocode
