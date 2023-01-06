@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cart from './reducers/cart';
+import cart = require('./reducers/cart');
 import {saveState} from "./reducers/storeDb";
 import promocode from "./reducers/promocode";
 
@@ -8,7 +8,7 @@ import promocode from "./reducers/promocode";
  */
 const store = configureStore({
   reducer: {
-    cart: cart,
+    cart: cart.reducer,
     promocode: promocode,
   },
 });

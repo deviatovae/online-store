@@ -84,22 +84,8 @@ const slice = createSlice({
   },
 });
 
-/**
- * экспортируем экшены из слайса, чтобы использовать их в контроллере
- */
-export const {
-  addProductToCart,
-  removeProductFromCart,
-  removeProductFromCartAll,
-  setProductQuantityInCart,
-  clearCart
-} = slice.actions;
 
 /**
- * экспортируем редюсер из слайса, чтобы использовать его для инициализации store
+ * экспортируем поля слайса
  */
-export default slice.reducer;
-
-module.exports = {
-  ...slice,
-}
+export = {...slice}
