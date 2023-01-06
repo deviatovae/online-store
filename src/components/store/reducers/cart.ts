@@ -9,7 +9,7 @@ import {CartItemArgType} from "../../types/cartItemArgType";
  */
 let initialState = loadState<CartItemType[]>('cart', []);
 
-export const slice = createSlice({
+const slice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
@@ -99,3 +99,7 @@ export const {
  * экспортируем редюсер из слайса, чтобы использовать его для инициализации store
  */
 export default slice.reducer;
+
+module.exports = {
+  ...slice,
+}
