@@ -1,14 +1,7 @@
 import {CallbackFn} from "../types/callbackFn";
 import {Product} from "../types/product";
 import store from "../store/store";
-import {
-    addProductToCart,
-    clearCart,
-    removeProductFromCart,
-    removeProductFromCartAll,
-    setProductQuantityInCart
-} from "../store/reducers/cart";
-
+import cart = require("../store/reducers/cart");
 import products from '../../assets/data/products.json'
 import {CartDataType, GetPriceByPromocodes} from "../types/cartDataType";
 import {MainPageDataType} from "../types/mainPageDataType";
@@ -193,7 +186,7 @@ export class Controller {
     addProductToCart(id: number, quantity: number = 1) {
         const product = products.find((product: Product) => product.id === id)
         if (product) {
-            store.dispatch(addProductToCart({product: product, quantity: quantity}))
+            store.dispatch(cart.actions.addProductToCart({product: product, quantity: quantity}))
         }
     }
     /**
@@ -202,7 +195,7 @@ export class Controller {
     setProductQuantityInCart(id: number, value: number) {
         const product = products.find((product: Product) => product.id === id)
         if (product) {
-            store.dispatch(setProductQuantityInCart({product: product, quantity: value}))
+            store.dispatch(cart.actions.setProductQuantityInCart({product: product, quantity: value}))
         }
     }
 
@@ -212,7 +205,7 @@ export class Controller {
     removeProductFromCart(id: number) {
         const product = products.find((product: Product) => product.id === id)
         if (product) {
-            store.dispatch(removeProductFromCart(product))
+            store.dispatch(cart.actions.removeProductFromCart(product))
         }
     }
 
@@ -222,12 +215,12 @@ export class Controller {
     removeProductFromCartAll(id: number) {
         const product = products.find((product: Product) => product.id === id)
         if (product) {
-            store.dispatch(removeProductFromCartAll(product))
+            store.dispatch(cart.actions.removeProductFromCartAll(product))
         }
     }
 
     async clearCart() {
-        store.dispatch(clearCart());
+        store.dispatch(cart.actions.clearCart());
     }
 
     /**
