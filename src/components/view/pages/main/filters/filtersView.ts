@@ -31,82 +31,82 @@ export class FiltersView extends View<FiltersDataType> {
                 <div class="item-content__collection collection">
                   ${data.collections?.map((collection) => {
             const selectedClass = data.selected.collections?.includes(collection) ? 'is-selected' : '';
-            return `<div class="collection__year ${selectedClass}" data-collection="${collection}">${collection}</div>`;
-        }).join('')}
+                    return `<div class="collection__year ${selectedClass}" data-collection="${collection}">${collection}</div>`;
+                  }).join('')}
                 </div>
               </div>
             </div>
-            <div class="filters__item filters-item">
-              <div class="filters-item__title">Price</div>
-              <div class="filters-item__content item-content">
-                <div class="item-content__price price">
-                  <div>
-                    <input type="text" class="box-start" value="${data.price?.selectedMin}">
-                    <span class="price__dollar_start">$</span>
+              <div class="filters__item filters-item">
+                <div class="filters-item__title">Price</div>
+                <div class="filters-item__content item-content">
+                  <div class="item-content__price price">
+                    <div>
+                      <input type="text" class="box-start" value="${data.price?.selectedMin}" maxlength="6">
+                      <span class="price__dollar_start">$</span>
+                    </div>
+                    <div>
+                      <input type="text" class="box-end" value="${data.price?.selectedMax}" maxlength="6">
+                      <span class="price__dollar_end">$</span>
+                    </div>
                   </div>
-                  <div>
-                    <input type="text" class="box-end" value="${data.price?.selectedMax}">
-                    <span class="price__dollar_end">$</span>
+                  <div class="item-content__dual-range dual-range">
+                    <div class="slider"
+                         data-min_selected="${data.selected.price?.selectedMin}"
+                         data-max_selected="${data.selected.price?.selectedMax}"
+                         data-min="${data.price?.min}"
+                         data-max="${data.price?.max}"></div>
                   </div>
                 </div>
-                <div class="item-content__dual-range dual-range">
-                  <div class="slider" 
-                       data-min_selected="${data.selected.price?.selectedMin}" 
-                       data-max_selected="${data.selected.price?.selectedMax}" 
-                       data-min="${data.price?.min}" 
-                       data-max="${data.price?.max}"></div>
+              </div>
+              <div class="filters__item filters-item">
+                <div class="filters-item__title">Size</div>
+                <div class="filters-item__content item-content">
+                  <div class="item-content__size size">
+                    <input type="text" class="box-start" placeholder="cm" maxlength="3">
+                    <input type="text" class="box-end" placeholder="cm" maxlength="3">
+                  </div>
+                  <div class="item-content__dual-range dual-range">
+                    <div class="slider"
+                         data-min_selected="${data.selected.size?.selectedMin}"
+                         data-max_selected="${data.selected.size?.selectedMax}"
+                         data-min="${data.size?.min}"
+                         data-max="${data.size?.max}"></div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="filters__item filters-item">
-              <div class="filters-item__title">Size</div>
-              <div class="filters-item__content item-content">
-                <div class="item-content__size size">
-                  <input type="text" class="box-start" placeholder="${data.size?.selectedMin}cm">
-                  <input type="text" class="box-end" placeholder="${data.size?.selectedMax}cm">
-                </div>
-                <div class="item-content__dual-range dual-range">
-                  <div class="slider"
-                       data-min_selected="${data.selected.size?.selectedMin}"
-                       data-max_selected="${data.selected.size?.selectedMax}"
-                       data-min="${data.size?.min}" 
-                       data-max="${data.size?.max}"></div>
-                </div>
-              </div>
-            </div>
-            <div class="filters__item filters-item">
-              <div class="filters-item__title">Category</div>
-              <div class="filters-item__content item-content">
-                ${data.categories?.map((item) => {
+              <div class="filters__item filters-item">
+                <div class="filters-item__title">Category</div>
+                <div class="filters-item__content item-content">
+                  ${data.categories?.map((item) => {
             const id = item.category.toLowerCase().replace(' ', '-')
-            const checked = data.selected.categories?.some(c => c.category === item.category) ? 'checked="checked"' : '';
-            // language=HTML
-            return `<div class="item-content__category category">
+                    const checked = data.selected.categories?.some(c => c.category === item.category) ? 'checked="checked"' : '';
+                    // language=HTML
+                    return `<div class="item-content__category category">
                       <label for="${id}" class="category__label">${item.category}</label>
                       <div class="category__count">(${item.products})</div>
                       <input id="${id}" type="checkbox" class="category__checkbox" data-categories="${item.category}" ${checked}>
                   </div>`
-        }).join('')}
-              </div>
-            </div>
-            <div class="filters__item filters-item">
-              <div class="filters-item__title">In stock</div>
-              <div class="filters-item__content item-content">
-                <div class="item-content__stock stock">
-                  <input type="text" class="box-start" placeholder="${data.stock?.selectedMin}">
-                  <input type="text" class="box-end" placeholder="${data.stock?.selectedMax}">
-                </div>
-                <div class="item-content__dual-range dual-range">
-                  <div class="slider"
-                       data-min_selected="${data.selected.stock?.selectedMin}"
-                       data-max_selected="${data.selected.stock?.selectedMax}"
-                       data-min="${data.stock?.min}" 
-                       data-max="${data.stock?.max}"></div>
+                  }).join('')}
                 </div>
               </div>
-            </div>
+              <div class="filters__item filters-item">
+                <div class="filters-item__title">In stock</div>
+                <div class="filters-item__content item-content">
+                  <div class="item-content__stock stock">
+                    <input type="text" class="box-start" maxlength="2">
+                    <input type="text" class="box-end" maxlength="2">
+                  </div>
+                  <div class="item-content__dual-range dual-range">
+                    <div class="slider"
+                         data-min_selected="${data.selected.stock?.selectedMin}"
+                         data-max_selected="${data.selected.stock?.selectedMax}"
+                         data-min="${data.stock?.min}"
+                         data-max="${data.stock?.max}"></div>
+                  </div>
+                </div>
+              </div>
               <div class="filters__close-btn"></div>
-          </div>
+            </div>
         `
     }
 
@@ -220,40 +220,46 @@ export class FiltersView extends View<FiltersDataType> {
         });
 
         api.on('change', function () {
+            console.log(startInput.value)
             onChange(startInput.value, endInput.value);
         });
         api.on('set', function () {
             onChange(startInput.value, endInput.value);
         });
 
-        startInput.addEventListener('change', function () {
-            api.set([this.value, endInput.value]);
-        });
-
-        endInput.addEventListener('change', function () {
-            api.set([startInput.value, this.value]);
-        });
-
         [startInput, endInput]
-            .forEach((input) => input.addEventListener('keypress', (e: KeyboardEvent) => {
-                const target = e.target as HTMLInputElement;
-                const value = target.value;
-                const dotPos = value.indexOf('.');
-                const decimal = value.toString().split('.')[1];
-
-                const canEnterDecimal = !decimal || decimal.length < maxDecimals;
-                const selectionBeforeDot = (target.selectionStart ?? 0) <= dotPos;
-                const isReplaceDecimals = !selectionBeforeDot && (target.selectionEnd ?? 0) > (target.selectionStart ?? 0)
-
-                if (!isNaN(parseInt(e.key)) && (canEnterDecimal || selectionBeforeDot || isReplaceDecimals)) {
-                    return;
+            .forEach((input) => {
+                const updateRangeValue = () => {
+                    console.log(1111)
+                    api.set([startInput.value, endInput.value]);
                 }
 
-                if (e.key === '.' && maxDecimals > 0 && dotPos < 0) {
-                    return;
-                }
+                input.addEventListener('change', updateRangeValue)
 
-                e.preventDefault();
-            }))
+                input.addEventListener('keypress', (e: KeyboardEvent) => {
+                    const target = e.target as HTMLInputElement;
+                    const value = target.value;
+                    const dotPos = value.indexOf('.');
+                    const decimal = value.toString().split('.')[1];
+
+                    const canEnterDecimal = !decimal || decimal.length < maxDecimals;
+                    const selectionBeforeDot = (target.selectionStart ?? 0) <= dotPos;
+                    const isReplaceDecimals = !selectionBeforeDot && (target.selectionEnd ?? 0) > (target.selectionStart ?? 0)
+
+                    if (e.key === 'Enter') {
+                        return;
+                    }
+
+                    if (!isNaN(parseInt(e.key)) && (canEnterDecimal || selectionBeforeDot || isReplaceDecimals)) {
+                        return;
+                    }
+
+                    if (e.key === '.' && maxDecimals > 0 && dotPos < 0) {
+                        return;
+                    }
+
+                    e.preventDefault();
+                })
+            })
     }
 }
