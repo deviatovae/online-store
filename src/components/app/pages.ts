@@ -6,7 +6,7 @@ import {Router} from "../router/router";
  * занимается отрисовкой конкретных страниц
  */
 export class Pages {
-    private controller: Controller;
+    private readonly controller: Controller;
     private views: ViewStorage;
     private container = document.querySelector('#app') as HTMLElement;
 
