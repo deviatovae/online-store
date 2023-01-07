@@ -6,7 +6,6 @@ import {formatPrice} from "../../helpers/helpers";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {ProductPageType} from "../../../types/productPageType";
-import objectContaining = jasmine.objectContaining;
 
 export default class ProductPageView extends View<ProductPageType> {
     protected views = {

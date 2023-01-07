@@ -10,7 +10,6 @@ import {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/pro
 import {Router} from "../router/router";
 import {ProductPageType} from "../types/productPageType";
 import {PaginationDataType} from "../types/paginationDataType";
-import objectContaining = jasmine.objectContaining;
 
 /**
  * контроллер получает, изменяет, фильтрует данные, которые потребуются для view
