@@ -18,7 +18,6 @@ export default class ProductPageView extends View<ProductPageType> {
         const inCart = `<div class="product-summary__state-in-cart">In cart</div>`
         const addToCart = `<button class="button-add-cart button" data-id="${product.id}">ADD TO CART</button>`
         const addMore = `<button class="button-add-cart button" data-id="${product.id}">ADD MORE</button>`
-        console.log(inCart)
 
         return `
           ${this.views.header.render(cart)}

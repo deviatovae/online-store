@@ -220,7 +220,6 @@ export class FiltersView extends View<FiltersDataType> {
         });
 
         api.on('change', function () {
-            console.log(startInput.value)
             onChange(startInput.value, endInput.value);
         });
         api.on('set', function () {
@@ -230,7 +229,6 @@ export class FiltersView extends View<FiltersDataType> {
         [startInput, endInput]
             .forEach((input) => {
                 const updateRangeValue = () => {
-                    console.log(1111)
                     api.set([startInput.value, endInput.value]);
                 }
 
