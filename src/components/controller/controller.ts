@@ -10,6 +10,7 @@ import {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/pro
 import {Router} from "../router/router";
 import {ProductPageType} from "../types/productPageType";
 import {PaginationDataType} from "../types/paginationDataType";
+import getTimerCount = jest.getTimerCount;
 
 /**
  * контроллер получает, изменяет, фильтрует данные, которые потребуются для view
@@ -300,6 +301,9 @@ export class Controller {
         }
     }
 
+    getLastPageInCart(): number {
+        return this.getPagination(store.getState().cart.length, 3).pageCount
+    }
     private getPagination(count: number, defaultPerPage: number): PaginationDataType {
         const params = Router.getUrlParams();
         const page = Number(params.get('page') || 1)
