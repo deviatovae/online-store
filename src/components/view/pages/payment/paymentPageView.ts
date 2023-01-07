@@ -132,7 +132,7 @@ export class PaymentPageView extends View<CartDataType> {
         const numberInput = document.querySelector<HTMLInputElement>(".payment-details__phone-number");
         numberInput?.addEventListener('input', (event: Event) => {
 
-            numberInput.value = numberInput.value.replace(/[^\0-9]/g, "").substring(0, 16);
+            numberInput.value = numberInput.value.replace(/[^+\d]/g, '').substring(0, 16);
             if (numberInput.value.match(/^\+\d{9}/g)) {
                 numberInput.classList.add('valid');
                 numberInput.classList.remove('invalid');
