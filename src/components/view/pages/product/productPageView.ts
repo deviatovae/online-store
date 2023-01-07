@@ -6,6 +6,7 @@ import {formatPrice} from "../../helpers/helpers";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {ProductPageType} from "../../../types/productPageType";
+import objectContaining = jasmine.objectContaining;
 
 export default class ProductPageView extends View<ProductPageType> {
     protected views = {
@@ -13,7 +14,13 @@ export default class ProductPageView extends View<ProductPageType> {
         footer: new FooterView(),
     };
 
-    render({cart, product}: ProductPageType): string {
+    render({cart, product, isInCart}: ProductPageType): string {
+
+        const inCart = `<div class="product-summary__state-in-cart">In cart</div>`
+        const addToCart = `<button class="button-add-cart button" data-id="${product.id}">ADD TO CART</button>`
+        const addMore = `<button class="button-add-cart button" data-id="${product.id}">ADD MORE</button>`
+        console.log(inCart)
+
         return `
           ${this.views.header.render(cart)}
           <main>
@@ -33,10 +40,12 @@ export default class ProductPageView extends View<ProductPageType> {
                   </div>
                   <img class="product-page__img-main" src="${product.images[0]}" alt="product image">
                 </div>
-                <div class="product-page__summaru-item">
-                  ${product.name} | ${product.color} | ${product.size}cm | $${formatPrice(product.price)}
+                <div class="product-page__summaru-item product-summary">
+                <div class="product-summary__description">
+                ${product.name} | ${product.color} | ${product.size}cm | $${formatPrice(product.price)}
                 </div>
-    
+                ${isInCart ? inCart : ''}
+                </div>
                 <div class="product-page__cart-container">
                   <div class="cart-item__qty">
                     <div class="cart-item-qty__value-container">
@@ -49,7 +58,7 @@ export default class ProductPageView extends View<ProductPageType> {
                       <div class="cart-item-qty__arrow-down"></div>
                     </div>
                   </div>
-                  <button class="button-add-cart button" data-id="${product.id}">ADD TO CART</button>
+                  ${isInCart ? addMore : addToCart}
                 </div>
                 
                   <div class="product-page__specifications-container">
@@ -68,7 +77,7 @@ export default class ProductPageView extends View<ProductPageType> {
                         <div class="specifications__item specifications-item-number">${product.id + 500}</div>
                         <div class="specifications__item specifications-color">${product.color}</div>
                         <div class="specifications__item specifications-collection">${product.collection}</div>
-                        <div class="specifications__item specifications-price">${product.price}</div>
+                        <div class="specifications__item specifications-price">$${product.price}</div>
                         <div class="specifications__item specifications-size">${product.size} cm</div>
                         <div class="specifications__item specifications-category">${product.category}</div>
                         <div class="specifications__item specifications-in-stock">${product.stock}</div>

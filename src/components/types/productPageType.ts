@@ -3,5 +3,6 @@ import {Product} from "./product";
 
 export type ProductPageType = {
     cart: CartDataType,
-    product: Product
+    product: Product,
+    isInCart: boolean,
 }
