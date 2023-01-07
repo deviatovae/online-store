@@ -91,7 +91,7 @@ export class PaymentPageView extends View<CartDataType> {
         const nameInput = document.querySelector<HTMLInputElement>(".payment-details__name");
         nameInput?.addEventListener('input', (event: Event) => {
 
-            nameInput.value = nameInput.value.replace(/[^A-Za-z, А-Яа-я]/g, "");
+            nameInput.value = nameInput.value.replace(/[^A-Za-z, А-Яа-я]/g, '');
             let arrName = Array.from(nameInput.value.split(' '))
             if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
                 nameInput.classList.add('valid');
@@ -108,7 +108,7 @@ export class PaymentPageView extends View<CartDataType> {
         const addressInput = document.querySelector<HTMLInputElement>(".payment-details__shipping-address");
         addressInput?.addEventListener('input', (event: Event) => {
 
-            addressInput.value = addressInput.value.replace(/[^\-\A-Za-z, А-Яа-я]/g, "");
+            addressInput.value = addressInput.value.replace(/[^\-\A-Za-z, А-Яа-я]/g, '');
             let arrAddress = Array.from(addressInput.value.split(' '))
             if (arrAddress.length >= 3 && arrAddress.every((el) => el.length >= 5)) {
                 addressInput.classList.add('valid');
@@ -200,7 +200,7 @@ export class PaymentPageView extends View<CartDataType> {
         const nameCardInput = document.querySelector<HTMLInputElement>(".card-details__name");
         nameCardInput?.addEventListener('input', (event: Event) => {
 
-            nameCardInput.value = nameCardInput.value.replace(/[^\A-Za-z /]/g, "");
+            nameCardInput.value = nameCardInput.value.replace(/[^\A-Za-z /]/g, '');
             let arrName = Array.from(nameCardInput.value.split(' '));
 
             if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
@@ -218,7 +218,7 @@ export class PaymentPageView extends View<CartDataType> {
         const cvvInput = document.querySelector<HTMLInputElement>(".bottom-row__cvv");
         cvvInput?.addEventListener('input', (event: Event) => {
 
-            cvvInput.value = cvvInput.value.replace(/[^\0-9]/g, "").substring(0, 3);
+            cvvInput.value = cvvInput.value.replace(/[^\0-9]/g, '').substring(0, 3);
 
             if (cvvInput.value.match(/^\d{3}/g)) {
                 cvvInput.classList.add('valid');
@@ -229,7 +229,6 @@ export class PaymentPageView extends View<CartDataType> {
                 cvvInput.classList.add('invalid');
                 validCardCvv = false;
             }
-            ;
         })
 
         // валидация MM/YY
@@ -262,23 +261,23 @@ export class PaymentPageView extends View<CartDataType> {
             }
         })
 
-    const closeButton = document.querySelector<HTMLElement>('.payment-details__close-btn')
+    const closeButton = document.querySelector<HTMLElement>('.payment-details__close-btn');
     closeButton?.addEventListener('click', () => {
-        this.hide()
+        this.hide();
     })
 
     document.addEventListener('keydown', (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
-            this.hide()
+            this.hide();
         }
     })
 
-        const paymentPage = document.querySelector<HTMLElement>('.payment-page')
+        const paymentPage = document.querySelector<HTMLElement>('.payment-page');
         paymentPage?.addEventListener('click', (e) => {
             if (e.target === e.currentTarget) {
-                this.hide()
+                this.hide();
             } else {
-                return
+                return;
             }
         })
 
@@ -390,7 +389,6 @@ export class PaymentPageView extends View<CartDataType> {
                 cvvInput.classList.add('valid');
                 cvvInput.classList.remove('invalid');
             }
-
         })
     }
 }
