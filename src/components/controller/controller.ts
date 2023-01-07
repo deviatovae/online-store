@@ -58,6 +58,7 @@ export class Controller {
         callback({
             cart: cart!,
             product: product,
+            isInCart: cart!.items.some((p) => p.product.id === product.id)
         })
     }
 
