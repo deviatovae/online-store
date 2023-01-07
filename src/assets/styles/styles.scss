@@ -156,10 +156,6 @@ body{
   &:focus {
     outline: none;
   }
-
-  @media screen and (max-width: 360px) {
-    height: 22px;
-  }
 }
 
 .find-input::placeholder {
@@ -174,10 +170,6 @@ body{
 .find-input-img_search, .find-input-img_clear {
   background-size: contain;
   position: absolute;
-
-  @media screen and (max-width: 360px) {
-    top: 6px;
-  }
 }
 
 .find-input-img_search {
