@@ -300,6 +300,9 @@ export class Controller {
         }
     }
 
+    getLastPageInCart(): number {
+        return this.getPagination(store.getState().cart.length, 3).pageCount
+    }
     private getPagination(count: number, defaultPerPage: number): PaginationDataType {
         const params = Router.getUrlParams();
         const page = Number(params.get('page') || 1)

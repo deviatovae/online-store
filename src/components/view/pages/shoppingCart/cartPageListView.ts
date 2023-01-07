@@ -74,6 +74,13 @@ export class CartPageListView extends View<CartItemType[]>{
           button.addEventListener('click', (event: Event) => {
             const button = event.currentTarget as HTMLElement;
             controller.removeProductFromCartAll(Number(button.dataset.id));
+
+            const currentPage = Router.getUrlParams().get('page') || ''
+            const lastPage = controller.getLastPageInCart().toString()
+
+            if(currentPage > lastPage) {
+              Router.setUrlParam('page', lastPage)
+            }
           })
         });
 
