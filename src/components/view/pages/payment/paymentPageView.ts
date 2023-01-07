@@ -124,8 +124,16 @@ export class PaymentPageView extends View<CartDataType> {
         // валидация email
         const emailInput = document.querySelector<HTMLInputElement>(".payment-details__email");
         emailInput?.addEventListener('input', (event: Event) => {
-            emailInput.classList.add('invalid');
-            validEmail = true;
+
+            if (emailInput.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+                emailInput.classList.add('valid');
+                emailInput.classList.remove('invalid');
+                validEmail = true;
+            } else {
+                emailInput.classList.remove('valid');
+                emailInput.classList.add('invalid');
+                validEmail = false;
+            }
         })
 
         // валидация phone-number
@@ -343,6 +351,8 @@ export class PaymentPageView extends View<CartDataType> {
             if (emailInput) {
                 emailInput.value = "Rubi_Rohod@icloud.com";
                 validEmail = true;
+                emailInput.classList.add('valid');
+                emailInput.classList.remove('invalid');
             }
 
             if (numberInput) {

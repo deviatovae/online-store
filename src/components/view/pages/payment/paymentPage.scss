@@ -309,10 +309,11 @@
   border: 1.5px solid green;
 }
 
-.valid,
-.payment-details__email:valid {
+.valid {
   border: 1.5px solid green;
 }
+
+// .payment-details__email:valid
 
 .invalid {
   border: 1.5px solid red;
