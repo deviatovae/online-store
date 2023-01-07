@@ -280,7 +280,9 @@
     grid-template-columns: 50px 20px;
     grid-template-rows: 25px 25px;
     align-items: center;
-    gap: 6px;
+    column-gap: 7px;
+    row-gap: 6px;
+
 
     @media screen and (max-width: 767px) {
       grid-template-columns: 30px 10px;
@@ -345,7 +347,7 @@
     height: 55px;
     background: #fff;
     border: 1px solid $greyBorder;
-    border-radius: 5px;
+    border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -359,8 +361,8 @@
   }
 
   &__arrow-container {
-    width: 25px;
-    height: 27px;
+    width: 26px;
+    height: 26px;
     border: 1px solid $greyBorder;
     border-radius: 3px;
     display: flex;
