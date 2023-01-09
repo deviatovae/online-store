@@ -53,7 +53,7 @@ export class Controller {
         let cart: CartDataType|null = null;
         this.cart((cartData) => {
             cart = cartData;
-        })
+        }, products.length)
 
         callback({
             cart: cart!,
