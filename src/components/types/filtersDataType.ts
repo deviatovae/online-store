@@ -1,8 +1,10 @@
 export type MinMaxType = {
     min?: number
     selectedMin?: number
+    defaultMin?: number
     max?: number
     selectedMax?: number
+    defaultMax?: number
 }
 
 export type FilterCategoryType = {

@@ -1,7 +1,6 @@
 import {CallbackFn} from "../types/callbackFn";
 import {Product} from "../types/product";
 import store from "../store/store";
-import cart = require("../store/reducers/cart");
 import products from '../../assets/data/products.json'
 import {CartDataType, GetPriceByPromocodes} from "../types/cartDataType";
 import {MainPageDataType} from "../types/mainPageDataType";
@@ -10,6 +9,7 @@ import {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/pro
 import {Router} from "../router/router";
 import {ProductPageType} from "../types/productPageType";
 import {PaginationDataType} from "../types/paginationDataType";
+import cart = require("../store/reducers/cart");
 
 /**
  * контроллер получает, изменяет, фильтрует данные, которые потребуются для view
@@ -68,16 +68,6 @@ export class Controller {
     public catalog(callback: CallbackFn<MainPageDataType>) {
         const params = Router.getUrlParams()
 
-        const getMinMax = (minMax: MinMaxType, value: number) =>  {
-            if (minMax.min) {
-                minMax.min = minMax.min > value ? value : minMax.min
-            }
-            if (minMax.max) {
-                minMax.max = minMax.max < value ? value : minMax.max
-            }
-            return minMax;
-        }
-
         const selectedFilters: FilterList = {
             colors: params.get('colors')?.split(','),
             collections: params.get('collections')?.split(',').map((s) => Number(s)),
@@ -98,6 +88,28 @@ export class Controller {
 
         const getProductsBySelectedFilters = this.getProductsFunc(products, selectedFilters, params.get('q'));
 
+        if (!selectedFilters.price) {
+            selectedFilters.price = getProductsBySelectedFilters(['price'], products)
+                .reduce((minMax: MinMaxType, product) => this.getDefaultMinMax(minMax, product.price), {
+                    defaultMin: Number.MAX_SAFE_INTEGER,
+                    defaultMax: Number.MIN_SAFE_INTEGER
+                })
+        }
+        if (!selectedFilters.size) {
+            selectedFilters.size = getProductsBySelectedFilters(['size'], products)
+                .reduce((minMax: MinMaxType, product) => this.getDefaultMinMax(minMax, product.size), {
+                    defaultMin: Number.MAX_SAFE_INTEGER,
+                    defaultMax: Number.MIN_SAFE_INTEGER
+                })
+        }
+        if (!selectedFilters.stock) {
+            selectedFilters.stock = getProductsBySelectedFilters(['stock'], products)
+                .reduce((minMax: MinMaxType, product) => this.getDefaultMinMax(minMax, product.stock), {
+                    defaultMin: Number.MAX_SAFE_INTEGER,
+                    defaultMax: Number.MIN_SAFE_INTEGER
+                })
+        }
+
         let filteredProducts = getProductsBySelectedFilters();
         filteredProducts.sort((p1, p2) => {
             const sortByValues = (params.get('sortBy') || '-').split('-')
@@ -116,27 +128,44 @@ export class Controller {
             return 0;
         });
 
-        const filters: FiltersDataType = {
-            colors: [...getProductsBySelectedFilters(['colors'], products).reduce((set, product) => set.add(product.color), new Set<string>())],
-            collections: [...getProductsBySelectedFilters(['collections'], products).reduce((set, product) => set.add(product.collection), new Set<number>())].sort(),
-            categories: [...getProductsBySelectedFilters(['categories'], products).reduce((map, product) => {
-                if (map.has(product.category)) {
-                    const type = map.get(product.category) as FilterCategoryType
-                    type.products = type.products + 1 || 1;
-                } else {
-                    map.set(product.category, {category: product.category, products: 1})
+        const colorFilters = this.getUnique<string>(
+            getProductsBySelectedFilters(['colors'], products).reduce((acc, product) => [...acc, product.color], [] as string[]),
+            selectedFilters.colors || []
+        )
+        const collectionFilters = this.getUnique<number>(
+            getProductsBySelectedFilters(['collections'], products).reduce((acc, product) => [...acc, product.collection], [] as number[]),
+            selectedFilters.collections || []
+        ).sort()
+        const categoryFilters = [...getProductsBySelectedFilters(['categories'], products).reduce((map, product) => {
+            if (map.has(product.category)) {
+                const type = map.get(product.category) as FilterCategoryType
+                type.products = type.products + 1 || 1;
+            } else {
+                map.set(product.category, {category: product.category, products: 1})
+            }
+            return map;
+        }, new Map<string, FilterCategoryType>).values()]
+        if (selectedFilters.categories) {
+            selectedFilters.categories.forEach((selectedCategory) => {
+                if (!categoryFilters.some((c) => c.category === selectedCategory.category)) {
+                    categoryFilters.push(selectedCategory)
                 }
-                return map;
-            }, new Map<string, FilterCategoryType>).values()],
-            price: getProductsBySelectedFilters(['price'], products).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.price), {
+            })
+        }
+
+        const filters: FiltersDataType = {
+            colors: colorFilters,
+            collections: collectionFilters,
+            categories: categoryFilters,
+            price: products.reduce((minMax: MinMaxType, product) => this.getMinMax(minMax, product.price), {
                 min: Number.MAX_SAFE_INTEGER,
                 max: Number.MIN_SAFE_INTEGER
             }),
-            size: getProductsBySelectedFilters(['size'], products).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.size), {
+            size: products.reduce((minMax: MinMaxType, product) => this.getMinMax(minMax, product.size), {
                 min: Number.MAX_SAFE_INTEGER,
                 max: Number.MIN_SAFE_INTEGER
             }),
-            stock: getProductsBySelectedFilters(['stock'], products).reduce((minMax: MinMaxType, product) => getMinMax(minMax, product.stock), {
+            stock: products.reduce((minMax: MinMaxType, product) => this.getMinMax(minMax, product.stock), {
                 min: Number.MAX_SAFE_INTEGER,
                 max: Number.MIN_SAFE_INTEGER
             }),
@@ -319,5 +348,29 @@ export class Controller {
             perPage,
             page,
         }
+    }
+
+    private getMinMax(minMax: MinMaxType, value: number): MinMaxType {
+        if (minMax.min) {
+            minMax.min = minMax.min > value ? value : minMax.min
+        }
+        if (minMax.max) {
+            minMax.max = minMax.max < value ? value : minMax.max
+        }
+        return minMax;
+    }
+
+    private getDefaultMinMax(minMax: MinMaxType, value: number): MinMaxType {
+        if (minMax.defaultMin) {
+            minMax.defaultMin = minMax.defaultMin > value ? value : minMax.defaultMin
+        }
+        if (minMax.defaultMax) {
+            minMax.defaultMax = minMax.defaultMax < value ? value : minMax.defaultMax
+        }
+        return minMax;
+    }
+
+    private getUnique<T>(...values: T[][]) {
+        return [...(new Set<T>(values.reduce((acc, value) => [...acc, ...value], [])))]
     }
 }
