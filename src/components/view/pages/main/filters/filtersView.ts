@@ -51,8 +51,8 @@ export class FiltersView extends View<FiltersDataType> {
                   </div>
                   <div class="item-content__dual-range dual-range">
                     <div class="slider"
-                         data-min_selected="${data.selected.price?.selectedMin}"
-                         data-max_selected="${data.selected.price?.selectedMax}"
+                         data-min_selected="${data.selected.price?.selectedMin || data.selected.price?.defaultMin}"
+                         data-max_selected="${data.selected.price?.selectedMax || data.selected.price?.defaultMax}"
                          data-min="${data.price?.min}"
                          data-max="${data.price?.max}"></div>
                   </div>
@@ -67,8 +67,8 @@ export class FiltersView extends View<FiltersDataType> {
                   </div>
                   <div class="item-content__dual-range dual-range">
                     <div class="slider"
-                         data-min_selected="${data.selected.size?.selectedMin}"
-                         data-max_selected="${data.selected.size?.selectedMax}"
+                         data-min_selected="${data.selected.size?.selectedMin || data.selected.size?.defaultMin}"
+                         data-max_selected="${data.selected.size?.selectedMax || data.selected.size?.defaultMax}"
                          data-min="${data.size?.min}"
                          data-max="${data.size?.max}"></div>
                   </div>
@@ -98,8 +98,8 @@ export class FiltersView extends View<FiltersDataType> {
                   </div>
                   <div class="item-content__dual-range dual-range">
                     <div class="slider"
-                         data-min_selected="${data.selected.stock?.selectedMin}"
-                         data-max_selected="${data.selected.stock?.selectedMax}"
+                         data-min_selected="${data.selected.stock?.selectedMin || data.selected.stock?.defaultMin}"
+                         data-max_selected="${data.selected.stock?.selectedMax || data.selected.stock?.defaultMax}"
                          data-min="${data.stock?.min}"
                          data-max="${data.stock?.max}"></div>
                   </div>
