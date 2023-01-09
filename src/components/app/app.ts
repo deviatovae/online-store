@@ -1,13 +1,13 @@
 import {Router} from "../router/router";
 import {Pages} from "./pages";
-import store from "../store/store";
+import {subscribe} from "../store/store";
 
 /**
  * логика отрисовки приложения
  */
 export class App {
     private router: Router;
-    private pages: Pages;
+    private readonly pages: Pages;
 
     public constructor() {
         this.pages = new Pages();
@@ -15,25 +15,15 @@ export class App {
     }
 
     public start(): void {
-        this.router.route('/', () => {
-            this.pages.main()
-            return store.subscribe(() => this.pages.main())
-        });
+        const mainPage = () => this.pages.main()
+        const productPage = (id: string) => this.pages.product(id)
+        const cartPage = () => this.pages.cart()
+        const notFoundPage = () => this.pages.notFound()
 
-        this.router.route('/product/:id', (id: string) => {
-            this.pages.product(id)
-            return store.subscribe(() => this.pages.product(id))
-        });
-
-        this.router.route('/cart', () => {
-            this.pages.cart()
-            return store.subscribe(() => this.pages.cart())
-        });
-
-        this.router.fallback(() => {
-            this.pages.notFound()
-            return store.subscribe(() => this.pages.notFound())
-        });
+        this.router.route('/', () => subscribe(mainPage));
+        this.router.route('/product/:id', (id: string) => subscribe(productPage, id));
+        this.router.route('/cart', () => subscribe(cartPage));
+        this.router.fallback(() => subscribe(notFoundPage));
 
         this.router.start();
     }

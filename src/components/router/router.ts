@@ -1,5 +1,3 @@
-import {Unsubscribe} from "@reduxjs/toolkit";
-
 export class Router {
     private routes: { [key: string]: Function; } = {};
     private fallbackRoute: Function | null = null;
@@ -62,7 +60,7 @@ export class Router {
     /**
      * обращается к объекту routes и в поле path присваивает коллбэк
      */
-    public route(path: string, view: (...args: string[]) => Unsubscribe): void {
+    public route(path: string, view: (...args: string[]) => void): void {
         this.routes[path] = view;
     }
 
@@ -80,12 +78,7 @@ export class Router {
     }
 
     private call(callback: Function, args: string[] = []): void {
-        const urlBeforeCall = window.location.pathname
-        const unsubscribe = callback(...args);
-        const urlAfterCall = window.location.pathname
-        if (urlBeforeCall !== urlAfterCall) {
-            unsubscribe();
-        }
+        callback(...args);
     }
 
     /**
