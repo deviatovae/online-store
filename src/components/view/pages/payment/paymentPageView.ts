@@ -86,8 +86,21 @@ export class PaymentPageView extends View<CartDataType> {
         let validCardName: boolean = false;
         let validCardNumber: boolean = false;
         let validCardDate: boolean = false;
-        let validCardCvv: boolean = false
+        let validCardCvv: boolean = false;
 
+
+        function setInputValidity(input: HTMLElement | null, isValid: boolean) {
+            if (!input) return;
+        
+            if (isValid) {
+                input.classList.remove('invalid');
+                input.classList.add('valid');
+            } else {
+                input.classList.add('invalid');
+                input.classList.remove('valid');
+            }
+        }
+        
         // валидация name
         const nameInput = document.querySelector<HTMLInputElement>(".payment-details__name");
         nameInput?.addEventListener('input', (event: Event) => {
@@ -95,13 +108,11 @@ export class PaymentPageView extends View<CartDataType> {
             nameInput.value = nameInput.value.replace(/[^A-Za-z, А-Яа-я]/g, '');
             let arrName = Array.from(nameInput.value.split(' '))
             if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
-                nameInput.classList.add('valid');
-                nameInput.classList.remove('invalid');
                 validName = true;
+                setInputValidity(nameInput, validName);
             } else {
-                nameInput.classList.remove('valid');
-                nameInput.classList.add('invalid');
                 validName = false;
+                setInputValidity(nameInput, validName);
             }
         })
 
@@ -112,13 +123,11 @@ export class PaymentPageView extends View<CartDataType> {
             addressInput.value = addressInput.value.replace(/[^\-\A-Za-z, А-Яа-я]/g, '');
             let arrAddress = Array.from(addressInput.value.split(' '))
             if (arrAddress.length >= 3 && arrAddress.every((el) => el.length >= 5)) {
-                addressInput.classList.add('valid');
-                addressInput.classList.remove('invalid');
                 validAddress = true;
+                setInputValidity(addressInput, validAddress);
             } else {
-                addressInput.classList.remove('valid');
-                addressInput.classList.add('invalid');
                 validAddress = false;
+                setInputValidity(addressInput, validAddress);
             }
         })
 
@@ -127,13 +136,12 @@ export class PaymentPageView extends View<CartDataType> {
         emailInput?.addEventListener('input', (event: Event) => {
 
             if (emailInput.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-                emailInput.classList.add('valid');
-                emailInput.classList.remove('invalid');
                 validEmail = true;
+                setInputValidity(emailInput, validEmail);
+
             } else {
-                emailInput.classList.remove('valid');
-                emailInput.classList.add('invalid');
                 validEmail = false;
+                setInputValidity(emailInput, validEmail);
             }
         })
 
@@ -143,13 +151,11 @@ export class PaymentPageView extends View<CartDataType> {
 
             numberInput.value = numberInput.value.replace(/[^+\d]/g, '').substring(0, 16);
             if (numberInput.value.match(/^\+\d{9}/g)) {
-                numberInput.classList.add('valid');
-                numberInput.classList.remove('invalid');
                 validTell = true;
+                setInputValidity(numberInput, validTell);
             } else {
-                numberInput.classList.remove('valid');
-                numberInput.classList.add('invalid');
                 validTell = false;
+                setInputValidity(numberInput, validTell);
             }
         })
 
@@ -189,13 +195,12 @@ export class PaymentPageView extends View<CartDataType> {
             }
 
             if (arrCardNumber.length >= 19) {
-                cardNumberInput.classList.add('valid');
-                cardNumberInput.classList.remove('invalid');
                 validCardNumber = true;
+                setInputValidity(cardNumberInput, validCardNumber);
+
             } else {
-                cardNumberInput.classList.remove('valid');
-                cardNumberInput.classList.add('invalid');
                 validCardNumber = false;
+                setInputValidity(cardNumberInput, validCardNumber);
             }
         })
 
@@ -207,13 +212,11 @@ export class PaymentPageView extends View<CartDataType> {
             let arrName = Array.from(nameCardInput.value.split(' '));
 
             if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
-                nameCardInput.classList.add('valid');
-                nameCardInput.classList.remove('invalid');
                 validCardName = true;
+                setInputValidity(nameCardInput, validCardName);
             } else {
-                nameCardInput.classList.remove('valid');
-                nameCardInput.classList.add('invalid');
                 validCardName = false;
+                setInputValidity(nameCardInput, validCardName);
             }
         })
 
@@ -224,13 +227,11 @@ export class PaymentPageView extends View<CartDataType> {
             cvvInput.value = cvvInput.value.replace(/[^\0-9]/g, '').substring(0, 3);
 
             if (cvvInput.value.match(/^\d{3}/g)) {
-                cvvInput.classList.add('valid');
-                cvvInput.classList.remove('invalid');
                 validCardCvv = true;
+                setInputValidity(cvvInput, validCardCvv);
             } else {
-                cvvInput.classList.remove('valid');
-                cvvInput.classList.add('invalid');
                 validCardCvv = false;
+                setInputValidity(cvvInput, validCardCvv);
             }
         })
 
@@ -254,13 +255,11 @@ export class PaymentPageView extends View<CartDataType> {
             if (dateInput.value.match(/.{5}/g) &&
                 Number(dateInput.value.substring(0, 2)) <= 12 &&
                 Number(dateInput.value.substring(3, 5)) >= +thisYear) {
-                dateInput.classList.add('valid');
-                dateInput.classList.remove('invalid');
                 validCardDate = true;
+                setInputValidity(dateInput, validCardDate);
             } else {
-                dateInput.classList.remove('valid');
-                dateInput.classList.add('invalid');
                 validCardDate = false;
+                setInputValidity(dateInput, validCardDate);
             }
         })
 
@@ -307,29 +306,21 @@ export class PaymentPageView extends View<CartDataType> {
                 }, 2000);
 
                 // Подсвететка не валидных блоков
-                if (!validName) nameInput?.classList.add('invalid');
-                else nameInput?.classList.remove('invalid');
+                if (!validName)setInputValidity(nameInput, validName);
 
-                if (!validAddress) addressInput?.classList.add('invalid');
-                else addressInput?.classList.remove('invalid');
+                if (!validAddress)setInputValidity(addressInput, validAddress);
 
-                if (!validEmail) emailInput?.classList.add('invalid');
-                else emailInput?.classList.remove('invalid');
+                if (!validEmail) setInputValidity(emailInput, validEmail);
 
-                if (!validTell) numberInput?.classList.add('invalid');
-                else numberInput?.classList.remove('invalid');
+                if (!validTell) setInputValidity(numberInput, validTell);
 
-                if (!validCardName) nameCardInput?.classList.add('invalid');
-                else nameCardInput?.classList.remove('invalid');
+                if (!validCardName) setInputValidity(nameCardInput, validCardName);
 
-                if (!validCardNumber) cardNumberInput?.classList.add('invalid');
-                else cardNumberInput?.classList.remove('invalid');
+                if (!validCardNumber) setInputValidity(cardNumberInput, validCardNumber);
 
-                if (!validCardDate) dateInput?.classList.add('invalid');
-                else dateInput?.classList.remove('invalid');
+                if (!validCardDate) setInputValidity(dateInput, validCardDate);
 
-                if (!validCardCvv) cvvInput?.classList.add('invalid');
-                else cvvInput?.classList.remove('invalid');
+                if (!validCardCvv) setInputValidity(cvvInput, validCardCvv);
             }
         })
 
