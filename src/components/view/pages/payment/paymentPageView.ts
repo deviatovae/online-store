@@ -2,8 +2,8 @@ import {View} from "../../view";
 import './paymentPage.scss'
 import {PaymentListView} from "./paymentListView";
 import {CartDataType} from "../../../types/cartDataType";
-import {Validation} from "../../../types/validationType";
-import {CardType} from "../../../types/cardTape";
+import {Validation} from "../../../types/validation";
+import {Card} from "../../../types/card";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {Controller} from "../../../controller/controller";
@@ -177,15 +177,15 @@ export class PaymentPageView extends View<CartDataType> {
             if (!cardsImg) return;
 
             switch (arrCardNumber[0]) {
-                case CardType.Visa:
+                case Card.VISA:
                     cardsImg.classList.add("cards__img_visa");
                     break;
         
-                case CardType.Mastercard:
+                case Card.MASTERCARD:
                     cardsImg.classList.add("cards__img_mastercard");
                     break;
         
-                case CardType.Amex:
+                case Card.AMEX:
                     cardsImg.classList.add("cards__img_amex");
                     break;
         
