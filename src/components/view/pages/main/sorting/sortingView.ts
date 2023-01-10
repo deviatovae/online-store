@@ -20,10 +20,17 @@ export class SortingFiltersView extends View<ProductViewDataType> {
     }
 
     public render(data: ProductViewDataType): string {
+        const {
+            filters: {colors, collections, categories, price, size, stock},
+            selectedFilters: selectedFiltersCount,
+            productsCount,
+            pagination
+        } = data
+
         let colorFilter = '';
-        if (data.filters.colors) {
+        if (colors) {
             // language=HTML
-            colorFilter = data.filters.colors.map((c) => {
+            colorFilter = colors.map((c) => {
                 return `
                   <div class="selected-filters__item selected-item">
                     <div class="selected-item__name">${c}</div>
@@ -32,9 +39,9 @@ export class SortingFiltersView extends View<ProductViewDataType> {
             }).join('')
         }
         let collectionFilter = '';
-        if (data.filters.collections) {
+        if (collections) {
             // language=HTML
-            collectionFilter = data.filters.collections.map((c) => {
+            collectionFilter = collections.map((c) => {
                 return `
                   <div class="selected-filters__item selected-item">
                     <div class="selected-item__name">${c}</div>
@@ -44,46 +51,47 @@ export class SortingFiltersView extends View<ProductViewDataType> {
         }
 
         let priceFilter = '';
-        if (data.filters.price?.selectedMin || data.filters.price?.selectedMax) {
+        if (price?.selectedMin || price?.selectedMax) {
             // language=HTML
             priceFilter = `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">Price: $${data.filters.price.selectedMin} - $${data.filters.price.selectedMax}</div>
+                <div class="selected-item__name">Price: $${price.selectedMin} - $${price.selectedMax}</div>
                 <div class="selected-item__remove-btn" data-params="minPrice,maxPrice"></div>
               </div>`;
         }
 
         let sizeFilter = '';
-        if (data.filters.size?.selectedMin || data.filters.size?.selectedMax) {
+        if (size?.selectedMin || size?.selectedMax) {
             // language=HTML
             sizeFilter = `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">Size: ${data.filters.size.selectedMin}cm - ${data.filters.size.selectedMax}cm</div>
+                <div class="selected-item__name">Size: ${size.selectedMin}cm - ${size.selectedMax}cm</div>
                 <div class="selected-item__remove-btn" data-params="minSize,maxSize"></div>
               </div>`;
         }
 
         let categoryFilter = '';
-        if (data.filters.categories) {
+        if (categories) {
             // language=HTML
-            categoryFilter = data.filters.categories.map((c) => {
+            categoryFilter = categories.map(({category}) => {
                 return `
                   <div class="selected-filters__item selected-item">
-                    <div class="selected-item__name">${c.category}</div>
-                    <div class="selected-item__remove-btn" data-params="categories" data-value="${c.category}"></div>
+                    <div class="selected-item__name">${category}</div>
+                    <div class="selected-item__remove-btn" data-params="categories" data-value="${category}"></div>
                   </div>`;
             }).join('')
         }
 
         let stockFilter = '';
-        if (data.filters.stock?.selectedMin || data.filters.stock?.selectedMax) {
+        if (stock?.selectedMin || stock?.selectedMax) {
             // language=HTML
             stockFilter = `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">Stock: ${data.filters.stock.selectedMin} - ${data.filters.stock.selectedMax}</div>
+                <div class="selected-item__name">Stock: ${stock.selectedMin} - ${stock.selectedMax}</div>
                 <div class="selected-item__remove-btn" data-params="minStock,maxStock"></div>
               </div>`;
         }
+
         const selectedFilters = [
             colorFilter,
             collectionFilter,
@@ -114,9 +122,9 @@ export class SortingFiltersView extends View<ProductViewDataType> {
               <div class="sorted-filters__filters-menu filters-menu">
                 <div class="filters-menu__icon"></div>
                 <div class="filters-menu__title">Show filters</div>
-                <div class="filters-menu__count">${data.selectedFilters}</div>
+                <div class="filters-menu__count">${selectedFiltersCount}</div>
               </div>
-              <div class="sorted-filters__item-count">${data.productsCount} items</div>
+              <div class="sorted-filters__item-count">${productsCount} items</div>
               <div class="sorted-filters__select">
                 <select class="filters-select" data-param="sortBy">
                   ${sortByOptions}
@@ -124,7 +132,7 @@ export class SortingFiltersView extends View<ProductViewDataType> {
               </div>
               <div class="sorted-filters__select">
                 ${this.views.paginationPerPage.render({
-                  selectedPerPage: data.pagination.perPage,
+                  selectedPerPage: pagination.perPage,
                   values: [5, 10, 20, 30, 0],
                 })}
               </div>
