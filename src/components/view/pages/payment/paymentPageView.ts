@@ -2,6 +2,7 @@ import {View} from "../../view";
 import './paymentPage.scss'
 import {PaymentListView} from "./paymentListView";
 import {CartDataType} from "../../../types/cartDataType";
+import {CardType} from "../../../types/cardTape";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {Controller} from "../../../controller/controller";
@@ -154,7 +155,7 @@ export class PaymentPageView extends View<CartDataType> {
 
         // валидация card number
         const cardNumberInput = document.querySelector<HTMLInputElement>(".card-details__card-number");
-        const cardsImg = document.querySelector<HTMLElement>(".cards__img");
+        const cardsImg = document.querySelector(".cards__img") as HTMLElement | null;
 
         cardNumberInput?.addEventListener('input', (event: Event) => {
             let arrCardNumber = Array.from(cardNumberInput.value)
@@ -165,23 +166,25 @@ export class PaymentPageView extends View<CartDataType> {
             } else value = '';
             cardNumberInput.value = value;
 
+            if (!cardsImg) return;
+
             switch (arrCardNumber[0]) {
-                case '4':
-                    cardsImg?.classList.add("cards__img_visa");
+                case CardType.Visa:
+                    cardsImg.classList.add("cards__img_visa");
                     break;
-
-                case '5':
-                    cardsImg?.classList.add("cards__img_mastercard");
+        
+                case CardType.Mastercard:
+                    cardsImg.classList.add("cards__img_mastercard");
                     break;
-
-                case '6':
-                    cardsImg?.classList.add("cards__img_amex");
+        
+                case CardType.Amex:
+                    cardsImg.classList.add("cards__img_amex");
                     break;
-
+        
                 default:
-                    cardsImg?.classList.remove("cards__img_visa");
-                    cardsImg?.classList.remove("cards__img_mastercard");
-                    cardsImg?.classList.remove("cards__img_amex");
+                    cardsImg.classList.remove("cards__img_visa");
+                    cardsImg.classList.remove("cards__img_mastercard");
+                    cardsImg.classList.remove("cards__img_amex");
                     break;
             }
 
