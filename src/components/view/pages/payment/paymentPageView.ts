@@ -2,6 +2,7 @@ import {View} from "../../view";
 import './paymentPage.scss'
 import {PaymentListView} from "./paymentListView";
 import {CartDataType} from "../../../types/cartDataType";
+import {Validation} from "../../../types/validationType";
 import {CardType} from "../../../types/cardTape";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
@@ -78,8 +79,8 @@ export class PaymentPageView extends View<CartDataType> {
 
     public afterRender(controller: Controller): void {
         super.afterRender(controller);
-
-        const valid = {
+        
+        const valid: Validation = {
             validName: false,
             validAddress: false,
             validEmail: false,
@@ -89,7 +90,7 @@ export class PaymentPageView extends View<CartDataType> {
             validCardDate: false,
             validCardCvv: false
         };
-        
+
         function setInputValidity(input: HTMLElement | null, isValid: boolean) {
             if (!input) return;
         
