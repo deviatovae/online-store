@@ -110,6 +110,13 @@ export default class CartPageView extends View<CartDataType> {
 
     afterRender(controller: Controller) {
         super.afterRender(controller);
+
+        const currentPage = Number(Router.getUrlParams().get('page') || 0)
+        const lastPage = controller.getLastPageInCart()
+        if (currentPage > lastPage) {
+            Router.setUrlParam('page', lastPage.toString())
+        }
+
         const order = document.querySelector('.button-order') as HTMLElement | null;
 
         if (order) {
