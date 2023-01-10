@@ -10,18 +10,36 @@ import {Router} from "../../../../router/router";
  */
 export class FiltersView extends View<FiltersDataType> {
     public render(data: FiltersDataType): string {
+        const {
+            colors,
+            categories,
+            collections,
+            price,
+            size,
+            stock,
+            selected: {
+                colors: selectedColors,
+                collections: selectedCollections,
+                categories: selectedCategories,
+                size: selectedSize,
+                stock: selectedStock,
+                price: selectedPrice
+            },
+            showFilters
+        } = data
+
         // language=HTML
         return `
-            <div class="filters" xmlns="http://www.w3.org/1999/html" data-show="${data.showFilters ? 'true' : ''}">
+          <div class="filters" xmlns="http://www.w3.org/1999/html" data-show="${showFilters ? 'true' : ''}">
             <div class="filters__item filters-item">
               <div class="filters-item__title">Color</div>
               <div class="filters-item__content item-content">
                 <div class="item-content__colors colors">
-                  ${data.colors?.map((color) => {
-            const selectedClass = data.selected.colors?.includes(color) ? 'is-selected' : ''
-            return `<div class="colors__color is-${color} ${selectedClass}" data-color="${color}">
+                  ${colors?.map((color) => {
+                    const selectedClass = selectedColors?.includes(color) ? 'is-selected' : ''
+                    return `<div class="colors__color is-${color} ${selectedClass}" data-color="${color}">
                        </div>`
-        }).join('')}
+                  }).join('')}
                 </div>
               </div>
             </div>
@@ -29,84 +47,86 @@ export class FiltersView extends View<FiltersDataType> {
               <div class="filters-item__title">Collection</div>
               <div class="filters-item__content item-content">
                 <div class="item-content__collection collection">
-                  ${data.collections?.map((collection) => {
-            const selectedClass = data.selected.collections?.includes(collection) ? 'is-selected' : '';
+                  ${collections?.map((collection) => {
+                    const selectedClass = selectedCollections?.includes(collection) ? 'is-selected' : '';
                     return `<div class="collection__year ${selectedClass}" data-collection="${collection}">${collection}</div>`;
                   }).join('')}
                 </div>
               </div>
             </div>
-              <div class="filters__item filters-item">
-                <div class="filters-item__title">Price</div>
-                <div class="filters-item__content item-content">
-                  <div class="item-content__price price">
-                    <div>
-                      <input type="text" class="box-start" value="${data.price?.selectedMin}" maxlength="6">
-                      <span class="price__dollar_start">$</span>
-                    </div>
-                    <div>
-                      <input type="text" class="box-end" value="${data.price?.selectedMax}" maxlength="6">
-                      <span class="price__dollar_end">$</span>
-                    </div>
+            <div class="filters__item filters-item">
+              <div class="filters-item__title">Price</div>
+              <div class="filters-item__content item-content">
+                <div class="item-content__price price">
+                  <div>
+                    <input type="text" class="box-start" value="${price?.selectedMin}" maxlength="6">
+                    <span class="price__dollar_start">$</span>
                   </div>
-                  <div class="item-content__dual-range dual-range">
-                    <div class="slider"
-                         data-min_selected="${data.selected.price?.selectedMin || data.selected.price?.defaultMin}"
-                         data-max_selected="${data.selected.price?.selectedMax || data.selected.price?.defaultMax}"
-                         data-min="${data.price?.min}"
-                         data-max="${data.price?.max}"></div>
+                  <div>
+                    <input type="text" class="box-end" value="${price?.selectedMax}" maxlength="6">
+                    <span class="price__dollar_end">$</span>
                   </div>
                 </div>
-              </div>
-              <div class="filters__item filters-item">
-                <div class="filters-item__title">Size</div>
-                <div class="filters-item__content item-content">
-                  <div class="item-content__size size">
-                    <input type="text" class="box-start" placeholder="cm" maxlength="3">
-                    <input type="text" class="box-end" placeholder="cm" maxlength="3">
-                  </div>
-                  <div class="item-content__dual-range dual-range">
-                    <div class="slider"
-                         data-min_selected="${data.selected.size?.selectedMin || data.selected.size?.defaultMin}"
-                         data-max_selected="${data.selected.size?.selectedMax || data.selected.size?.defaultMax}"
-                         data-min="${data.size?.min}"
-                         data-max="${data.size?.max}"></div>
-                  </div>
+                <div class="item-content__dual-range dual-range">
+                  <div class="slider"
+                       data-min_selected="${selectedPrice?.selectedMin || selectedPrice?.defaultMin}"
+                       data-max_selected="${selectedPrice?.selectedMax || selectedPrice?.defaultMax}"
+                       data-min="${price?.min}"
+                       data-max="${price?.max}"></div>
                 </div>
               </div>
-              <div class="filters__item filters-item">
-                <div class="filters-item__title">Category</div>
-                <div class="filters-item__content item-content">
-                  ${data.categories?.map((item) => {
-            const id = item.category.toLowerCase().replace(' ', '-')
-                    const checked = data.selected.categories?.some(c => c.category === item.category) ? 'checked="checked"' : '';
-                    // language=HTML
-                    return `<div class="item-content__category category">
-                      <label for="${id}" class="category__label">${item.category}</label>
-                      <div class="category__count">(${item.products})</div>
-                      <input id="${id}" type="checkbox" class="category__checkbox" data-categories="${item.category}" ${checked}>
-                  </div>`
-                  }).join('')}
-                </div>
-              </div>
-              <div class="filters__item filters-item">
-                <div class="filters-item__title">In stock</div>
-                <div class="filters-item__content item-content">
-                  <div class="item-content__stock stock">
-                    <input type="text" class="box-start" maxlength="2">
-                    <input type="text" class="box-end" maxlength="2">
-                  </div>
-                  <div class="item-content__dual-range dual-range">
-                    <div class="slider"
-                         data-min_selected="${data.selected.stock?.selectedMin || data.selected.stock?.defaultMin}"
-                         data-max_selected="${data.selected.stock?.selectedMax || data.selected.stock?.defaultMax}"
-                         data-min="${data.stock?.min}"
-                         data-max="${data.stock?.max}"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="filters__close-btn"></div>
             </div>
+            <div class="filters__item filters-item">
+              <div class="filters-item__title">Size</div>
+              <div class="filters-item__content item-content">
+                <div class="item-content__size size">
+                  <input type="text" class="box-start" placeholder="cm" maxlength="3">
+                  <input type="text" class="box-end" placeholder="cm" maxlength="3">
+                </div>
+                <div class="item-content__dual-range dual-range">
+                  <div class="slider"
+                       data-min_selected="${selectedSize?.selectedMin || selectedSize?.defaultMin}"
+                       data-max_selected="${selectedSize?.selectedMax || selectedSize?.defaultMax}"
+                       data-min="${size?.min}"
+                       data-max="${size?.max}"></div>
+                </div>
+              </div>
+            </div>
+            <div class="filters__item filters-item">
+              <div class="filters-item__title">Category</div>
+              <div class="filters-item__content item-content">
+                ${categories?.map(({ category: categoryName, products }) => {
+                  const id = categoryName.toLowerCase().replace(' ', '-')
+                  const checked = selectedCategories?.some(({category}) => category === categoryName)
+                          ? 'checked="checked"'
+                          : '';
+                  // language=HTML
+                  return `<div class="item-content__category category">
+                      <label for="${id}" class="category__label">${categoryName}</label>
+                      <div class="category__count">(${products})</div>
+                      <input id="${id}" type="checkbox" class="category__checkbox" data-categories="${categoryName}" ${checked}>
+                  </div>`
+                }).join('')}
+              </div>
+            </div>
+            <div class="filters__item filters-item">
+              <div class="filters-item__title">In stock</div>
+              <div class="filters-item__content item-content">
+                <div class="item-content__stock stock">
+                  <input type="text" class="box-start" maxlength="2">
+                  <input type="text" class="box-end" maxlength="2">
+                </div>
+                <div class="item-content__dual-range dual-range">
+                  <div class="slider"
+                       data-min_selected="${selectedStock?.selectedMin || selectedStock?.defaultMin}"
+                       data-max_selected="${selectedStock?.selectedMax || selectedStock?.defaultMax}"
+                       data-min="${stock?.min}"
+                       data-max="${stock?.max}"></div>
+                </div>
+              </div>
+            </div>
+            <div class="filters__close-btn"></div>
+          </div>
         `
     }
 
@@ -184,17 +204,17 @@ export class FiltersView extends View<FiltersDataType> {
         if (!slider || !startInput || !endInput) {
             return
         }
-
-        const minValue = parseFloat(slider.dataset.min ?? '')
-        const maxValue = parseFloat(slider.dataset.max ?? '')
+        const {dataset: {min, max, min_selected: minSelected, max_selected: maxSelected}} = slider
+        const minValue = parseFloat(min ?? '')
+        const maxValue = parseFloat(max ?? '')
         let startMin = minValue
         let startMax = maxValue
 
-        if (Number(slider.dataset.min_selected)) {
-            startMin = Number(slider.dataset.min_selected)
+        if (Number(minSelected)) {
+            startMin = Number(minSelected)
         }
-        if (Number(slider.dataset.max_selected)) {
-            startMax = Number(slider.dataset.max_selected)
+        if (Number(maxSelected)) {
+            startMax = Number(maxSelected)
         }
 
         const api = noUiSlider.create(slider, {
