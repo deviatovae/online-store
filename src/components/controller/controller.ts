@@ -39,7 +39,7 @@ export class Controller {
             getPriceByPromocodes: priceByPromocodes,
             productCount: cartItems.reduce((count, cartItem) => count + cartItem.quantity, 0),
             promocodes: store.getState().promocode,
-            pagination:  pagination
+            pagination: pagination
         }
         callback(cartData);
     }

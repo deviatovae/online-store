@@ -17,7 +17,9 @@ export class App {
     public start(): void {
         const mainPage = () => this.pages.main()
         const productPage = (id: string) => this.pages.product(id)
-        const cartPage = () => this.pages.cart()
+        const cartPage = () => {
+            this.pages.cart()
+        }
         const notFoundPage = () => this.pages.notFound()
 
         this.router.route('/', () => subscribe(mainPage));
