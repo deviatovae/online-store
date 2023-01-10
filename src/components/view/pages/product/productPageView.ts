@@ -81,7 +81,7 @@ export default class ProductPageView extends View<ProductPageType> {
                         <div class="specifications__item specifications-in-stock">${product.stock}</div>
                        </div>
                       </div>
-                  <button class="button-buy-now button">BUY NOW</button>
+                  <button class="button-buy-now button" data-id="${isInCart}">BUY NOW</button>
                 </div>
               </div>
           </main>
@@ -172,7 +172,9 @@ export default class ProductPageView extends View<ProductPageType> {
 
         const buttonBuy = document.querySelector('.button-buy-now') as HTMLElement;
         buttonBuy.addEventListener('click', (event: Event) => {
-          controller.addProductToCart(Number(buttonAdd.dataset.id), Number(quantityInput.value));
+          if (buttonBuy.dataset.id === 'false') {
+            controller.addProductToCart(Number(buttonAdd.dataset.id), Number(quantityInput.value));
+          }
           Router.redirectTo('/cart?buy-now');
         })
 
