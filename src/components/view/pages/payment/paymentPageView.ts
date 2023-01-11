@@ -80,7 +80,7 @@ export class PaymentPageView extends View<CartDataType> {
     public afterRender(controller: Controller): void {
         super.afterRender(controller);
         
-        const valid: Validation = {
+        const formFields: Validation = {
             validName: false,
             validAddress: false,
             validEmail: false,
@@ -124,10 +124,10 @@ export class PaymentPageView extends View<CartDataType> {
             nameInput.value = nameInput.value.replace(/[^A-Za-z, А-Яа-я]/g, '');
             let arrName = Array.from(nameInput.value.split(' '))
             if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
-                valid.validName = true;
+                formFields.validName = true;
                 makeInputValid(nameInput);
             } else {
-                valid.validName = false;
+                formFields.validName = false;
                 makeInputInvalid(nameInput);
             }
         })
@@ -139,10 +139,10 @@ export class PaymentPageView extends View<CartDataType> {
             addressInput.value = addressInput.value.replace(/[^\-\A-Za-z, А-Яа-я]/g, '');
             let arrAddress = Array.from(addressInput.value.split(' '))
             if (arrAddress.length >= 3 && arrAddress.every((el) => el.length >= 5)) {
-                valid.validAddress = true;
+                formFields.validAddress = true;
                 makeInputValid(addressInput);
             } else {
-                valid.validAddress = false;
+                formFields.validAddress = false;
                 makeInputInvalid(addressInput);
             }
         })
@@ -152,11 +152,11 @@ export class PaymentPageView extends View<CartDataType> {
         emailInput?.addEventListener('input', (event: Event) => {
 
             if (emailInput.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-                valid.validEmail = true;
+                formFields.validEmail = true;
                 makeInputValid(emailInput);
 
             } else {
-                valid.validEmail = false;
+                formFields.validEmail = false;
                 makeInputInvalid(emailInput);
             }
         })
@@ -167,10 +167,10 @@ export class PaymentPageView extends View<CartDataType> {
 
             numberInput.value = numberInput.value.replace(/[^+\d]/g, '').substring(0, 16);
             if (numberInput.value.match(/^\+\d{9}/g)) {
-                valid.validTell = true;
+                formFields.validTell = true;
                 makeInputValid(numberInput);
             } else {
-                valid.validTell = false;
+                formFields.validTell = false;
                 makeInputInvalid(numberInput);
             }
         })
@@ -207,11 +207,11 @@ export class PaymentPageView extends View<CartDataType> {
                     break;
             }
             if (value.length >= 16) {
-                valid.validCardNumber = true;
+                formFields.validCardNumber = true;
                 makeInputValid(cardNumberInput);
 
             } else {
-                valid.validCardNumber = false;
+                formFields.validCardNumber = false;
                 makeInputInvalid(cardNumberInput);
             }
         })
@@ -224,10 +224,10 @@ export class PaymentPageView extends View<CartDataType> {
             let arrName = Array.from(nameCardInput.value.split(' '));
 
             if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
-                valid.validCardName = true;
+                formFields.validCardName = true;
                 makeInputValid(nameCardInput);
             } else {
-                valid.validCardName = false;
+                formFields.validCardName = false;
                 makeInputInvalid(nameCardInput);
             }
         })
@@ -239,10 +239,10 @@ export class PaymentPageView extends View<CartDataType> {
             cvvInput.value = cvvInput.value.replace(/[^\0-9]/g, '').substring(0, 3);
 
             if (cvvInput.value.match(/^\d{3}/g)) {
-                valid.validCardCvv = true;
+                formFields.validCardCvv = true;
                 makeInputValid(cvvInput);
             } else {
-                valid.validCardCvv = false;
+                formFields.validCardCvv = false;
                 makeInputInvalid(cvvInput);
             }
         })
@@ -267,10 +267,10 @@ export class PaymentPageView extends View<CartDataType> {
             if (dateInput.value.match(/.{5}/g) &&
                 Number(dateInput.value.substring(0, 2)) <= 12 &&
                 Number(dateInput.value.substring(3, 5)) >= +thisYear) {
-                    valid.validCardDate = true;
+                    formFields.validCardDate = true;
                     makeInputValid(dateInput);
             } else {
-                valid.validCardDate = false;
+                formFields.validCardDate = false;
                 makeInputInvalid(dateInput);
             }
         })
@@ -298,13 +298,13 @@ export class PaymentPageView extends View<CartDataType> {
         const loadingSpinner = document.querySelector<HTMLInputElement>(".loading-spinner");
         const orderBtn = document.querySelector<HTMLInputElement>(".summary-content__order-btn");
 
-        const checkFormValidity = (valid: Validation): boolean => {
-            return Object.values(valid).every(value => value === true);
+        const checkFormValidity = (formFields: Validation): boolean => {
+            return Object.values(formFields).every(value => value === true);
         }
           
         orderBtn?.addEventListener('click', (event: Event) => {
             
-            if (checkFormValidity(valid)) {
+            if (checkFormValidity(formFields)) {
                 orderBtn.textContent = "Your order has been placed!";
                 orderBtn.style.color = "green";
                 paymentTest!.style.display = "none";
@@ -321,21 +321,21 @@ export class PaymentPageView extends View<CartDataType> {
                 }, 2000);
 
                 // Подсвететка не валидных блоков
-                if (!valid.validName)makeInputInvalid(nameInput);
+                if (!formFields.validName)makeInputInvalid(nameInput);
 
-                if (!valid.validAddress)makeInputInvalid(addressInput);
+                if (!formFields.validAddress)makeInputInvalid(addressInput);
 
-                if (!valid.validEmail) makeInputInvalid(emailInput);
+                if (!formFields.validEmail) makeInputInvalid(emailInput);
 
-                if (!valid.validTell) makeInputInvalid(numberInput);
+                if (!formFields.validTell) makeInputInvalid(numberInput);
 
-                if (!valid.validCardName) makeInputInvalid(nameCardInput);
+                if (!formFields.validCardName) makeInputInvalid(nameCardInput);
 
-                if (!valid.validCardNumber) makeInputInvalid(cardNumberInput);
+                if (!formFields.validCardNumber) makeInputInvalid(cardNumberInput);
 
-                if (!valid.validCardDate) makeInputInvalid(dateInput);
+                if (!formFields.validCardDate) makeInputInvalid(dateInput);
 
-                if (!valid.validCardCvv) makeInputInvalid(cvvInput);
+                if (!formFields.validCardCvv) makeInputInvalid(cvvInput);
             }
         })
 
@@ -344,50 +344,50 @@ export class PaymentPageView extends View<CartDataType> {
         paymentTest?.addEventListener('click', (event: Event) => {
             if (nameInput) {
                 nameInput.value = 'Rubi Rhod';
-                valid.validName = true;
+                formFields.validName = true;
                 makeInputValid(nameInput);
             }
 
             if (addressInput) {
                 addressInput.value = "United States, New-York, Times Square";
-                valid.validAddress = true;
+                formFields.validAddress = true;
                 makeInputValid(addressInput);
             }
 
             if (emailInput) {
                 emailInput.value = "Rubi_Rohod@icloud.com";
-                valid.validEmail = true;
+                formFields.validEmail = true;
                 makeInputValid(emailInput);
             }
 
             if (numberInput) {
                 numberInput.value = "+7123456789";
-                valid.validTell = true;
+                formFields.validTell = true;
                 makeInputValid(numberInput);
             }
 
             if (nameCardInput) {
                 nameCardInput.value = "RUBI RHOD";
-                valid.validCardName = true;
+                formFields.validCardName = true;
                 makeInputValid(nameCardInput);
             }
 
             if (cardNumberInput && cardsImg) {
                 cardNumberInput.value = "5761 8744 9011 0008";
-                valid.validCardNumber = true;
+                formFields.validCardNumber = true;
                 makeInputValid(cardNumberInput);
                 cardsImg.classList.add("cards__img_mastercard");
             }
 
             if (dateInput) {
                 dateInput.value = "04/24";
-                valid.validCardDate = true;
+                formFields.validCardDate = true;
                 makeInputValid(dateInput);
             }
 
             if (cvvInput) {
                 cvvInput.value = "344";
-                valid.validCardCvv = true;
+                formFields.validCardCvv = true;
                 makeInputValid(cvvInput);
             }
         })
