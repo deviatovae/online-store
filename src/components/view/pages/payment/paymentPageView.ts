@@ -91,32 +91,18 @@ export class PaymentPageView extends View<CartDataType> {
             validCardCvv: false
         };
 
-        function setInputValidity(input: HTMLElement | null, isValid: boolean) {
-            if (!input) return;
-        
-            if (isValid) {
-                input.classList.remove('invalid');
-                input.classList.add('valid');
-            } else {
-                input.classList.add('invalid');
-                input.classList.remove('valid');
-            }
-        }
-
         function makeInputValid(input: HTMLElement | null) {
             if (!input) return;
                 input.classList.remove('invalid');
                 input.classList.add('valid');
         }
 
-        function makeInputInvalid(input: HTMLElement | null) {
+       function makeInputInvalid(input: HTMLElement | null) {
             if (!input) return;
                 input.classList.add('invalid');
                 input.classList.remove('valid');
         }
 
-
-        
         // валидация name
         const nameInput = document.querySelector<HTMLInputElement>(".payment-details__name");
         nameInput?.addEventListener('input', (event: Event) => {
@@ -275,16 +261,16 @@ export class PaymentPageView extends View<CartDataType> {
             }
         })
 
-    const closeButton = document.querySelector<HTMLElement>('.payment-details__close-btn');
-    closeButton?.addEventListener('click', () => {
-        this.hide();
-    })
-
-    document.addEventListener('keydown', (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
+        const closeButton = document.querySelector<HTMLElement>('.payment-details__close-btn');
+        closeButton?.addEventListener('click', () => {
             this.hide();
-        }
-    })
+        })
+
+        document.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                this.hide();
+            }
+        })
 
         const paymentPage = document.querySelector<HTMLElement>('.payment-page');
         paymentPage?.addEventListener('click', (e) => {
@@ -321,20 +307,14 @@ export class PaymentPageView extends View<CartDataType> {
                 }, 2000);
 
                 // Подсвететка не валидных блоков
+
                 if (!formFields.validName)makeInputInvalid(nameInput);
-
                 if (!formFields.validAddress)makeInputInvalid(addressInput);
-
                 if (!formFields.validEmail) makeInputInvalid(emailInput);
-
                 if (!formFields.validTell) makeInputInvalid(numberInput);
-
                 if (!formFields.validCardName) makeInputInvalid(nameCardInput);
-
                 if (!formFields.validCardNumber) makeInputInvalid(cardNumberInput);
-
                 if (!formFields.validCardDate) makeInputInvalid(dateInput);
-
                 if (!formFields.validCardCvv) makeInputInvalid(cvvInput);
             }
         })
