@@ -297,11 +297,14 @@ export class PaymentPageView extends View<CartDataType> {
 
         const loadingSpinner = document.querySelector<HTMLInputElement>(".loading-spinner");
         const orderBtn = document.querySelector<HTMLInputElement>(".summary-content__order-btn");
-        orderBtn?.addEventListener('click', (event: Event) => {
 
-            if (valid.validName && valid.validAddress && valid.validEmail &&
-                valid.validTell && valid.validCardName && valid.validCardNumber &&
-                valid.validCardDate && valid.validCardCvv) {
+        const checkFormValidity = (valid: Validation): boolean => {
+            return Object.values(valid).every(value => value === true);
+        }
+          
+        orderBtn?.addEventListener('click', (event: Event) => {
+            
+            if (checkFormValidity(valid)) {
                 orderBtn.textContent = "Your order has been placed!";
                 orderBtn.style.color = "green";
                 paymentTest!.style.display = "none";
