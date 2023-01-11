@@ -166,17 +166,14 @@ export class PaymentPageView extends View<CartDataType> {
         const cardsImg = document.querySelector(".cards__img") as HTMLElement | null;
 
         cardNumberInput?.addEventListener('input', (event: Event) => {
-            let arrCardNumber = Array.from(cardNumberInput.value)
 
-            let value = cardNumberInput.value.replace(/[^\d]/g, '').substring(0, 16);
-            if (value != '') {
-                value = value.match(/.{1,4}/g)?.join(' ') || '';
-            } else value = '';
-            cardNumberInput.value = value;
+            const value = cardNumberInput.value.replace(/[^\d]/g, '').substring(0, 16);
+            const formattedValue = value.match(/.{1,4}/g)?.join(' ') || '';
+            cardNumberInput.value = formattedValue;
 
             if (!cardsImg) return;
 
-            switch (arrCardNumber[0]) {
+            switch (value[0]) {
                 case Card.VISA:
                     cardsImg.classList.add("cards__img_visa");
                     break;
@@ -195,8 +192,7 @@ export class PaymentPageView extends View<CartDataType> {
                     cardsImg.classList.remove("cards__img_amex");
                     break;
             }
-
-            if (arrCardNumber.length >= 19) {
+            if (value.length >= 16) {
                 valid.validCardNumber = true;
                 setInputValidity(cardNumberInput, valid.validCardNumber);
 
