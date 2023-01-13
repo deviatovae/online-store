@@ -1,8 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Product} from '../../types/product';
-import {CartItem} from "../../types/cartItem";
+import {Product} from '../../components/types/product';
+import {CartItem} from "../../components/types/cartItem";
 import {loadState} from "./storeDb";
-import {CartItemArg} from "../../types/cartItemArg";
+import {CartItemArg} from "../../components/types/cartItemArg";
 
 /**
  * начальное состояние стейта

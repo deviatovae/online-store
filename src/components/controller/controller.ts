@@ -1,15 +1,15 @@
 import {CallbackFn} from "../types/callbackFn";
 import {Product} from "../types/product";
-import store from "../store/store";
+import store from "../../store/store";
 import products from '../../assets/data/products.json'
 import {CartData, GetPriceByPromocodes} from "../types/cartData";
 import {MainPageData} from "../types/mainPageData";
 import {FilterCategory, FilterList, FiltersData, Limit} from "../types/filtersData";
-import {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/promocode";
+import {addAppliedPromocode, removeAppliedPromocode} from "../../store/reducers/promocode";
 import {Router} from "../router/router";
 import {ProductPage} from "../types/productPage";
 import {PaginationData} from "../types/paginationData";
-import cart = require("../store/reducers/cart");
+import cart = require("../../store/reducers/cart");
 import { UrlParam } from "../types/urlParam";
 import {SortByParam} from "../types/sortByParam";
 import {UrlParamValue} from "../types/urlParamValue";
