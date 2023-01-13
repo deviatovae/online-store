@@ -4,6 +4,8 @@ import {Controller} from "../../../../controller/controller";
 import noUiSlider from 'nouislider';
 import {FiltersDataType} from "../../../../types/filtersDataType";
 import {Router} from "../../../../router/router";
+import {UrlParam} from "../../../../types/urlParam";
+import {UrlParamValue} from "../../../../types/urlParamValue";
 
 /**
  * view отвечающий за отрисовку фильтров каталога
@@ -12,7 +14,7 @@ export class FiltersView extends View<FiltersDataType> {
     public render(data: FiltersDataType): string {
         // language=HTML
         return `
-            <div class="filters" xmlns="http://www.w3.org/1999/html" data-show="${data.showFilters ? 'true' : ''}">
+            <div class="filters" xmlns="http://www.w3.org/1999/html" data-show="${data.showFilters ? UrlParamValue.FILTERS_SHOW : ''}">
             <div class="filters__item filters-item">
               <div class="filters-item__title">Color</div>
               <div class="filters-item__content item-content">
@@ -113,66 +115,68 @@ export class FiltersView extends View<FiltersDataType> {
     afterRender(controller: Controller) {
         super.afterRender(controller);
 
+        const MAX_DECIMALS = 2
+
         const priceFilter = document.querySelector('.filters-item .price') as HTMLElement | null;
         if (priceFilter) {
             this.initializeSlider(priceFilter, (start, end) => {
-                Router.removeUrlParamKey('page');
-                Router.setUrlParam('minPrice', start)
-                Router.setUrlParam('maxPrice', end)
-            }, 2);
+                Router.removeUrlParamKey(UrlParam.PAGE);
+                Router.setUrlParam(UrlParam.MIN_PRICE, start)
+                Router.setUrlParam(UrlParam.MAX_PRICE, end)
+            }, MAX_DECIMALS);
         }
 
         const sizeFilter = document.querySelector('.filters-item .size') as HTMLElement | null;
         if (sizeFilter) {
             this.initializeSlider(sizeFilter, (start, end) => {
-                Router.removeUrlParamKey('page');
-                Router.setUrlParam('minSize', start)
-                Router.setUrlParam('maxSize', end)
+                Router.removeUrlParamKey(UrlParam.PAGE);
+                Router.setUrlParam(UrlParam.MIN_SIZE, start)
+                Router.setUrlParam(UrlParam.MAX_SIZE, end)
             });
         }
 
         const stockFilter = document.querySelector('.filters-item .stock') as HTMLElement | null;
         if (stockFilter) {
             this.initializeSlider(stockFilter, (start, end) => {
-                Router.removeUrlParamKey('page');
-                Router.setUrlParam('minStock', start)
-                Router.setUrlParam('maxStock', end)
+                Router.removeUrlParamKey(UrlParam.PAGE);
+                Router.setUrlParam(UrlParam.MIN_STOCK, start)
+                Router.setUrlParam(UrlParam.MAX_STOCK, end)
             });
         }
 
         const colors = document.querySelectorAll<HTMLElement>('.colors__color')
         colors.forEach(c => c.addEventListener('click', () => {
-            Router.removeUrlParamKey('page');
+            Router.removeUrlParamKey(UrlParam.PAGE);
             if (c.classList.contains('is-selected')) {
-                Router.removeUrlParamValue('colors', c.dataset.color || '');
+                Router.removeUrlParamValue(UrlParam.COLORS, c.dataset.color || '');
             } else {
-                Router.addUrlParamValue('colors', c.dataset.color || '');
+                Router.addUrlParamValue(UrlParam.COLORS, c.dataset.color || '');
             }
         }))
 
         const collections = document.querySelectorAll<HTMLElement>('.collection__year')
         collections.forEach(c => c.addEventListener('click', () => {
-            Router.removeUrlParamKey('page');
+            Router.removeUrlParamKey(UrlParam.PAGE);
             if (c.classList.contains('is-selected')) {
-                Router.removeUrlParamValue('collections', c.dataset.collection || '');
+                Router.removeUrlParamValue(UrlParam.COLLECTIONS, c.dataset.collection || '');
             } else {
-                Router.addUrlParamValue('collections', c.dataset.collection || '');
+                Router.addUrlParamValue(UrlParam.COLLECTIONS, c.dataset.collection || '');
             }
         }))
 
         const categories = document.querySelectorAll<HTMLInputElement>('.category__checkbox')
         categories.forEach(c => c.addEventListener('change', () => {
-            Router.removeUrlParamKey('page');
+            Router.removeUrlParamKey(UrlParam.PAGE);
             if (!c.checked) {
-                Router.removeUrlParamValue('categories', c.dataset.categories || '');
+                Router.removeUrlParamValue(UrlParam.CATEGORIES, c.dataset.categories || '');
             } else {
-                Router.addUrlParamValue('categories', c.dataset.categories || '');
+                Router.addUrlParamValue(UrlParam.CATEGORIES, c.dataset.categories || '');
             }
         }))
 
         const closeButton = document.querySelector<HTMLElement>('.filters__close-btn')
         closeButton?.addEventListener('click', () => {
-            Router.removeUrlParamKey('showFilters')
+            Router.removeUrlParamKey(UrlParam.SHOW_FILTERS)
         })
     }
 

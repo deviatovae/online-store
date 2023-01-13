@@ -11,6 +11,7 @@ import {FooterView} from "../../footer/footerView";
 import {PaymentPageView} from "../payment/paymentPageView";
 import {PaginationPerPageView} from "../../common/pagination/paginationPerPageView";
 import {PaginationPagesView} from "../../common/pagination/paginationPagesView";
+import {UrlParam} from "../../../types/urlParam";
 
 
 export default class CartPageView extends View<CartDataType> {
@@ -111,10 +112,10 @@ export default class CartPageView extends View<CartDataType> {
     afterRender(controller: Controller) {
         super.afterRender(controller);
 
-        const currentPage = Number(Router.getUrlParams().get('page') || 0)
+        const currentPage = Number(Router.getUrlParams().get(UrlParam.PAGE) || 0)
         const lastPage = controller.getLastPageInCart()
         if (currentPage > lastPage) {
-            Router.setUrlParam('page', lastPage.toString())
+            Router.setUrlParam(UrlParam.PAGE, lastPage.toString())
         }
 
         const order = document.querySelector('.button-order') as HTMLElement | null;
@@ -125,7 +126,7 @@ export default class CartPageView extends View<CartDataType> {
             }
         }
 
-        if (Router.getUrlParams().has('buy-now')) {
+        if (Router.getUrlParams().has(UrlParam.BUY_NOW)) {
             this.views.payment.show();
         }
 
