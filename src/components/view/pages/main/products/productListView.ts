@@ -3,10 +3,10 @@ import './productListView.scss'
 import {ProductView} from "./productView";
 import {Product} from "../../../../types/product";
 import {View} from "../../../view";
-import {CartDataType} from "../../../../types/cartDataType";
+import {CartData} from "../../../../types/cartData";
 
-type ProductListViewDataType = {
-    cart: CartDataType
+type ProductListViewData = {
+    cart: CartData
     products: Product[]
 }
 
@@ -15,12 +15,12 @@ type ProductListViewDataType = {
  *   - получает список продуктов для отрисовки
  *   - пробегает по всем продуктам и для каждого вызывает render() метод из класса ProductView
  */
-export class ProductListView extends View<ProductListViewDataType> {
+export class ProductListView extends View<ProductListViewData> {
     protected views = {
         product: new ProductView(),
     }
 
-    public render(data: ProductListViewDataType): string {
+    public render(data: ProductListViewData): string {
         if(data.products.length) {
             return data.products.map((product) => this.views.product.render({
                 product: product,

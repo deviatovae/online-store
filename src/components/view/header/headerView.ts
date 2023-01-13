@@ -2,7 +2,7 @@ import './headerView.scss';
 import {View} from "../view";
 import {Controller} from "../../controller/controller";
 import {Router} from "../../router/router";
-import {CartDataType} from "../../types/cartDataType";
+import {CartData} from "../../types/cartData";
 
 /**
  * view иконки корзины в хедере
@@ -10,8 +10,8 @@ import {CartDataType} from "../../types/cartDataType";
  * принимает список продуктов (временно, лучше принимать уже готовый объект с полями count, и price (sum))
  * возвращает готовый html инонки корзины
  */
-export class HeaderView extends View<CartDataType> {
-    public render(cart: CartDataType): string {
+export class HeaderView extends View<CartData> {
+    public render(cart: CartData): string {
         // language=HTML
         return `
           <header class="header">

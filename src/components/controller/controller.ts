@@ -2,13 +2,13 @@ import {CallbackFn} from "../types/callbackFn";
 import {Product} from "../types/product";
 import store from "../store/store";
 import products from '../../assets/data/products.json'
-import {CartDataType, GetPriceByPromocodes} from "../types/cartDataType";
-import {MainPageDataType} from "../types/mainPageDataType";
-import {FilterCategoryType, FilterList, FiltersDataType, MinMaxType} from "../types/filtersDataType";
+import {CartData, GetPriceByPromocodes} from "../types/cartData";
+import {MainPageData} from "../types/mainPageData";
+import {FilterCategory, FilterList, FiltersData, Limit} from "../types/filtersData";
 import {addAppliedPromocode, removeAppliedPromocode} from "../store/reducers/promocode";
 import {Router} from "../router/router";
-import {ProductPageType} from "../types/productPageType";
-import {PaginationDataType} from "../types/paginationDataType";
+import {ProductPage} from "../types/productPage";
+import {PaginationData} from "../types/paginationData";
 import cart = require("../store/reducers/cart");
 import { UrlParam } from "../types/urlParam";
 import {SortByParam} from "../types/sortByParam";
@@ -25,7 +25,7 @@ export class Controller {
     /**
      * возвращает данные для корзины / иконки в хэдере
      */
-    public cart(callback: CallbackFn<CartDataType>, perPage: number = this.CART_PAGE_LIMIT): void {
+    public cart(callback: CallbackFn<CartData>, perPage: number = this.CART_PAGE_LIMIT): void {
         const cartItems = store.getState().cart
         const promocodes = store.getState().promocode;
         const price = cartItems.reduce((count, cartItem) => count + cartItem.product.price * cartItem.quantity, 0);
@@ -39,7 +39,7 @@ export class Controller {
 
         const pagination = this.getPagination(cartItems.length, perPage);
 
-        const cartData: CartDataType = {
+        const cartData: CartData = {
             items: cartItems.slice(pagination.offset, pagination.offset + pagination.limit),
             priceAfterDiscount: priceByPromocodes(promocodes.applied),
             getPriceByPromocodes: priceByPromocodes,
@@ -50,13 +50,13 @@ export class Controller {
         callback(cartData);
     }
 
-    public product(id: string, callback: CallbackFn<ProductPageType>) {
+    public product(id: string, callback: CallbackFn<ProductPage>) {
         const product = products.find((p) => p.id === Number(id));
         if (!product) {
             return Router.redirectTo('/404');
         }
 
-        let cart: CartDataType|null = null;
+        let cart: CartData|null = null;
         this.cart((cartData) => {
             cart = cartData;
         }, products.length)
@@ -71,7 +71,7 @@ export class Controller {
     /**
      * метод возвращает данные для страницы каталога и передает их в коллбэк
      */
-    public catalog(callback: CallbackFn<MainPageDataType>) {
+    public catalog(callback: CallbackFn<MainPageData>) {
         const params = Router.getUrlParams()
 
         const selectedFilters: FilterList = {
@@ -96,21 +96,21 @@ export class Controller {
 
         if (!selectedFilters.price) {
             selectedFilters.price = getProductsBySelectedFilters(['price'], products)
-                .reduce((minMax: MinMaxType, product) => this.getDefaultMinMax(minMax, product.price), {
+                .reduce((minMax: Limit, product) => this.getDefaultMinMax(minMax, product.price), {
                     defaultMin: Number.MAX_SAFE_INTEGER,
                     defaultMax: Number.MIN_SAFE_INTEGER
                 })
         }
         if (!selectedFilters.size) {
             selectedFilters.size = getProductsBySelectedFilters(['size'], products)
-                .reduce((minMax: MinMaxType, product) => this.getDefaultMinMax(minMax, product.size), {
+                .reduce((minMax: Limit, product) => this.getDefaultMinMax(minMax, product.size), {
                     defaultMin: Number.MAX_SAFE_INTEGER,
                     defaultMax: Number.MIN_SAFE_INTEGER
                 })
         }
         if (!selectedFilters.stock) {
             selectedFilters.stock = getProductsBySelectedFilters(['stock'], products)
-                .reduce((minMax: MinMaxType, product) => this.getDefaultMinMax(minMax, product.stock), {
+                .reduce((minMax: Limit, product) => this.getDefaultMinMax(minMax, product.stock), {
                     defaultMin: Number.MAX_SAFE_INTEGER,
                     defaultMax: Number.MIN_SAFE_INTEGER
                 })
@@ -144,13 +144,13 @@ export class Controller {
         ).sort()
         const categoryFilters = [...getProductsBySelectedFilters(['categories'], products).reduce((map, product) => {
             if (map.has(product.category)) {
-                const type = map.get(product.category) as FilterCategoryType
+                const type = map.get(product.category) as FilterCategory
                 type.products = type.products + 1 || 1;
             } else {
                 map.set(product.category, {category: product.category, products: 1})
             }
             return map;
-        }, new Map<string, FilterCategoryType>).values()]
+        }, new Map<string, FilterCategory>).values()]
         if (selectedFilters.categories) {
             selectedFilters.categories.forEach((selectedCategory) => {
                 if (!categoryFilters.some((c) => c.category === selectedCategory.category)) {
@@ -159,19 +159,19 @@ export class Controller {
             })
         }
 
-        const filters: FiltersDataType = {
+        const filters: FiltersData = {
             colors: colorFilters,
             collections: collectionFilters,
             categories: categoryFilters,
-            price: products.reduce((minMax: MinMaxType, product) => this.getMinMax(minMax, product.price), {
+            price: products.reduce((minMax: Limit, product) => this.getMinMax(minMax, product.price), {
                 min: Number.MAX_SAFE_INTEGER,
                 max: Number.MIN_SAFE_INTEGER
             }),
-            size: products.reduce((minMax: MinMaxType, product) => this.getMinMax(minMax, product.size), {
+            size: products.reduce((minMax: Limit, product) => this.getMinMax(minMax, product.size), {
                 min: Number.MAX_SAFE_INTEGER,
                 max: Number.MIN_SAFE_INTEGER
             }),
-            stock: products.reduce((minMax: MinMaxType, product) => this.getMinMax(minMax, product.stock), {
+            stock: products.reduce((minMax: Limit, product) => this.getMinMax(minMax, product.stock), {
                 min: Number.MAX_SAFE_INTEGER,
                 max: Number.MIN_SAFE_INTEGER
             }),
@@ -185,12 +185,12 @@ export class Controller {
         }
         const slicedProducts = filteredProducts.slice(pagination.offset, pagination.offset + pagination.limit)
 
-        let cart: CartDataType;
+        let cart: CartData;
         this.cart((cartData) => {
             cart = cartData;
         }, products.length)
 
-        const data: MainPageDataType = {
+        const data: MainPageData = {
             products: slicedProducts,
             filters: filters,
             cart: cart!,
@@ -339,7 +339,7 @@ export class Controller {
     getLastPageInCart(): number {
         return this.getPagination(store.getState().cart.length, this.CART_PAGE_LIMIT).pageCount
     }
-    private getPagination(count: number, defaultPerPage: number): PaginationDataType {
+    private getPagination(count: number, defaultPerPage: number): PaginationData {
         const params = Router.getUrlParams();
         const page = Number(params.get(UrlParam.PAGE) || 1)
         const perPage = params.get(UrlParam.PER_PAGE) === UrlParamValue.PAGINATION_ALL ? 0 : Number(params.get(UrlParam.PER_PAGE) || defaultPerPage)
@@ -356,7 +356,7 @@ export class Controller {
         }
     }
 
-    private getMinMax(minMax: MinMaxType, value: number): MinMaxType {
+    private getMinMax(minMax: Limit, value: number): Limit {
         if (minMax.min) {
             minMax.min = minMax.min > value ? value : minMax.min
         }
@@ -366,7 +366,7 @@ export class Controller {
         return minMax;
     }
 
-    private getDefaultMinMax(minMax: MinMaxType, value: number): MinMaxType {
+    private getDefaultMinMax(minMax: Limit, value: number): Limit {
         if (minMax.defaultMin) {
             minMax.defaultMin = minMax.defaultMin > value ? value : minMax.defaultMin
         }

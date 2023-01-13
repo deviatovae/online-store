@@ -1,14 +1,14 @@
 import {View} from "../../view";
-import {CartItemType} from "../../../types/cartItemType";
+import {CartItem} from "../../../types/cartItem";
 import {formatPrice} from "../../helpers/helpers";
 import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
 
 
-export class CartPageListView extends View<CartItemType[]>{
+export class CartPageListView extends View<CartItem[]>{
     protected views = {}
 
-    public render(cartItems: CartItemType[]): string {
+    public render(cartItems: CartItem[]): string {
         return cartItems.map((cartItem) => {
             return `<div class="cart-item">
             <div class="cart-item__content">

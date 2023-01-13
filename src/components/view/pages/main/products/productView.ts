@@ -6,7 +6,7 @@ import {View} from "../../../view";
 
 import {Router} from "../../../../router/router";
 
-type ProductViewDataType = {
+type ProductViewData = {
     isInCart: boolean
     product: Product
 }
@@ -14,8 +14,8 @@ type ProductViewDataType = {
  * view отвечающий за формирование html для одного товара
  *   - используется в productListView
  */
-export class ProductView extends View<ProductViewDataType> {
-    render(data: ProductViewDataType): string {
+export class ProductView extends View<ProductViewData> {
+    render(data: ProductViewData): string {
         const productItemButton = !data.isInCart
             ? `<div class="product-item__cart-add" data-id="${data.product.id}">Add to cart</div>`
             : `<div class="product-item__cart-added" data-id="${data.product.id}">In cart</div>`
