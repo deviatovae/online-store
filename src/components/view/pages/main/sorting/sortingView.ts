@@ -29,70 +29,50 @@ export class SortingFiltersView extends View<ProductViewData> {
             pagination
         } = data
 
-        let colorFilter = '';
-        if (colors) {
+        const colorFilter = colors ? colors.map((c) => {
             // language=HTML
-            colorFilter = colors.map((c) => {
-                return `
-                  <div class="selected-filters__item selected-item">
-                    <div class="selected-item__name">${c}</div>
-                    <div class="selected-item__remove-btn" data-params="colors" data-value="${c}"></div>
-                  </div>`;
-            }).join('')
-        }
-        let collectionFilter = '';
-        if (collections) {
-            // language=HTML
-            collectionFilter = collections.map((c) => {
-                return `
-                  <div class="selected-filters__item selected-item">
-                    <div class="selected-item__name">${c}</div>
-                    <div class="selected-item__remove-btn" data-params="collections" data-value="${c}"></div>
-                  </div>`;
-            }).join('')
-        }
-
-        let priceFilter = '';
-        if (price?.selectedMin || price?.selectedMax) {
-            // language=HTML
-            priceFilter = `
+            return `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">Price: $${price.selectedMin} - $${price.selectedMax}</div>
-                <div class="selected-item__remove-btn" data-params="minPrice,maxPrice"></div>
+                <div class="selected-item__name">${c}</div>
+                <div class="selected-item__remove-btn" data-params="colors" data-value="${c}"></div>
               </div>`;
-        }
+        }).join('') : ''
 
-        let sizeFilter = '';
-        if (size?.selectedMin || size?.selectedMax) {
+        const collectionFilter = collections ? collections.map((c) => {
             // language=HTML
-            sizeFilter = `
+            return `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">Size: ${size.selectedMin}cm - ${size.selectedMax}cm</div>
-                <div class="selected-item__remove-btn" data-params="minSize,maxSize"></div>
+                <div class="selected-item__name">${c}</div>
+                <div class="selected-item__remove-btn" data-params="collections" data-value="${c}"></div>
               </div>`;
-        }
+        }).join('') : ''
 
-        let categoryFilter = '';
-        if (categories) {
-            // language=HTML
-            categoryFilter = categories.map(({category}) => {
-                return `
-                  <div class="selected-filters__item selected-item">
-                    <div class="selected-item__name">${category}</div>
-                    <div class="selected-item__remove-btn" data-params="categories" data-value="${category}"></div>
-                  </div>`;
-            }).join('')
-        }
+        const priceFilter = price?.selectedMin || price?.selectedMax ? `
+          <div class="selected-filters__item selected-item">
+            <div class="selected-item__name">Price: $${price.selectedMin} - $${price.selectedMax}</div>
+            <div class="selected-item__remove-btn" data-params="minPrice,maxPrice"></div>
+          </div>` : ''
 
-        let stockFilter = '';
-        if (stock?.selectedMin || stock?.selectedMax) {
+        const sizeFilter = size?.selectedMin || size?.selectedMax ? `
+          <div class="selected-filters__item selected-item">
+            <div class="selected-item__name">Size: ${size.selectedMin}cm - ${size.selectedMax}cm</div>
+            <div class="selected-item__remove-btn" data-params="minSize,maxSize"></div>
+          </div>` : ''
+
+        const categoryFilter = categories ? categories.map(({category}) => {
             // language=HTML
-            stockFilter = `
+            return `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">Stock: ${stock.selectedMin} - ${stock.selectedMax}</div>
-                <div class="selected-item__remove-btn" data-params="minStock,maxStock"></div>
+                <div class="selected-item__name">${category}</div>
+                <div class="selected-item__remove-btn" data-params="categories" data-value="${category}"></div>
               </div>`;
-        }
+        }).join('') : ''
+
+        const stockFilter = stock?.selectedMin || stock?.selectedMax ? `
+          <div class="selected-filters__item selected-item">
+            <div class="selected-item__name">Stock: ${stock.selectedMin} - ${stock.selectedMax}</div>
+            <div class="selected-item__remove-btn" data-params="minStock,maxStock"></div>
+          </div>` : ''
 
         const selectedFilters = [
             colorFilter,

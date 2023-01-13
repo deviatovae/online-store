@@ -7,7 +7,7 @@ import {CartItemArg} from "../../types/cartItemArg";
 /**
  * начальное состояние стейта
  */
-let initialState = loadState<CartItem[]>('cart', []);
+const initialState = loadState<CartItem[]>('cart', []);
 
 const slice = createSlice({
   name: 'cart',

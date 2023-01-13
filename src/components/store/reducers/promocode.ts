@@ -5,7 +5,7 @@ import {PromocodeData} from "../../types/promocodeData";
 /**
  * начальное состояние стейта
  */
-let initialState = loadState<PromocodeData>('promocode', {
+const initialState = loadState<PromocodeData>('promocode', {
     applied: [],
     available: [
         {
