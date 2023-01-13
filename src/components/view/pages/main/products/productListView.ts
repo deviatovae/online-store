@@ -19,13 +19,13 @@ export class ProductListView extends View<ProductListViewData> {
     protected views = {
         product: new ProductView(),
     }
-
     public render(data: ProductListViewData): string {
-        if(data.products.length) {
-            return data.products.map((product) => this.views.product.render({
+        const { products, cart } = data
+        if(products.length) {
+            return products.map((product) => this.views.product.render({
                 product: product,
-                isInCart: data.cart.items.some((p) => {
-                    return p.product.id === product.id
+                isInCart: cart.items.some(({product: inCartProduct}) => {
+                    return inCartProduct.id === product.id
                 })
             })).join('')
         }

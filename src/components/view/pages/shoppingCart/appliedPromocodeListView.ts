@@ -5,21 +5,23 @@ import {Controller} from "../../../controller/controller";
 
 export class AppliedPromocodeListView extends View<CartData> {
     render(cart: CartData): string {
+        const {promocodes: {applied: promocodes}} = cart
         // language=HTML
-        const items = cart.promocodes.applied.map(code => {
+        const items = promocodes.map((promocode) => {
+            const {id, name, discount} = promocode
             return `
               <div class="promocode-order__item">
-                <div class="promocode-order__name">${code.name} ${code.discount}% OFF<br>
-                    ($-${formatPrice(cart.getPriceByPromocodes() - cart.getPriceByPromocodes([code]))})
+                <div class="promocode-order__name">${name} ${discount}% OFF<br>
+                    ($-${formatPrice(cart.getPriceByPromocodes() - cart.getPriceByPromocodes([promocode]))})
                 </div>
-                <div class="promocodes__remove-btn remove-btn" data-id="${code.id}">
+                <div class="promocodes__remove-btn remove-btn" data-id="${id}">
                   <div class="remove-btn__icon"></div>
                 </div>
               </div>`
         }).join('')
 
         // language=HTML
-        const priceAfterDiscount = items ? `$${formatPrice(cart.getPriceByPromocodes(cart.promocodes.applied))}` : '';
+        const priceAfterDiscount = items ? `$${formatPrice(cart.getPriceByPromocodes(promocodes))}` : '';
 
         // language=HTML
         return `

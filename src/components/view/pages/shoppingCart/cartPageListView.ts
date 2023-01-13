@@ -10,33 +10,39 @@ export class CartPageListView extends View<CartItem[]>{
 
     public render(cartItems: CartItem[]): string {
         return cartItems.map((cartItem) => {
-            return `<div class="cart-item">
+          const {
+            id: itemId,
+            quantity,
+            product: {id, images, name, color, collection, size, category, stock, price}
+          } = cartItem
+
+          return `<div class="cart-item">
             <div class="cart-item__content">
-              <div class="cart-item__number">${cartItem.id}</div>
-              <img class="cart-item__img" data-id="${cartItem.product.id}" src="${cartItem.product.images[0]}" alt="product image">
+              <div class="cart-item__number">${itemId}</div>
+              <img class="cart-item__img" data-id="${id}" src="${images[0]}" alt="product image">
               <div class="cart-item__info">
-                <div class="cart-item-info__name">${cartItem.product.name}</div>
-                <div class="cart-item-info__color">Color: ${cartItem.product.color}</div>
-                <div class="cart-item-info__collecrion">Collection: ${cartItem.product.collection}</div>
-                <div class="cart-item-info__size">Size: ${cartItem.product.size}cm</div>
-                <div class="cart-item-info__category">Category: ${cartItem.product.category}</div>
-                <div class="cart-item-info__instock" data-id="${cartItem.product.id}">In stock: ${cartItem.product.stock}</div>
+                <div class="cart-item-info__name">${name}</div>
+                <div class="cart-item-info__color">Color: ${color}</div>
+                <div class="cart-item-info__collecrion">Collection: ${collection}</div>
+                <div class="cart-item-info__size">Size: ${size}cm</div>
+                <div class="cart-item-info__category">Category: ${category}</div>
+                <div class="cart-item-info__instock" data-id="${id}">In stock: ${stock}</div>
               </div>
-             <div class="cart-item__price">$${cartItem.product.price}</div>
+             <div class="cart-item__price">$${price}</div>
              <div class="cart-item__qty">
                <div class="cart-item-qty__value-container">
-                 <input class="cart-item-qty__value-container quantity-input" type="number" data-id="${cartItem.product.id}" data-stock="${cartItem.product.stock}" value="${cartItem.quantity}">
+                 <input class="cart-item-qty__value-container quantity-input" type="number" data-id="${id}" data-stock="${stock}" value="${quantity}">
                </div>
-               <div class="cart-item-qty__arrow-container arrow-up" data-stock="${cartItem.product.stock}" data-id="${cartItem.product.id}">
+               <div class="cart-item-qty__arrow-container arrow-up" data-stock="${stock}" data-id="${id}">
                  <div class="cart-item-qty__arrow-up"></div>
               </div>
-              <div class="cart-item-qty__arrow-container arrow-down" data-id="${cartItem.product.id}">
+              <div class="cart-item-qty__arrow-container arrow-down" data-id="${id}">
                  <div class="cart-item-qty__arrow-down"></div>
               </div>
              </div>
-             <div class="cart-item__subtotal">$${formatPrice(cartItem.product.price * cartItem.quantity)}</div>
+             <div class="cart-item__subtotal">$${formatPrice(price * quantity)}</div>
             </div>
-            <div class="cart-item__cross" data-id="${cartItem.product.id}"></div>
+            <div class="cart-item__cross" data-id="${id}"></div>
           </div>`
         }).join('')
     }
@@ -81,7 +87,7 @@ export class CartPageListView extends View<CartItem[]>{
 
           input.addEventListener('input', (event: Event) => {
             const input = event.currentTarget as HTMLInputElement
-            // верификация по in ctock
+            // верификация по in stock
             if (Number(input.value) > (Number(input.dataset.stock))) {
               input.value = String(input.dataset.stock);
 
