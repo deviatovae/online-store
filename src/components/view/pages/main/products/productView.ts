@@ -6,7 +6,7 @@ import {View} from "../../../view";
 
 import {Router} from "../../../../router/router";
 
-type ProductViewDataType = {
+type ProductViewData = {
     isInCart: boolean
     product: Product
 }
@@ -14,8 +14,8 @@ type ProductViewDataType = {
  * view отвечающий за формирование html для одного товара
  *   - используется в productListView
  */
-export class ProductView extends View<ProductViewDataType> {
-    render(data: ProductViewDataType): string {
+export class ProductView extends View<ProductViewData> {
+    render(data: ProductViewData): string {
         const {
             product: {id, images, name, price, color, collection, size, category, stock},
             isInCart

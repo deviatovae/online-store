@@ -3,7 +3,7 @@ import {Controller} from "../../../controller/controller";
 import './cartPageView.scss'
 import {Router} from "../../../router/router";
 import {CartPageListView} from "./cartPageListView";
-import {CartDataType} from "../../../types/cartDataType";
+import {CartData} from "../../../types/cartData";
 import {formatPrice} from "../../helpers/helpers";
 import {AppliedPromocodeListView} from "./appliedPromocodeListView";
 import {HeaderView} from "../../header/headerView";
@@ -14,7 +14,7 @@ import {PaginationPagesView} from "../../common/pagination/paginationPagesView";
 import {UrlParam} from "../../../types/urlParam";
 
 
-export default class CartPageView extends View<CartDataType> {
+export default class CartPageView extends View<CartData> {
     protected views = {
         cartList: new CartPageListView(),
         appliedPromocodes: new AppliedPromocodeListView(),
@@ -25,7 +25,7 @@ export default class CartPageView extends View<CartDataType> {
         paginationPages: new PaginationPagesView(),
     };
 
-    render(cart: CartDataType): string {
+    render(cart: CartData): string {
         const {
             items,
             pagination,

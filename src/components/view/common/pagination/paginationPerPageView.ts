@@ -5,13 +5,13 @@ import {capitalizeFirst} from "../../helpers/helpers";
 import {UrlParam} from "../../../types/urlParam";
 import {UrlParamValue} from "../../../types/urlParamValue";
 
-export type PaginationPerPageViewDataType = {
+export type PaginationPerPageViewData = {
     selectedPerPage: number
     values: number[]
 }
 
-export class PaginationPerPageView extends View<PaginationPerPageViewDataType> {
-    render(data: PaginationPerPageViewDataType): string {
+export class PaginationPerPageView extends View<PaginationPerPageViewData> {
+    render(data: PaginationPerPageViewData): string {
         // language=HTML
         return `
           <div class="pagination__select">

@@ -1,4 +1,4 @@
-export type MinMaxType = {
+export type Limit = {
     min?: number
     selectedMin?: number
     defaultMin?: number
@@ -7,21 +7,21 @@ export type MinMaxType = {
     defaultMax?: number
 }
 
-export type FilterCategoryType = {
+export type FilterCategory = {
     category: string,
     products: number,
 }
 
 export type FilterList = {
     colors?: string[]
-    categories?: FilterCategoryType[]
+    categories?: FilterCategory[]
     collections?: number[]
-    price?: MinMaxType
-    size?: MinMaxType
-    stock?: MinMaxType
+    price?: Limit
+    size?: Limit
+    stock?: Limit
 }
 
-export type FiltersDataType = FilterList & {
+export type FiltersData = FilterList & {
     selected: FilterList
     showFilters: boolean
 }

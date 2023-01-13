@@ -1,7 +1,7 @@
 import {FiltersView} from "./filters/filtersView";
 import {View} from "../../view";
 import {ProductListView} from "./products/productListView";
-import {MainPageDataType} from "../../../types/mainPageDataType";
+import {MainPageData} from "../../../types/mainPageData";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {SortingFiltersView} from "./sorting/sortingView";
@@ -17,7 +17,7 @@ import {UrlParamValue} from "../../../types/urlParamValue";
  * view-компонент, который возвращает страницу main (фильтры, каталог)
  *   - использует (вызывает) внутри себя более мелкие компоненты FiltersView, ProductListView
  */
-export class MainPageView extends View<MainPageDataType> {
+export class MainPageView extends View<MainPageData> {
     protected views = {
         header: new HeaderView(),
         footer: new FooterView(),
@@ -26,7 +26,7 @@ export class MainPageView extends View<MainPageDataType> {
         sorting: new SortingFiltersView(),
         paginationPages: new PaginationPagesView(),
     }
-    public render(data: MainPageDataType): string {
+    public render(data: MainPageData): string {
         // language=HTML
         return `
           ${this.views.header.render(data.cart)}

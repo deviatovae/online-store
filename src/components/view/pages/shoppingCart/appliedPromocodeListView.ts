@@ -1,10 +1,10 @@
 import {View} from "../../view";
-import {CartDataType} from "../../../types/cartDataType";
+import {CartData} from "../../../types/cartData";
 import {formatPrice} from "../../helpers/helpers";
 import {Controller} from "../../../controller/controller";
 
-export class AppliedPromocodeListView extends View<CartDataType> {
-    render(cart: CartDataType): string {
+export class AppliedPromocodeListView extends View<CartData> {
+    render(cart: CartData): string {
         const {promocodes: {applied: promocodes}} = cart
         // language=HTML
         const items = promocodes.map((promocode) => {

@@ -1,10 +1,10 @@
 import {View} from "../../view";
-import {CartItemType} from "../../../types/cartItemType";
+import {CartItem} from "../../../types/cartItem";
 import {formatPrice} from "../../helpers/helpers";
 import {Controller} from "../../../controller/controller";
 import {Product} from "../../../types/product";
 
-export class PaymentListView extends View<CartItemType[]> {
+export class PaymentListView extends View<CartItem[]> {
     protected views = {}
 
     private static getDescription({name, color, size, collection, category}: Product): string {
@@ -17,7 +17,7 @@ export class PaymentListView extends View<CartItemType[]> {
         ].join(' | ')
     }
 
-    public render(cartItems: CartItemType[]): string {
+    public render(cartItems: CartItem[]): string {
         return cartItems.map(({ product, quantity }) => {
             return `<div class="summary-list__item summary-item">
                   <div class="summary-item__top">

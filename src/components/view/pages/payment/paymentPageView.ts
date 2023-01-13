@@ -1,21 +1,21 @@
 import {View} from "../../view";
 import './paymentPage.scss'
 import {PaymentListView} from "./paymentListView";
-import {CartDataType} from "../../../types/cartDataType";
+import {CartData} from "../../../types/cartData";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
 import {UrlParam} from "../../../types/urlParam";
 
-export class PaymentPageView extends View<CartDataType> {
+export class PaymentPageView extends View<CartData> {
     protected views = {
         paymentList: new PaymentListView(),
         header: new HeaderView(),
         footer: new FooterView(),
     };
 
-    render(cart: CartDataType): string {
+    render(cart: CartData): string {
         // language=HTML
         return `
           <div class="main-catalog__payment-page payment-page">

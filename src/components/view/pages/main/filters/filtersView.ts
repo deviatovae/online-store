@@ -2,7 +2,7 @@ import './filtersView.scss'
 import {View} from "../../../view";
 import {Controller} from "../../../../controller/controller";
 import noUiSlider from 'nouislider';
-import {FiltersDataType} from "../../../../types/filtersDataType";
+import {FiltersData} from "../../../../types/filtersData";
 import {Router} from "../../../../router/router";
 import {UrlParam} from "../../../../types/urlParam";
 import {UrlParamValue} from "../../../../types/urlParamValue";
@@ -10,8 +10,8 @@ import {UrlParamValue} from "../../../../types/urlParamValue";
 /**
  * view отвечающий за отрисовку фильтров каталога
  */
-export class FiltersView extends View<FiltersDataType> {
-    public render(data: FiltersDataType): string {
+export class FiltersView extends View<FiltersData> {
+    public render(data: FiltersData): string {
         const {
             colors,
             categories,

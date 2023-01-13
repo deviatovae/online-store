@@ -2,12 +2,12 @@ import './sortingView.scss';
 import {View} from "../../../view";
 import {Controller} from "../../../../controller/controller";
 import {Router} from "../../../../router/router";
-import {ProductViewDataType} from "../../../../types/sortDataType";
+import {ProductViewData} from "../../../../types/sortData";
 import {PaginationPerPageView} from "../../../common/pagination/paginationPerPageView";
 import {UrlParam} from "../../../../types/urlParam";
 import {UrlParamValue} from "../../../../types/urlParamValue";
 
-export class SortingFiltersView extends View<ProductViewDataType> {
+export class SortingFiltersView extends View<ProductViewData> {
     private readonly sortOptions: { [key: string]: string } = {
         '': 'Recommended',
         'name': 'Name',
@@ -21,7 +21,7 @@ export class SortingFiltersView extends View<ProductViewDataType> {
         paginationPerPage: new PaginationPerPageView(),
     }
 
-    public render(data: ProductViewDataType): string {
+    public render(data: ProductViewData): string {
         const {
             filters: {colors, collections, categories, price, size, stock},
             selectedFilters: selectedFiltersCount,

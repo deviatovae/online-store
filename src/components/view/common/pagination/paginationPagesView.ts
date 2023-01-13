@@ -3,13 +3,13 @@ import {Router} from "../../../router/router";
 import {Controller} from "../../../controller/controller";
 import {UrlParam} from "../../../types/urlParam";
 
-export type PaginationPagesViewDataType = {
+export type PaginationPagesViewData = {
     selectedPage: number
     pageCount: number
 }
 
-export class PaginationPagesView extends View<PaginationPagesViewDataType> {
-    render(data: PaginationPagesViewDataType): string {
+export class PaginationPagesView extends View<PaginationPagesViewData> {
+    render(data: PaginationPagesViewData): string {
         // language=HTML
         return `
           <div class="shopping-cart__pagination-button-container">

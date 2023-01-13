@@ -1,4 +1,4 @@
-export type PromocodeType = {
+export type Promocode = {
     id: number
     name : string
     discount: number
