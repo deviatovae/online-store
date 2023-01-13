@@ -4,6 +4,8 @@ import {Controller} from "../../../../controller/controller";
 import {Router} from "../../../../router/router";
 import {ProductViewDataType} from "../../../../types/sortDataType";
 import {PaginationPerPageView} from "../../../common/pagination/paginationPerPageView";
+import {UrlParam} from "../../../../types/urlParam";
+import {UrlParamValue} from "../../../../types/urlParamValue";
 
 export class SortingFiltersView extends View<ProductViewDataType> {
     private readonly sortOptions: { [key: string]: string } = {
@@ -158,7 +160,7 @@ export class SortingFiltersView extends View<ProductViewDataType> {
                     } else {
                         Router.removeUrlParamKey(p)
                     }
-                    Router.removeUrlParamKey('page');
+                    Router.removeUrlParamKey(UrlParam.PAGE);
                 })
             })
         })
@@ -169,13 +171,13 @@ export class SortingFiltersView extends View<ProductViewDataType> {
                     Router.removeUrlParamKey(p)
                 })
             })
-            Router.removeUrlParamKey('q')
-            Router.removeUrlParamKey('page');
+            Router.removeUrlParamKey(UrlParam.SEARCH_QUERY)
+            Router.removeUrlParamKey(UrlParam.PAGE);
         })
 
         filterSelects.forEach((select) => {
             select.addEventListener('change', () => {
-                Router.removeUrlParamKey('page')
+                Router.removeUrlParamKey(UrlParam.PAGE)
                 const key = select.dataset.param || ''
                 Router.setUrlParam(key, select.value)
 
@@ -194,7 +196,7 @@ export class SortingFiltersView extends View<ProductViewDataType> {
 
         const filtersIcon = document.querySelector<HTMLElement>('.filters-menu__icon')
         filtersIcon?.addEventListener('click', () => {
-            Router.setUrlParam('showFilters', 'true')
+            Router.setUrlParam(UrlParam.SHOW_FILTERS, UrlParamValue.FILTERS_SHOW)
         })
     }
 }

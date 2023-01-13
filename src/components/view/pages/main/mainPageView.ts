@@ -9,6 +9,8 @@ import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
 import {TimeoutId} from "@reduxjs/toolkit/dist/query/core/buildMiddleware/types";
 import {PaginationPagesView} from "../../common/pagination/paginationPagesView";
+import {UrlParam} from "../../../types/urlParam";
+import {UrlParamValue} from "../../../types/urlParamValue";
 
 
 /**
@@ -39,7 +41,7 @@ export class MainPageView extends View<MainPageDataType> {
                 a festive atmosphere at your home
               </div>
               <div class="find-input-wrapper">
-                <input class="find-input" type="search" value="${Router.getUrlParam('q', '')}" placeholder="Search..."/>
+                <input class="find-input" type="search" value="${Router.getUrlParam(UrlParam.SEARCH_QUERY, '')}" placeholder="Search..."/>
                 <div class="find-input-img_search"></div>
                 <div class="find-input-img_clear"></div>
               </div>
@@ -52,7 +54,7 @@ export class MainPageView extends View<MainPageDataType> {
                 <div class="main-catalog__center-section main-center-section">
                   ${this.views.sorting.render(data.view)}
                   </div>
-                  <div class="main-catalog__products ${data.switchType === 'row' ? 'row-view' : ''}">
+                  <div class="main-catalog__products ${data.switchType === UrlParamValue.SWITCH_VIEW_ROW ? 'row-view' : ''}">
                     ${this.views.productList.render({
                       cart: data.cart,
                       products: data.products
@@ -80,11 +82,11 @@ export class MainPageView extends View<MainPageDataType> {
         const clearButton = document.querySelector('.find-input-img_clear') as HTMLElement;
 
         switchingRow.addEventListener('click', () => {
-            Router.setUrlParam('switch-view', 'row')
+            Router.setUrlParam(UrlParam.SWITCH_VIEW, UrlParamValue.SWITCH_VIEW_ROW)
         })
 
         switchingBlock.addEventListener('click', () => {
-            Router.setUrlParam('switch-view', 'block')
+            Router.removeUrlParamKey(UrlParam.SWITCH_VIEW)
         })
 
         if (mainCatalogProducts.classList.contains('row-view')) {
@@ -93,7 +95,7 @@ export class MainPageView extends View<MainPageDataType> {
         }
 
         clearButton.addEventListener('click', () => {
-            Router.removeUrlParamKey('q')
+            Router.removeUrlParamKey(UrlParam.SEARCH_QUERY)
         })
 
         let timeouts: TimeoutId[] = []
@@ -109,8 +111,8 @@ export class MainPageView extends View<MainPageDataType> {
                         }, 1)
                     );
 
-                    Router.removeUrlParamKey('page');
-                    inputSearch.value ? Router.setUrlParam('q', inputSearch.value) : Router.removeUrlParamKey('q');
+                    Router.removeUrlParamKey(UrlParam.PAGE);
+                    inputSearch.value ? Router.setUrlParam(UrlParam.SEARCH_QUERY, inputSearch.value) : Router.removeUrlParamKey('q');
                 }, 1000)
             );
         })

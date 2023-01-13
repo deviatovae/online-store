@@ -6,6 +6,7 @@ import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
+import {UrlParam} from "../../../types/urlParam";
 
 export class PaymentPageView extends View<CartDataType> {
     protected views = {
@@ -69,8 +70,8 @@ export class PaymentPageView extends View<CartDataType> {
         const container = document.querySelector<HTMLElement>('.payment-page');
         if (container) {
             container.style.display = 'none';
-            if (Router.getUrlParams().has('buy-now')) {
-                Router.removeUrlParamKey('buy-now');
+            if (Router.getUrlParams().has(UrlParam.BUY_NOW)) {
+                Router.removeUrlParamKey(UrlParam.BUY_NOW);
             }
         }
     }

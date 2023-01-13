@@ -1,6 +1,7 @@
 import {View} from "../../view";
 import {Router} from "../../../router/router";
 import {Controller} from "../../../controller/controller";
+import {UrlParam} from "../../../types/urlParam";
 
 export type PaginationPagesViewDataType = {
     selectedPage: number
@@ -25,7 +26,7 @@ export class PaginationPagesView extends View<PaginationPagesViewDataType> {
         const paginationButtons = document.querySelectorAll<HTMLElement>('.pagination-button')
         paginationButtons.forEach((button) => {
             button?.addEventListener('click', () => {
-                Router.setUrlParam('page', button.textContent || '1')
+                Router.setUrlParam(UrlParam.PAGE, button.textContent || '1')
                 window.scroll({
                     top: 150,
                     left: 0,
