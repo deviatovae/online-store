@@ -26,8 +26,16 @@ export default class CartPageView extends View<CartDataType> {
     };
 
     render(cart: CartDataType): string {
+        const {
+            items,
+            pagination,
+            promocodes: {applied: appliedPromocodes, available: availablePromocodes},
+            getPriceByPromocodes,
+            productCount
+        } = cart
+
         // language=HTML
-        if (!cart.items.length) {
+        if (!items.length) {
             return `
               ${this.views.header.render(cart)}
               <main>
@@ -52,7 +60,7 @@ export default class CartPageView extends View<CartDataType> {
               <div class="shopping-cart__header">SHOPPING CART</div>
               <div class="shopping-cart__pagination">
                 ${this.views.paginationPerPage.render({
-                  selectedPerPage: cart.pagination.perPage,
+                  selectedPerPage: pagination.perPage,
                   values: [1, 3, 5, 10, 0],
                 })}
               </div>
@@ -64,7 +72,7 @@ export default class CartPageView extends View<CartDataType> {
                 <span>Subtotal</span>
               </div>
               <div class="shopping-cart__list">
-                ${this.views.cartList.render(cart.items)}
+                ${this.views.cartList.render(items)}
               </div>
               <div class="shopping-cart__summary">
                 <div class="summery-info">
@@ -73,12 +81,12 @@ export default class CartPageView extends View<CartDataType> {
                     <div class="order-container__content">
                       <div class="order-container__items-count items-count">
                         <div class="items-count__title">Items Total</div>
-                        <div class="items-count__count">${cart.productCount}</div>
+                        <div class="items-count__count">${productCount}</div>
                       </div>
                       <div class="order-container__total-count total-count">
                         <div class="total-count__text">Order Total</div>
-                        <div class="total-count__total-value ${cart.promocodes.applied.length ? 'discount' : ''}">
-                            $${formatPrice(cart.getPriceByPromocodes())}
+                        <div class="total-count__total-value ${appliedPromocodes.length ? 'discount' : ''}">
+                            $${formatPrice(getPriceByPromocodes())}
                         </div>
                       </div>
                     </div>
@@ -95,13 +103,13 @@ export default class CartPageView extends View<CartDataType> {
                   <input class="input-promo" type="text" maxlength="16" placeholder="  Enter promo code">
                   <button class="button-apply" disabled="disabled">Apply</button>
                   <div class="promo-test">Promo for test:
-                    ${cart.promocodes.available.map(code => `<div class="promo-test__name">${code.name}</div>`).join(' | ')}
+                    ${availablePromocodes.map(({name}) => `<div class="promo-test__name">${name}</div>`).join(' | ')}
                   </div>
                 </div>
               </div>
               ${this.views.paginationPages.render({
-                pageCount: cart.pagination.pageCount,
-                selectedPage: cart.pagination.page
+                pageCount: pagination.pageCount,
+                selectedPage: pagination.page
               })}
             </div>
           </main>
