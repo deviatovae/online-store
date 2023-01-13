@@ -165,32 +165,32 @@ export class FiltersView extends View<FiltersData> {
         }
 
         const colors = document.querySelectorAll<HTMLElement>('.colors__color')
-        colors.forEach(c => c.addEventListener('click', () => {
+        colors.forEach(el => el.addEventListener('click', () => {
             Router.removeUrlParamKey(UrlParam.PAGE);
-            if (c.classList.contains('is-selected')) {
-                Router.removeUrlParamValue(UrlParam.COLORS, c.dataset.color || '');
+            if (el.classList.contains('is-selected')) {
+                Router.removeUrlParamValue(UrlParam.COLORS, el.dataset.color || '');
             } else {
-                Router.addUrlParamValue(UrlParam.COLORS, c.dataset.color || '');
+                Router.addUrlParamValue(UrlParam.COLORS, el.dataset.color || '');
             }
         }))
 
         const collections = document.querySelectorAll<HTMLElement>('.collection__year')
-        collections.forEach(c => c.addEventListener('click', () => {
+        collections.forEach(el => el.addEventListener('click', () => {
             Router.removeUrlParamKey(UrlParam.PAGE);
-            if (c.classList.contains('is-selected')) {
-                Router.removeUrlParamValue(UrlParam.COLLECTIONS, c.dataset.collection || '');
+            if (el.classList.contains('is-selected')) {
+                Router.removeUrlParamValue(UrlParam.COLLECTIONS, el.dataset.collection || '');
             } else {
-                Router.addUrlParamValue(UrlParam.COLLECTIONS, c.dataset.collection || '');
+                Router.addUrlParamValue(UrlParam.COLLECTIONS, el.dataset.collection || '');
             }
         }))
 
         const categories = document.querySelectorAll<HTMLInputElement>('.category__checkbox')
-        categories.forEach(c => c.addEventListener('change', () => {
+        categories.forEach(el => el.addEventListener('change', () => {
             Router.removeUrlParamKey(UrlParam.PAGE);
-            if (!c.checked) {
-                Router.removeUrlParamValue(UrlParam.CATEGORIES, c.dataset.categories || '');
+            if (!el.checked) {
+                Router.removeUrlParamValue(UrlParam.CATEGORIES, el.dataset.categories || '');
             } else {
-                Router.addUrlParamValue(UrlParam.CATEGORIES, c.dataset.categories || '');
+                Router.addUrlParamValue(UrlParam.CATEGORIES, el.dataset.categories || '');
             }
         }))
 
