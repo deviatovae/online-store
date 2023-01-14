@@ -103,13 +103,19 @@ export class PaymentPageView extends View<CartDataType> {
                 input.classList.remove('valid');
         }
 
-        // валидация name
-        const nameInput = document.querySelector<HTMLInputElement>(".payment-details__name");
-        nameInput?.addEventListener('input', (event: Event) => {
+        // name
+        const nameInput = document.querySelector(".payment-details__name") as HTMLInputElement;
 
-            nameInput.value = nameInput.value.replace(/[^A-Za-z, А-Яа-я]/g, '');
-            let arrName = Array.from(nameInput.value.split(' '))
-            if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
+        const checkFormatName = (value: string) => value.replace(/[^-\A-Za-z, А-Яа-я]/g, '');
+        const checkNameLength = (value: string) => {
+            const arrName = value.split(' ');
+            return arrName.length >= 2 && arrName.every((el) => el.length >= 3);
+        }
+
+        nameInput?.addEventListener('input', (event: Event) => {
+            nameInput.value = checkFormatName(nameInput.value);
+            const isValidNameInput = checkNameLength(nameInput.value);
+            if (isValidNameInput) {
                 formFields.validName = true;
                 makeInputValid(nameInput);
             } else {
@@ -118,13 +124,19 @@ export class PaymentPageView extends View<CartDataType> {
             }
         })
 
-        // валидация address
-        const addressInput = document.querySelector<HTMLInputElement>(".payment-details__shipping-address");
-        addressInput?.addEventListener('input', (event: Event) => {
+        // address
+        const addressInput = document.querySelector(".payment-details__shipping-address") as HTMLInputElement;
 
-            addressInput.value = addressInput.value.replace(/[^\-\A-Za-z, А-Яа-я]/g, '');
-            let arrAddress = Array.from(addressInput.value.split(' '))
-            if (arrAddress.length >= 3 && arrAddress.every((el) => el.length >= 5)) {
+        const checkFormatAddress = (value: string) => value.replace(/[^-\A-Za-z, А-Яа-я]/g, '');
+        const checkAddressLength = (value: string) => {
+            const arrAddress = value.split(' ');
+            return arrAddress.length >= 3 && arrAddress.every((el) => el.length >= 5);
+        }
+
+        addressInput?.addEventListener('input', (event: Event) => {
+            addressInput.value = checkFormatAddress(addressInput.value);
+            const isValidAddressInput = checkAddressLength(addressInput.value);
+            if (isValidAddressInput) {
                 formFields.validAddress = true;
                 makeInputValid(addressInput);
             } else {
@@ -133,11 +145,14 @@ export class PaymentPageView extends View<CartDataType> {
             }
         })
 
-        // валидация email
-        const emailInput = document.querySelector<HTMLInputElement>(".payment-details__email");
-        emailInput?.addEventListener('input', (event: Event) => {
+        // email
+        const emailInput = document.querySelector(".payment-details__email") as HTMLInputElement;
 
-            if (emailInput.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+        const checkFormatEmail = (value: string) => value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
+
+        emailInput?.addEventListener('input', (event: Event) => {
+            const isValidEmailInput = checkFormatEmail(emailInput.value);
+            if (isValidEmailInput) {
                 formFields.validEmail = true;
                 makeInputValid(emailInput);
 
@@ -147,12 +162,16 @@ export class PaymentPageView extends View<CartDataType> {
             }
         })
 
-        // валидация phone-number
-        const numberInput = document.querySelector<HTMLInputElement>(".payment-details__phone-number");
-        numberInput?.addEventListener('input', (event: Event) => {
+        // phone-number
+        const numberInput = document.querySelector(".payment-details__phone-number") as HTMLInputElement;
 
-            numberInput.value = numberInput.value.replace(/[^+\d]/g, '').substring(0, 16);
-            if (numberInput.value.match(/^\+\d{9}/g)) {
+        const checkFormatNumber = (value: string) => value.replace(/[^+\d]/g, '').substring(0, 16)
+        const checkNumberLength = (value: string) => value.match(/^\+\d{9}/g);
+        
+        numberInput?.addEventListener('input', (event: Event) => {
+            numberInput.value = checkFormatNumber(numberInput.value);
+            const isValidNumberInput = checkNumberLength(numberInput.value);
+            if (isValidNumberInput) {
                 formFields.validTell = true;
                 makeInputValid(numberInput);
             } else {
@@ -162,7 +181,8 @@ export class PaymentPageView extends View<CartDataType> {
         })
 
         // валидация card number
-        const cardNumberInput = document.querySelector<HTMLInputElement>(".card-details__card-number");
+
+        const cardNumberInput = document.querySelector(".card-details__card-number") as HTMLInputElement;
         const cardsImg = document.querySelector(".cards__img") as HTMLElement | null;
 
         cardNumberInput?.addEventListener('input', (event: Event) => {
@@ -203,38 +223,48 @@ export class PaymentPageView extends View<CartDataType> {
         })
 
         // валидация name on card
-        const nameCardInput = document.querySelector<HTMLInputElement>(".card-details__name");
+
+        const nameCardInput = document.querySelector(".card-details__name") as HTMLInputElement;
+
+        const checkFormatNameCard = (value: string) => value.replace(/[^\A-Za-z /]/g, '');
+        const checkFormatLength = (value: string) => {
+          const arrName = value.split(' ');
+          return arrName.length >= 2 && arrName.every((el) => el.length >= 3);
+        }
+        
         nameCardInput?.addEventListener('input', (event: Event) => {
-
-            nameCardInput.value = nameCardInput.value.replace(/[^\A-Za-z /]/g, '');
-            let arrName = Array.from(nameCardInput.value.split(' '));
-
-            if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
+            nameCardInput.value = checkFormatNameCard(nameCardInput.value);
+            const isValidNameInput = checkFormatLength(nameCardInput.value);
+            if (isValidNameInput) {
                 formFields.validCardName = true;
                 makeInputValid(nameCardInput);
             } else {
                 formFields.validCardName = false;
                 makeInputInvalid(nameCardInput);
             }
-        })
+        });
 
         // валидация CVV
-        const cvvInput = document.querySelector<HTMLInputElement>(".bottom-row__cvv");
+
+        const cvvInput = document.querySelector(".bottom-row__cvv") as HTMLInputElement;
+
+        const checkFormatCvv = (value: string) => value.replace(/[^\d]/g, '').substring(0, 3);
+        const checkLengthCvv = (value: string) => value.length === 3;
+
         cvvInput?.addEventListener('input', (event: Event) => {
-
-            cvvInput.value = cvvInput.value.replace(/[^\0-9]/g, '').substring(0, 3);
-
-            if (cvvInput.value.match(/^\d{3}/g)) {
-                formFields.validCardCvv = true;
-                makeInputValid(cvvInput);
-            } else {
-                formFields.validCardCvv = false;
-                makeInputInvalid(cvvInput);
-            }
-        })
+            cvvInput.value = checkFormatCvv(cvvInput.value);
+            const isValidCvvInput = checkLengthCvv(cvvInput.value);
+              if (isValidCvvInput) {
+                  formFields.validCardCvv = true;
+                  makeInputValid(cvvInput);
+              } else {
+                  formFields.validCardCvv = false;
+                  makeInputInvalid(cvvInput);
+              }
+        });
 
         // валидация MM/YY
-        const dateInput = document.querySelector<HTMLInputElement>(".bottom-row__date");
+        const dateInput = document.querySelector(".bottom-row__date") as HTMLInputElement;
         dateInput?.addEventListener('input', (event: Event) => {
 
             const thisYear = new Date().getFullYear().toString().substring(2, 4)
@@ -308,8 +338,8 @@ export class PaymentPageView extends View<CartDataType> {
 
                 // Подсвететка не валидных блоков
 
-                if (!formFields.validName)makeInputInvalid(nameInput);
-                if (!formFields.validAddress)makeInputInvalid(addressInput);
+                if (!formFields.validName) makeInputInvalid(nameInput);
+                if (!formFields.validAddress) makeInputInvalid(addressInput);
                 if (!formFields.validEmail) makeInputInvalid(emailInput);
                 if (!formFields.validTell) makeInputInvalid(numberInput);
                 if (!formFields.validCardName) makeInputInvalid(nameCardInput);
