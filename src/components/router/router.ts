@@ -85,9 +85,9 @@ export class Router {
      * ищет и вызывает функцию которая была записана в routes по url (после #) или возывает fallback
      */
     private loadRoute(): void {
-        let url = window.location.pathname;
+        const url = window.location.pathname;
 
-        for (let route of Object.keys(this.routes)) {
+        for (const route of Object.keys(this.routes)) {
             const routeSplit = route.split('/');
             const urlSplit = url.split('/');
             const args: string[] = [];

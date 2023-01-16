@@ -98,7 +98,7 @@ export class MainPageView extends View<MainPageData> {
             Router.removeUrlParamKey(UrlParam.SEARCH_QUERY)
         })
 
-        let timeouts: TimeoutId[] = []
+        const timeouts: TimeoutId[] = []
         inputSearch.addEventListener('input', () => {
             timeouts.forEach((timeout) => clearTimeout(timeout))
             timeouts.push(
