@@ -9,10 +9,10 @@ import {addAppliedPromocode, removeAppliedPromocode} from "../../store/reducers/
 import {Router} from "../router/router";
 import {ProductPage} from "../types/productPage";
 import {PaginationData} from "../types/paginationData";
-import cart = require("../../store/reducers/cart");
-import { UrlParam } from "../types/urlParam";
+import {UrlParam} from "../types/urlParam";
 import {SortByParam} from "../types/sortByParam";
 import {UrlParamValue} from "../types/urlParamValue";
+import cart = require("../../store/reducers/cart");
 
 /**
  * контроллер получает, изменяет, фильтрует данные, которые потребуются для view
@@ -56,16 +56,13 @@ export class Controller {
             return Router.redirectTo('/404');
         }
 
-        let cart: CartData|null = null;
         this.cart((cartData) => {
-            cart = cartData;
+            callback({
+                cart: cartData,
+                product: product,
+                isInCart: cartData.items.some(({product: inCartProduct}) => inCartProduct.id === product.id)
+            })
         }, products.length)
-
-        callback({
-            cart: cart!,
-            product: product,
-            isInCart: cart!.items.some((p) => p.product.id === product.id)
-        })
     }
 
     /**
@@ -116,7 +113,7 @@ export class Controller {
                 })
         }
 
-        let filteredProducts = getProductsBySelectedFilters();
+        const filteredProducts = getProductsBySelectedFilters();
         filteredProducts.sort((p1, p2) => {
             const sortByValues = (params.get(UrlParam.SORT_BY) || '-').split('-')
             const sortBy = sortByValues[0] as keyof Product;
@@ -185,35 +182,21 @@ export class Controller {
         }
         const slicedProducts = filteredProducts.slice(pagination.offset, pagination.offset + pagination.limit)
 
-        let cart: CartData;
         this.cart((cartData) => {
-            cart = cartData;
+            callback({
+                products: slicedProducts,
+                filters: filters,
+                cart: cartData,
+                switchType: params.get(UrlParam.SWITCH_VIEW),
+                view: {
+                    filters: selectedFilters,
+                    productsCount: filteredProducts.length,
+                    sortBy: params.get(UrlParam.SORT_BY),
+                    pagination: pagination,
+                    selectedFilters: this.getSelectedFiltersCount(selectedFilters)
+                }
+            })
         }, products.length)
-
-        const data: MainPageData = {
-            products: slicedProducts,
-            filters: filters,
-            cart: cart!,
-            switchType: params.get(UrlParam.SWITCH_VIEW),
-            view: {
-                filters: selectedFilters,
-                productsCount: filteredProducts.length,
-                sortBy: params.get(UrlParam.SORT_BY),
-                pagination: pagination,
-                selectedFilters: (Object.keys(selectedFilters) as Array<keyof FilterList>).reduce((count, key) => {
-                    const filter = selectedFilters[key];
-                    if (!filter) {
-                        return count;
-                    }
-                    if (Array.isArray(filter)) {
-                        return count + filter.length;
-                    }
-                    return count + 1;
-                }, 0)
-            }
-        }
-
-        callback(data);
     }
 
     /**
@@ -225,6 +208,7 @@ export class Controller {
             store.dispatch(cart.actions.addProductToCart({product: product, quantity: quantity}))
         }
     }
+
     /**
      * добавление количества продукта из инпут по идентификатору
      */
@@ -234,7 +218,6 @@ export class Controller {
             store.dispatch(cart.actions.setProductQuantityInCart({product: product, quantity: value}))
         }
     }
-
     /**
      * удаление продукта из корзины по идентификатору
      */
@@ -339,6 +322,7 @@ export class Controller {
     getLastPageInCart(): number {
         return this.getPagination(store.getState().cart.length, this.CART_PAGE_LIMIT).pageCount
     }
+
     private getPagination(count: number, defaultPerPage: number): PaginationData {
         const params = Router.getUrlParams();
         const page = Number(params.get(UrlParam.PAGE) || 1)
@@ -355,7 +339,6 @@ export class Controller {
             page,
         }
     }
-
     private getMinMax(minMax: Limit, value: number): Limit {
         if (minMax.min) {
             minMax.min = minMax.min > value ? value : minMax.min
@@ -378,5 +361,18 @@ export class Controller {
 
     private getUnique<T>(...values: T[][]) {
         return [...(new Set<T>(values.reduce((acc, value) => [...acc, ...value], [])))]
+    }
+
+    private getSelectedFiltersCount(selectedFilters: FilterList) {
+        return (Object.keys(selectedFilters) as Array<keyof FilterList>).reduce((count, key) => {
+            const filter = selectedFilters[key];
+            if (!filter) {
+                return count;
+            }
+            if (Array.isArray(filter)) {
+                return count + filter.length;
+            }
+            return count + 1;
+        }, 0);
     }
 }
