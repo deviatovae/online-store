@@ -27,7 +27,7 @@ describe('cart slice', () => {
         }]
 
         localStorage.setItem('store', JSON.stringify({cart: initialState}))
-        const cartSlice = require('../../../../src/components/store/reducers/cart');
+        const cartSlice = require('../../../../src/store/reducers/cart');
         expect(cartSlice.getInitialState()).toEqual(initialState)
     })
 
@@ -38,7 +38,7 @@ describe('cart slice', () => {
 
         beforeEach(() => {
             initialState = []
-            cartSlice = require('../../../../src/components/store/reducers/cart');
+            cartSlice = require('../../../../src/store/reducers/cart');
             product = {
                 id: 48,
                 name: "Christmas bauble with deco",

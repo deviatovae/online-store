@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {loadState} from "./storeDb";
-import {PromocodeData} from "../../types/promocodeData";
+import {PromocodeData} from "../../components/types/promocodeData";
 
 /**
  * начальное состояние стейта

@@ -1,6 +1,6 @@
 import {Router} from "../router/router";
 import {Pages} from "./pages";
-import {subscribe} from "../store/store";
+import {subscribe} from "../../store/store";
 
 /**
  * логика отрисовки приложения
