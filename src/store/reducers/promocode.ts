@@ -1,11 +1,11 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {loadState} from "./storeDb";
-import {PromocodeData} from "../../types/promocodeData";
+import {PromocodeData} from "../../components/types/promocodeData";
 
 /**
  * начальное состояние стейта
  */
-let initialState = loadState<PromocodeData>('promocode', {
+const initialState = loadState<PromocodeData>('promocode', {
     applied: [],
     available: [
         {

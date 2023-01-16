@@ -211,15 +211,8 @@ export class FiltersView extends View<FiltersData> {
         const {dataset: {min, max, min_selected: minSelected, max_selected: maxSelected}} = slider
         const minValue = parseFloat(min ?? '')
         const maxValue = parseFloat(max ?? '')
-        let startMin = minValue
-        let startMax = maxValue
-
-        if (Number(minSelected)) {
-            startMin = Number(minSelected)
-        }
-        if (Number(maxSelected)) {
-            startMax = Number(maxSelected)
-        }
+        const startMin = Number(minSelected) || minValue
+        const startMax = Number(maxSelected) || maxValue
 
         const api = noUiSlider.create(slider, {
             start: [startMin, startMax],
