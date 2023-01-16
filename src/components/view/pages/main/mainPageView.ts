@@ -112,7 +112,11 @@ export class MainPageView extends View<MainPageData> {
                     );
 
                     Router.removeUrlParamKey(UrlParam.PAGE);
-                    inputSearch.value ? Router.setUrlParam(UrlParam.SEARCH_QUERY, inputSearch.value) : Router.removeUrlParamKey('q');
+                    if(inputSearch.value) {
+                        Router.setUrlParam(UrlParam.SEARCH_QUERY, inputSearch.value)
+                    } else {
+                        Router.removeUrlParamKey('q')
+                    }
                 }, 1000)
             );
         })

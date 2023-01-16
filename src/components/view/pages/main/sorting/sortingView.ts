@@ -29,21 +29,21 @@ export class SortingFiltersView extends View<ProductViewData> {
             pagination
         } = data
 
-        const colorFilter = colors ? colors.map((c) => {
+        const colorFilter = colors ? colors.map((color) => {
             // language=HTML
             return `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">${c}</div>
-                <div class="selected-item__remove-btn" data-params="colors" data-value="${c}"></div>
+                <div class="selected-item__name">${color}</div>
+                <div class="selected-item__remove-btn" data-params="colors" data-value="${color}"></div>
               </div>`;
         }).join('') : ''
 
-        const collectionFilter = collections ? collections.map((c) => {
+        const collectionFilter = collections ? collections.map((collection) => {
             // language=HTML
             return `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">${c}</div>
-                <div class="selected-item__remove-btn" data-params="collections" data-value="${c}"></div>
+                <div class="selected-item__name">${collection}</div>
+                <div class="selected-item__remove-btn" data-params="collections" data-value="${collection}"></div>
               </div>`;
         }).join('') : ''
 
@@ -134,11 +134,11 @@ export class SortingFiltersView extends View<ProductViewData> {
 
         removeButtons.forEach((btn) => {
             btn.addEventListener('click', () => {
-                btn.dataset.params?.split(',').forEach(p => {
+                btn.dataset.params?.split(',').forEach(el => {
                     if (btn.dataset.value) {
-                        Router.removeUrlParamValue(p, btn.dataset.value)
+                        Router.removeUrlParamValue(el, btn.dataset.value)
                     } else {
-                        Router.removeUrlParamKey(p)
+                        Router.removeUrlParamKey(el)
                     }
                     Router.removeUrlParamKey(UrlParam.PAGE);
                 })
@@ -147,8 +147,8 @@ export class SortingFiltersView extends View<ProductViewData> {
 
         removeFilters?.addEventListener('click', () => {
             removeButtons.forEach((btn) => {
-                btn.dataset.params?.split(',').forEach(p => {
-                    Router.removeUrlParamKey(p)
+                btn.dataset.params?.split(',').forEach(el => {
+                    Router.removeUrlParamKey(el)
                 })
             })
             Router.removeUrlParamKey(UrlParam.SEARCH_QUERY)
