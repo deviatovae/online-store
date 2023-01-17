@@ -3,7 +3,7 @@ import {Controller} from "../../../controller/controller";
 import './cartPageView.scss'
 import {Router} from "../../../router/router";
 import {CartPageListView} from "./cartPageListView";
-import {CartDataType} from "../../../types/cartDataType";
+import {CartData} from "../../../types/cartData";
 import {formatPrice} from "../../helpers/helpers";
 import {AppliedPromocodeListView} from "./appliedPromocodeListView";
 import {HeaderView} from "../../header/headerView";
@@ -11,9 +11,10 @@ import {FooterView} from "../../footer/footerView";
 import {PaymentPageView} from "../payment/paymentPageView";
 import {PaginationPerPageView} from "../../common/pagination/paginationPerPageView";
 import {PaginationPagesView} from "../../common/pagination/paginationPagesView";
+import {UrlParam} from "../../../types/urlParam";
 
 
-export default class CartPageView extends View<CartDataType> {
+export default class CartPageView extends View<CartData> {
     protected views = {
         cartList: new CartPageListView(),
         appliedPromocodes: new AppliedPromocodeListView(),
@@ -24,9 +25,17 @@ export default class CartPageView extends View<CartDataType> {
         paginationPages: new PaginationPagesView(),
     };
 
-    render(cart: CartDataType): string {
+    render(cart: CartData): string {
+        const {
+            items,
+            pagination,
+            promocodes: {applied: appliedPromocodes, available: availablePromocodes},
+            getPriceByPromocodes,
+            productCount
+        } = cart
+
         // language=HTML
-        if (!cart.items.length) {
+        if (!items.length) {
             return `
               ${this.views.header.render(cart)}
               <main>
@@ -51,7 +60,7 @@ export default class CartPageView extends View<CartDataType> {
               <div class="shopping-cart__header">SHOPPING CART</div>
               <div class="shopping-cart__pagination">
                 ${this.views.paginationPerPage.render({
-                  selectedPerPage: cart.pagination.perPage,
+                  selectedPerPage: pagination.perPage,
                   values: [1, 3, 5, 10, 0],
                 })}
               </div>
@@ -63,7 +72,7 @@ export default class CartPageView extends View<CartDataType> {
                 <span>Subtotal</span>
               </div>
               <div class="shopping-cart__list">
-                ${this.views.cartList.render(cart.items)}
+                ${this.views.cartList.render(items)}
               </div>
               <div class="shopping-cart__summary">
                 <div class="summery-info">
@@ -72,12 +81,12 @@ export default class CartPageView extends View<CartDataType> {
                     <div class="order-container__content">
                       <div class="order-container__items-count items-count">
                         <div class="items-count__title">Items Total</div>
-                        <div class="items-count__count">${cart.productCount}</div>
+                        <div class="items-count__count">${productCount}</div>
                       </div>
                       <div class="order-container__total-count total-count">
                         <div class="total-count__text">Order Total</div>
-                        <div class="total-count__total-value ${cart.promocodes.applied.length ? 'discount' : ''}">
-                            $${formatPrice(cart.getPriceByPromocodes())}
+                        <div class="total-count__total-value ${appliedPromocodes.length ? 'discount' : ''}">
+                            $${formatPrice(getPriceByPromocodes())}
                         </div>
                       </div>
                     </div>
@@ -94,13 +103,13 @@ export default class CartPageView extends View<CartDataType> {
                   <input class="input-promo" type="text" maxlength="16" placeholder="  Enter promo code">
                   <button class="button-apply" disabled="disabled">Apply</button>
                   <div class="promo-test">Promo for test:
-                    ${cart.promocodes.available.map(code => `<div class="promo-test__name">${code.name}</div>`).join(' | ')}
+                    ${availablePromocodes.map(({name}) => `<div class="promo-test__name">${name}</div>`).join(' | ')}
                   </div>
                 </div>
               </div>
               ${this.views.paginationPages.render({
-                pageCount: cart.pagination.pageCount,
-                selectedPage: cart.pagination.page
+                pageCount: pagination.pageCount,
+                selectedPage: pagination.page
               })}
             </div>
           </main>
@@ -111,10 +120,10 @@ export default class CartPageView extends View<CartDataType> {
     afterRender(controller: Controller) {
         super.afterRender(controller);
 
-        const currentPage = Number(Router.getUrlParams().get('page') || 0)
+        const currentPage = Number(Router.getUrlParams().get(UrlParam.PAGE) || 0)
         const lastPage = controller.getLastPageInCart()
         if (currentPage > lastPage) {
-            Router.setUrlParam('page', lastPage.toString())
+            Router.setUrlParam(UrlParam.PAGE, lastPage.toString())
         }
 
         const order = document.querySelector('.button-order') as HTMLElement | null;
@@ -125,7 +134,7 @@ export default class CartPageView extends View<CartDataType> {
             }
         }
 
-        if (Router.getUrlParams().has('buy-now')) {
+        if (Router.getUrlParams().has(UrlParam.BUY_NOW)) {
             this.views.payment.show();
         }
 

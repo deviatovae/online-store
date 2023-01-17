@@ -2,10 +2,12 @@ import './sortingView.scss';
 import {View} from "../../../view";
 import {Controller} from "../../../../controller/controller";
 import {Router} from "../../../../router/router";
-import {ProductViewDataType} from "../../../../types/sortDataType";
+import {ProductViewData} from "../../../../types/sortData";
 import {PaginationPerPageView} from "../../../common/pagination/paginationPerPageView";
+import {UrlParam} from "../../../../types/urlParam";
+import {UrlParamValue} from "../../../../types/urlParamValue";
 
-export class SortingFiltersView extends View<ProductViewDataType> {
+export class SortingFiltersView extends View<ProductViewData> {
     private readonly sortOptions: { [key: string]: string } = {
         '': 'Recommended',
         'name': 'Name',
@@ -19,71 +21,59 @@ export class SortingFiltersView extends View<ProductViewDataType> {
         paginationPerPage: new PaginationPerPageView(),
     }
 
-    public render(data: ProductViewDataType): string {
-        let colorFilter = '';
-        if (data.filters.colors) {
-            // language=HTML
-            colorFilter = data.filters.colors.map((c) => {
-                return `
-                  <div class="selected-filters__item selected-item">
-                    <div class="selected-item__name">${c}</div>
-                    <div class="selected-item__remove-btn" data-params="colors" data-value="${c}"></div>
-                  </div>`;
-            }).join('')
-        }
-        let collectionFilter = '';
-        if (data.filters.collections) {
-            // language=HTML
-            collectionFilter = data.filters.collections.map((c) => {
-                return `
-                  <div class="selected-filters__item selected-item">
-                    <div class="selected-item__name">${c}</div>
-                    <div class="selected-item__remove-btn" data-params="collections" data-value="${c}"></div>
-                  </div>`;
-            }).join('')
-        }
+    public render(data: ProductViewData): string {
+        const {
+            filters: {colors, collections, categories, price, size, stock},
+            selectedFilters: selectedFiltersCount,
+            productsCount,
+            pagination
+        } = data
 
-        let priceFilter = '';
-        if (data.filters.price?.selectedMin || data.filters.price?.selectedMax) {
+        const colorFilter = colors ? colors.map((color) => {
             // language=HTML
-            priceFilter = `
+            return `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">Price: $${data.filters.price.selectedMin} - $${data.filters.price.selectedMax}</div>
-                <div class="selected-item__remove-btn" data-params="minPrice,maxPrice"></div>
+                <div class="selected-item__name">${color}</div>
+                <div class="selected-item__remove-btn" data-params="colors" data-value="${color}"></div>
               </div>`;
-        }
+        }).join('') : ''
 
-        let sizeFilter = '';
-        if (data.filters.size?.selectedMin || data.filters.size?.selectedMax) {
+        const collectionFilter = collections ? collections.map((collection) => {
             // language=HTML
-            sizeFilter = `
+            return `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">Size: ${data.filters.size.selectedMin}cm - ${data.filters.size.selectedMax}cm</div>
-                <div class="selected-item__remove-btn" data-params="minSize,maxSize"></div>
+                <div class="selected-item__name">${collection}</div>
+                <div class="selected-item__remove-btn" data-params="collections" data-value="${collection}"></div>
               </div>`;
-        }
+        }).join('') : ''
 
-        let categoryFilter = '';
-        if (data.filters.categories) {
-            // language=HTML
-            categoryFilter = data.filters.categories.map((c) => {
-                return `
-                  <div class="selected-filters__item selected-item">
-                    <div class="selected-item__name">${c.category}</div>
-                    <div class="selected-item__remove-btn" data-params="categories" data-value="${c.category}"></div>
-                  </div>`;
-            }).join('')
-        }
+        const priceFilter = price?.selectedMin || price?.selectedMax ? `
+          <div class="selected-filters__item selected-item">
+            <div class="selected-item__name">Price: $${price.selectedMin} - $${price.selectedMax}</div>
+            <div class="selected-item__remove-btn" data-params="minPrice,maxPrice"></div>
+          </div>` : ''
 
-        let stockFilter = '';
-        if (data.filters.stock?.selectedMin || data.filters.stock?.selectedMax) {
+        const sizeFilter = size?.selectedMin || size?.selectedMax ? `
+          <div class="selected-filters__item selected-item">
+            <div class="selected-item__name">Size: ${size.selectedMin}cm - ${size.selectedMax}cm</div>
+            <div class="selected-item__remove-btn" data-params="minSize,maxSize"></div>
+          </div>` : ''
+
+        const categoryFilter = categories ? categories.map(({category}) => {
             // language=HTML
-            stockFilter = `
+            return `
               <div class="selected-filters__item selected-item">
-                <div class="selected-item__name">Stock: ${data.filters.stock.selectedMin} - ${data.filters.stock.selectedMax}</div>
-                <div class="selected-item__remove-btn" data-params="minStock,maxStock"></div>
+                <div class="selected-item__name">${category}</div>
+                <div class="selected-item__remove-btn" data-params="categories" data-value="${category}"></div>
               </div>`;
-        }
+        }).join('') : ''
+
+        const stockFilter = stock?.selectedMin || stock?.selectedMax ? `
+          <div class="selected-filters__item selected-item">
+            <div class="selected-item__name">Stock: ${stock.selectedMin} - ${stock.selectedMax}</div>
+            <div class="selected-item__remove-btn" data-params="minStock,maxStock"></div>
+          </div>` : ''
+
         const selectedFilters = [
             colorFilter,
             collectionFilter,
@@ -114,9 +104,9 @@ export class SortingFiltersView extends View<ProductViewDataType> {
               <div class="sorted-filters__filters-menu filters-menu">
                 <div class="filters-menu__icon"></div>
                 <div class="filters-menu__title">Show filters</div>
-                <div class="filters-menu__count">${data.selectedFilters}</div>
+                <div class="filters-menu__count">${selectedFiltersCount}</div>
               </div>
-              <div class="sorted-filters__item-count">${data.productsCount} items</div>
+              <div class="sorted-filters__item-count">${productsCount} items</div>
               <div class="sorted-filters__select">
                 <select class="filters-select" data-param="sortBy">
                   ${sortByOptions}
@@ -124,7 +114,7 @@ export class SortingFiltersView extends View<ProductViewDataType> {
               </div>
               <div class="sorted-filters__select">
                 ${this.views.paginationPerPage.render({
-                  selectedPerPage: data.pagination.perPage,
+                  selectedPerPage: pagination.perPage,
                   values: [5, 10, 20, 30, 0],
                 })}
               </div>
@@ -144,30 +134,30 @@ export class SortingFiltersView extends View<ProductViewDataType> {
 
         removeButtons.forEach((btn) => {
             btn.addEventListener('click', () => {
-                btn.dataset.params?.split(',').forEach(p => {
+                btn.dataset.params?.split(',').forEach(el => {
                     if (btn.dataset.value) {
-                        Router.removeUrlParamValue(p, btn.dataset.value)
+                        Router.removeUrlParamValue(el, btn.dataset.value)
                     } else {
-                        Router.removeUrlParamKey(p)
+                        Router.removeUrlParamKey(el)
                     }
-                    Router.removeUrlParamKey('page');
+                    Router.removeUrlParamKey(UrlParam.PAGE);
                 })
             })
         })
 
         removeFilters?.addEventListener('click', () => {
             removeButtons.forEach((btn) => {
-                btn.dataset.params?.split(',').forEach(p => {
-                    Router.removeUrlParamKey(p)
+                btn.dataset.params?.split(',').forEach(el => {
+                    Router.removeUrlParamKey(el)
                 })
             })
-            Router.removeUrlParamKey('q')
-            Router.removeUrlParamKey('page');
+            Router.removeUrlParamKey(UrlParam.SEARCH_QUERY)
+            Router.removeUrlParamKey(UrlParam.PAGE);
         })
 
         filterSelects.forEach((select) => {
             select.addEventListener('change', () => {
-                Router.removeUrlParamKey('page')
+                Router.removeUrlParamKey(UrlParam.PAGE)
                 const key = select.dataset.param || ''
                 Router.setUrlParam(key, select.value)
 
@@ -186,7 +176,7 @@ export class SortingFiltersView extends View<ProductViewDataType> {
 
         const filtersIcon = document.querySelector<HTMLElement>('.filters-menu__icon')
         filtersIcon?.addEventListener('click', () => {
-            Router.setUrlParam('showFilters', 'true')
+            Router.setUrlParam(UrlParam.SHOW_FILTERS, UrlParamValue.FILTERS_SHOW)
         })
     }
 }

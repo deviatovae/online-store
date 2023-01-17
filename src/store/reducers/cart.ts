@@ -1,13 +1,13 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Product} from '../../types/product';
-import {CartItemType} from "../../types/cartItemType";
+import {Product} from '../../components/types/product';
+import {CartItem} from "../../components/types/cartItem";
 import {loadState} from "./storeDb";
-import {CartItemArgType} from "../../types/cartItemArgType";
+import {CartItemArg} from "../../components/types/cartItemArg";
 
 /**
  * начальное состояние стейта
  */
-let initialState = loadState<CartItemType[]>('cart', []);
+const initialState = loadState<CartItem[]>('cart', []);
 
 const slice = createSlice({
   name: 'cart',
@@ -16,7 +16,7 @@ const slice = createSlice({
     /**
      * добавляет продукт в стейт корзины, при повторном добавлении увеличивает quantity
      */
-    addProductToCart: (state, { payload: cartItem }: PayloadAction<CartItemArgType>): CartItemType[] => {
+    addProductToCart: (state, { payload: cartItem }: PayloadAction<CartItemArg>): CartItem[] => {
       const item = state.find((item) => item.product.id === cartItem.product.id);
       if (!item) {
         return [...state, {
@@ -38,7 +38,7 @@ const slice = createSlice({
     /**
      * изменяет quantity на величину value из input
      */
-    setProductQuantityInCart: (state, { payload: cartItem }: PayloadAction<CartItemArgType>): CartItemType[] => {
+    setProductQuantityInCart: (state, { payload: cartItem }: PayloadAction<CartItemArg>): CartItem[] => {
       const item = state.find((item) => item.product.id === cartItem.product.id);
       if (!item) {
         return [...state, {
@@ -55,7 +55,7 @@ const slice = createSlice({
     /**
      * удаляет продукт из стейта корзины, если quantity > 1, то просто уменьшает значение этого поля
      */
-    removeProductFromCart: (state, { payload: product }: PayloadAction<Product>): CartItemType[] => {
+    removeProductFromCart: (state, { payload: product }: PayloadAction<Product>): CartItem[] => {
       const item = state.find((item) => item.product.id === product.id);
       if (item) {
         if (item.quantity <= 1 ) {
@@ -70,7 +70,7 @@ const slice = createSlice({
     /**
      * удаляет продукт с любым количеством из стейта корзины
      */
-    removeProductFromCartAll: (state, {payload: product}: PayloadAction<Product>): CartItemType[] => {
+    removeProductFromCartAll: (state, {payload: product}: PayloadAction<Product>): CartItem[] => {
       const item = state.find((item) => item.product.id === product.id);
       if (item) {
         return state.filter((stateItem) => stateItem !== item).map((p, i) => ({...p, id: i + 1}));
@@ -78,7 +78,7 @@ const slice = createSlice({
       return state;
     },
 
-    clearCart: (state): CartItemType[] => {
+    clearCart: (state): CartItem[] => {
       return [];
     }
   },

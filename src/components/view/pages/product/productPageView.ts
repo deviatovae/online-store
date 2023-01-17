@@ -5,15 +5,15 @@ import {Router} from "../../../router/router";
 import {formatPrice} from "../../helpers/helpers";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
-import {ProductPageType} from "../../../types/productPageType";
+import {ProductPage} from "../../../types/productPage";
 
-export default class ProductPageView extends View<ProductPageType> {
+export default class ProductPageView extends View<ProductPage> {
     protected views = {
         header: new HeaderView(),
         footer: new FooterView(),
     };
 
-    render({cart, product, isInCart}: ProductPageType): string {
+    render({cart, product, isInCart}: ProductPage): string {
 
         const inCart = `<div class="product-summary__state-in-cart">In cart</div>`
         const addToCart = `<button class="button-add-cart button" data-id="${product.id}">ADD TO CART</button>`

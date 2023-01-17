@@ -1,13 +1,15 @@
 import {View} from "../../view";
 import './paymentPage.scss'
 import {PaymentListView} from "./paymentListView";
-import {CartDataType} from "../../../types/cartDataType";
+import {CartData} from "../../../types/cartData";
+// import {CartDataType} from "../../../types/cartDataType";
 import {Validation} from "../../../types/validation";
 import {Card} from "../../../types/card";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
+import {UrlParam} from "../../../types/urlParam";
 import {lightInvalid} from "./utils"
 import {makeInputInvalid, makeInputValid} from "./utils"
 import {checkFormatName, checkNameLength, checkFormatAddress, checkAddressLength,
@@ -17,14 +19,14 @@ import {checkFormatName, checkNameLength, checkFormatAddress, checkAddressLength
 
 
 
-export class PaymentPageView extends View<CartDataType> {
+export class PaymentPageView extends View<CartData> {
     protected views = {
         paymentList: new PaymentListView(),
         header: new HeaderView(),
         footer: new FooterView(),
     };
 
-    render(cart: CartDataType): string {
+    render(cart: CartData): string {
         // language=HTML
         return `
           <div class="main-catalog__payment-page payment-page">
@@ -79,8 +81,8 @@ export class PaymentPageView extends View<CartDataType> {
         const container = document.querySelector<HTMLElement>('.payment-page');
         if (container) {
             container.style.display = 'none';
-            if (Router.getUrlParams().has('buy-now')) {
-                Router.removeUrlParamKey('buy-now');
+            if (Router.getUrlParams().has(UrlParam.BUY_NOW)) {
+                Router.removeUrlParamKey(UrlParam.BUY_NOW);
             }
         }
     }

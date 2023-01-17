@@ -1,6 +1,6 @@
 import {describe, expect} from '@jest/globals';
-import {CartItemType} from "../../../../src/components/types/cartItemType";
-import {CartItemArgType} from "../../../../src/components/types/cartItemArgType";
+import {CartItem} from "../../../../src/components/types/cartItem";
+import {CartItemArg} from "../../../../src/components/types/cartItemArg";
 import {Product} from "../../../../src/components/types/product";
 import {Slice} from "@reduxjs/toolkit";
 
@@ -27,18 +27,18 @@ describe('cart slice', () => {
         }]
 
         localStorage.setItem('store', JSON.stringify({cart: initialState}))
-        const cartSlice = require('../../../../src/components/store/reducers/cart');
+        const cartSlice = require('../../../../src/store/reducers/cart');
         expect(cartSlice.getInitialState()).toEqual(initialState)
     })
 
     describe('reducers', () => {
-        let initialState: CartItemType[]
+        let initialState: CartItem[]
         let product: Product
-        let cartSlice: Slice<CartItemType[]>
+        let cartSlice: Slice<CartItem[]>
 
         beforeEach(() => {
             initialState = []
-            cartSlice = require('../../../../src/components/store/reducers/cart');
+            cartSlice = require('../../../../src/store/reducers/cart');
             product = {
                 id: 48,
                 name: "Christmas bauble with deco",
@@ -58,12 +58,12 @@ describe('cart slice', () => {
 
         describe('addProductToCart', () => {
             it('should add new product', () => {
-                const item: CartItemArgType = {
+                const item: CartItemArg = {
                     product: product,
                     quantity: 42
                 }
 
-                const expected: CartItemType[] = [{id: 1, ...item}]
+                const expected: CartItem[] = [{id: 1, ...item}]
                 const exp = expect(cartSlice.reducer(initialState, cartSlice.actions.addProductToCart(item)))
                 exp.toEqual(expected)
             })
@@ -79,7 +79,7 @@ describe('cart slice', () => {
                     product,
                     quantity: 2
                 })))
-                const expected: CartItemType[] = [{id: 1, product, quantity: 3}]
+                const expected: CartItem[] = [{id: 1, product, quantity: 3}]
                 exp.toEqual(expected)
             })
 
@@ -90,7 +90,7 @@ describe('cart slice', () => {
                     quantity: 3
                 }]
 
-                const expected: CartItemType[] = [{id: 1, product, quantity: 5}]
+                const expected: CartItem[] = [{id: 1, product, quantity: 5}]
                 const exp = expect(cartSlice.reducer(initialState, cartSlice.actions.addProductToCart({
                     product,
                     quantity: 43
@@ -101,14 +101,14 @@ describe('cart slice', () => {
 
         describe('setProductQuantityInCart', () => {
             it('should set quantity of a new product into state', () => {
-                const item: CartItemArgType = {
+                const item: CartItemArg = {
                     product: product,
                     quantity: 42
                 }
 
                 const exp = expect(cartSlice.reducer(initialState, cartSlice.actions.setProductQuantityInCart(item)))
 
-                const expected: CartItemType[] = [{id: 1, ...item}]
+                const expected: CartItem[] = [{id: 1, ...item}]
                 exp.toEqual(expected)
             })
 
@@ -119,14 +119,14 @@ describe('cart slice', () => {
                     quantity: 42,
                 }]
 
-                const item: CartItemArgType = {
+                const item: CartItemArg = {
                     product: product,
                     quantity: 5,
                 }
 
                 const exp = expect(cartSlice.reducer(initialState, cartSlice.actions.setProductQuantityInCart(item)))
 
-                const expected: CartItemType[] = [{id: 1, ...item}]
+                const expected: CartItem[] = [{id: 1, ...item}]
                 exp.toEqual(expected)
             })
         })
@@ -165,7 +165,7 @@ describe('cart slice', () => {
 
                 const exp = expect(cartSlice.reducer(initialState, cartSlice.actions.removeProductFromCart(product)))
 
-                const expected: CartItemType[] = [{id: 1, quantity: 41, product}]
+                const expected: CartItem[] = [{id: 1, quantity: 41, product}]
                 exp.toEqual(expected)
             })
 
