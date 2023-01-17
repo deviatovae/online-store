@@ -2,11 +2,22 @@ import {View} from "../../view";
 import './paymentPage.scss'
 import {PaymentListView} from "./paymentListView";
 import {CartData} from "../../../types/cartData";
+// import {CartDataType} from "../../../types/cartDataType";
+import {Validation} from "../../../types/validation";
+import {Card} from "../../../types/card";
 import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
 import {UrlParam} from "../../../types/urlParam";
+import {lightInvalid} from "./utils"
+import {makeInputInvalid, makeInputValid} from "./utils"
+import {checkFormatName, checkNameLength, checkFormatAddress, checkAddressLength,
+        checkFormatEmail, checkFormatNumber, checkNumberLength, checkFormatNameCard,
+        checkFormatLength, checkFormatCvv, checkLengthCvv, formatCardNumber, isYearValid,
+        isMonthValid, isDateFormatValid, formatDate} from "./validation"
+
+
 
 export class PaymentPageView extends View<CartData> {
     protected views = {
@@ -78,217 +89,164 @@ export class PaymentPageView extends View<CartData> {
 
     public afterRender(controller: Controller): void {
         super.afterRender(controller);
+        
+        const nameInput = document.querySelector(".payment-details__name") as HTMLInputElement;
+        const addressInput = document.querySelector(".payment-details__shipping-address") as HTMLInputElement;
+        const emailInput = document.querySelector(".payment-details__email") as HTMLInputElement;
+        const numberInput = document.querySelector(".payment-details__phone-number") as HTMLInputElement;
+        const cardNumberInput = document.querySelector(".card-details__card-number") as HTMLInputElement;
+        const nameCardInput = document.querySelector(".card-details__name") as HTMLInputElement;
+        const cvvInput = document.querySelector(".bottom-row__cvv") as HTMLInputElement;
+        const dateInput = document.querySelector(".bottom-row__date") as HTMLInputElement;
+        const cardsImg = document.querySelector(".cards__img") as HTMLElement | null;
+        const loadingSpinner = document.querySelector(".loading-spinner") as HTMLInputElement;
+        const orderBtn = document.querySelector(".summary-content__order-btn") as HTMLInputElement;
+        const paymentPage = document.querySelector('.payment-page') as HTMLElement;
+        const closeButton = document.querySelector('.payment-details__close-btn') as HTMLElement;
 
-        let validName: boolean = false;
-        let validAddress: boolean = false;
-        let validEmail: boolean = false;
-        let validTell: boolean = false;
-        let validCardName: boolean = false;
-        let validCardNumber: boolean = false;
-        let validCardDate: boolean = false;
-        let validCardCvv: boolean = false
+        const inputElements: {[key: string] : HTMLInputElement} = {
+            validName: nameInput,
+            validAddress: addressInput,
+            validEmail: emailInput,
+            validTell: numberInput,
+            validCardName: nameCardInput,
+            validCardNumber: cardNumberInput,
+            validCardDate: dateInput,
+            validCardCvv: cvvInput
+        };
 
-        // валидация name
-        const nameInput = document.querySelector<HTMLInputElement>(".payment-details__name");
+        const formFields: Validation = {
+            validName: false,
+            validAddress: false,
+            validEmail: false,
+            validTell: false,
+            validCardName: false,
+            validCardNumber: false,
+            validCardDate: false,
+            validCardCvv: false
+        };
+
+        // name
         nameInput?.addEventListener('input', (event: Event) => {
-
-            nameInput.value = nameInput.value.replace(/[^A-Za-z, А-Яа-я]/g, '');
-            let arrName = Array.from(nameInput.value.split(' '))
-            if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
-                nameInput.classList.add('valid');
-                nameInput.classList.remove('invalid');
-                validName = true;
+            nameInput.value = checkFormatName(nameInput.value);
+            const isValidNameInput = checkNameLength(nameInput.value);
+            if (isValidNameInput) {
+                formFields.validName = true;
+                makeInputValid(nameInput);
             } else {
-                nameInput.classList.remove('valid');
-                nameInput.classList.add('invalid');
-                validName = false;
+                makeInputInvalid(nameInput);
             }
         })
 
-        // валидация address
-        const addressInput = document.querySelector<HTMLInputElement>(".payment-details__shipping-address");
+        // address
         addressInput?.addEventListener('input', (event: Event) => {
-
-            addressInput.value = addressInput.value.replace(/[^\-\A-Za-z, А-Яа-я]/g, '');
-            let arrAddress = Array.from(addressInput.value.split(' '))
-            if (arrAddress.length >= 3 && arrAddress.every((el) => el.length >= 5)) {
-                addressInput.classList.add('valid');
-                addressInput.classList.remove('invalid');
-                validAddress = true;
+            addressInput.value = checkFormatAddress(addressInput.value);
+            const isValidAddressInput = checkAddressLength(addressInput.value);
+            if (isValidAddressInput) {
+                formFields.validAddress = true;
+                makeInputValid(addressInput);
             } else {
-                addressInput.classList.remove('valid');
-                addressInput.classList.add('invalid');
-                validAddress = false;
+                makeInputInvalid(addressInput);
             }
         })
 
-        // валидация email
-        const emailInput = document.querySelector<HTMLInputElement>(".payment-details__email");
+        // email
         emailInput?.addEventListener('input', (event: Event) => {
+            const isValidEmailInput = checkFormatEmail(emailInput.value);
+            if (isValidEmailInput) {
+                formFields.validEmail = true;
+                makeInputValid(emailInput);
 
-            if (emailInput.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-                emailInput.classList.add('valid');
-                emailInput.classList.remove('invalid');
-                validEmail = true;
             } else {
-                emailInput.classList.remove('valid');
-                emailInput.classList.add('invalid');
-                validEmail = false;
+                makeInputInvalid(emailInput);
             }
         })
 
-        // валидация phone-number
-        const numberInput = document.querySelector<HTMLInputElement>(".payment-details__phone-number");
+        // phone-number
         numberInput?.addEventListener('input', (event: Event) => {
-
-            numberInput.value = numberInput.value.replace(/[^+\d]/g, '').substring(0, 16);
-            if (numberInput.value.match(/^\+\d{9}/g)) {
-                numberInput.classList.add('valid');
-                numberInput.classList.remove('invalid');
-                validTell = true;
+            numberInput.value = checkFormatNumber(numberInput.value);
+            const isValidNumberInput = checkNumberLength(numberInput.value);
+            if (isValidNumberInput) {
+                formFields.validTell = true;
+                makeInputValid(numberInput);
             } else {
-                numberInput.classList.remove('valid');
-                numberInput.classList.add('invalid');
-                validTell = false;
+                makeInputInvalid(numberInput);
             }
         })
 
-        // валидация card number
-        const cardNumberInput = document.querySelector<HTMLInputElement>(".card-details__card-number");
-        const cardsImg = document.querySelector<HTMLElement>(".cards__img");
-
+        // card number
         cardNumberInput?.addEventListener('input', (event: Event) => {
-            let arrCardNumber = Array.from(cardNumberInput.value)
+            cardNumberInput.value = formatCardNumber(cardNumberInput.value);
+            if (!cardsImg) return;
 
-            let value = cardNumberInput.value.replace(/[^\d]/g, '').substring(0, 16);
-            if (value != '') {
-                value = value.match(/.{1,4}/g)?.join(' ') || '';
-            } else value = '';
-            cardNumberInput.value = value;
-
-            switch (arrCardNumber[0]) {
-                case '4':
-                    cardsImg?.classList.add("cards__img_visa");
+            switch (cardNumberInput.value[0]) {
+                case Card.VISA:
+                    cardsImg.classList.add("cards__img_visa");
                     break;
-
-                case '5':
-                    cardsImg?.classList.add("cards__img_mastercard");
+                case Card.MASTERCARD:
+                    cardsImg.classList.add("cards__img_mastercard");
                     break;
-
-                case '6':
-                    cardsImg?.classList.add("cards__img_amex");
+                case Card.AMEX:
+                    cardsImg.classList.add("cards__img_amex");
                     break;
-
                 default:
-                    cardsImg?.classList.remove("cards__img_visa");
-                    cardsImg?.classList.remove("cards__img_mastercard");
-                    cardsImg?.classList.remove("cards__img_amex");
+                    cardsImg.classList.remove("cards__img_visa");
+                    cardsImg.classList.remove("cards__img_mastercard");
+                    cardsImg.classList.remove("cards__img_amex");
                     break;
             }
-
-            if (arrCardNumber.length >= 19) {
-                cardNumberInput.classList.add('valid');
-                cardNumberInput.classList.remove('invalid');
-                validCardNumber = true;
+            if (cardNumberInput.value.length >= 16) {
+                formFields.validCardNumber = true;
+                makeInputValid(cardNumberInput);
             } else {
-                cardNumberInput.classList.remove('valid');
-                cardNumberInput.classList.add('invalid');
-                validCardNumber = false;
+                makeInputInvalid(cardNumberInput);
             }
         })
 
-        // валидация name on card
-        const nameCardInput = document.querySelector<HTMLInputElement>(".card-details__name");
+        // name on card
         nameCardInput?.addEventListener('input', (event: Event) => {
-
-            nameCardInput.value = nameCardInput.value.replace(/[^\A-Za-z /]/g, '');
-            let arrName = Array.from(nameCardInput.value.split(' '));
-
-            if (arrName.length >= 2 && arrName.every((el) => el.length >= 3)) {
-                nameCardInput.classList.add('valid');
-                nameCardInput.classList.remove('invalid');
-                validCardName = true;
+            nameCardInput.value = checkFormatNameCard(nameCardInput.value);
+            const isValidNameInput = checkFormatLength(nameCardInput.value);
+            if (isValidNameInput) {
+                formFields.validCardName = true;
+                makeInputValid(nameCardInput);
             } else {
-                nameCardInput.classList.remove('valid');
-                nameCardInput.classList.add('invalid');
-                validCardName = false;
+                makeInputInvalid(nameCardInput);
             }
-        })
+        });
 
-        // валидация CVV
-        const cvvInput = document.querySelector<HTMLInputElement>(".bottom-row__cvv");
+        //  CVV
         cvvInput?.addEventListener('input', (event: Event) => {
+            cvvInput.value = checkFormatCvv(cvvInput.value);
+            const isValidCvvInput = checkLengthCvv(cvvInput.value);
+              if (isValidCvvInput) {
+                  formFields.validCardCvv = true;
+                  makeInputValid(cvvInput);
+              } else {
+                  makeInputInvalid(cvvInput);
+              }
+        });
 
-            cvvInput.value = cvvInput.value.replace(/[^\0-9]/g, '').substring(0, 3);
-
-            if (cvvInput.value.match(/^\d{3}/g)) {
-                cvvInput.classList.add('valid');
-                cvvInput.classList.remove('invalid');
-                validCardCvv = true;
-            } else {
-                cvvInput.classList.remove('valid');
-                cvvInput.classList.add('invalid');
-                validCardCvv = false;
-            }
-        })
-
-        // валидация MM/YY
-        const dateInput = document.querySelector<HTMLInputElement>(".bottom-row__date");
+        // MM/YY
         dateInput?.addEventListener('input', (event: Event) => {
-
-            const thisYear = new Date().getFullYear().toString().substring(2, 4)
-            let value = dateInput.value.replace(/[^\d]/g, '').substring(0, 4);
-
-            if (value != '') {
-                value = value.match(/.{1,2}/g)?.join('/') || '';
-            } else value = '';
-            dateInput.value = value;
-
-            if (Number(dateInput.value.substring(0, 2)) >= 12) {
-
-                dateInput.classList.add('invalid');
-            } else dateInput.classList.remove('invalid');
-
-            if (dateInput.value.match(/.{5}/g) &&
-                Number(dateInput.value.substring(0, 2)) <= 12 &&
-                Number(dateInput.value.substring(3, 5)) >= +thisYear) {
-                dateInput.classList.add('valid');
-                dateInput.classList.remove('invalid');
-                validCardDate = true;
+            formatDate(dateInput)
+            if (isYearValid(dateInput) &&
+                isMonthValid(dateInput) &&
+                isDateFormatValid(dateInput)) {
+                formFields.validCardDate = true;
+                makeInputValid(dateInput);
             } else {
-                dateInput.classList.remove('valid');
-                dateInput.classList.add('invalid');
-                validCardDate = false;
+                makeInputInvalid(dateInput);
             }
         })
 
-    const closeButton = document.querySelector<HTMLElement>('.payment-details__close-btn');
-    closeButton?.addEventListener('click', () => {
-        this.hide();
-    })
-
-    document.addEventListener('keydown', (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-            this.hide();
+        const checkFormValidity = (formFields: Validation): boolean => {
+            return Object.values(formFields).every(value => value === true);
         }
-    })
-
-        const paymentPage = document.querySelector<HTMLElement>('.payment-page');
-        paymentPage?.addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) {
-                this.hide();
-            } else {
-                return;
-            }
-        })
-
-        const loadingSpinner = document.querySelector<HTMLInputElement>(".loading-spinner");
-        const orderBtn = document.querySelector<HTMLInputElement>(".summary-content__order-btn");
+          
         orderBtn?.addEventListener('click', (event: Event) => {
-
-            if (validName && validAddress && validEmail &&
-                validTell && validCardName && validCardNumber &&
-                validCardDate && validCardCvv) {
+            
+            if (checkFormValidity(formFields)) {
                 orderBtn.textContent = "Your order has been placed!";
                 orderBtn.style.color = "green";
                 paymentTest!.style.display = "none";
@@ -305,29 +263,7 @@ export class PaymentPageView extends View<CartData> {
                 }, 2000);
 
                 // Подсвететка не валидных блоков
-                if (!validName) nameInput?.classList.add('invalid');
-                else nameInput?.classList.remove('invalid');
-
-                if (!validAddress) addressInput?.classList.add('invalid');
-                else addressInput?.classList.remove('invalid');
-
-                if (!validEmail) emailInput?.classList.add('invalid');
-                else emailInput?.classList.remove('invalid');
-
-                if (!validTell) numberInput?.classList.add('invalid');
-                else numberInput?.classList.remove('invalid');
-
-                if (!validCardName) nameCardInput?.classList.add('invalid');
-                else nameCardInput?.classList.remove('invalid');
-
-                if (!validCardNumber) cardNumberInput?.classList.add('invalid');
-                else cardNumberInput?.classList.remove('invalid');
-
-                if (!validCardDate) dateInput?.classList.add('invalid');
-                else dateInput?.classList.remove('invalid');
-
-                if (!validCardCvv) cvvInput?.classList.add('invalid');
-                else cvvInput?.classList.remove('invalid');
+                lightInvalid(formFields, inputElements);
             }
         })
 
@@ -336,60 +272,71 @@ export class PaymentPageView extends View<CartData> {
         paymentTest?.addEventListener('click', (event: Event) => {
             if (nameInput) {
                 nameInput.value = 'Rubi Rhod';
-                validName = true;
-                nameInput.classList.add('valid');
-                nameInput.classList.remove('invalid');
+                formFields.validName = true;
+                makeInputValid(nameInput);
             }
 
             if (addressInput) {
                 addressInput.value = "United States, New-York, Times Square";
-                validAddress = true;
-                addressInput.classList.add('valid');
-                addressInput.classList.remove('invalid');
+                formFields.validAddress = true;
+                makeInputValid(addressInput);
             }
 
             if (emailInput) {
                 emailInput.value = "Rubi_Rohod@icloud.com";
-                validEmail = true;
-                emailInput.classList.add('valid');
-                emailInput.classList.remove('invalid');
+                formFields.validEmail = true;
+                makeInputValid(emailInput);
             }
 
             if (numberInput) {
                 numberInput.value = "+7123456789";
-                validTell = true;
-                numberInput.classList.add('valid');
-                numberInput.classList.remove('invalid');
+                formFields.validTell = true;
+                makeInputValid(numberInput);
             }
 
             if (nameCardInput) {
                 nameCardInput.value = "RUBI RHOD";
-                validCardName = true;
-                nameCardInput.classList.add('valid');
-                nameCardInput.classList.remove('invalid');
+                formFields.validCardName = true;
+                makeInputValid(nameCardInput);
             }
 
             if (cardNumberInput && cardsImg) {
                 cardNumberInput.value = "5761 8744 9011 0008";
-                validCardNumber = true;
-                cardNumberInput.classList.add('valid');
-                cardNumberInput.classList.remove('invalid');
+                formFields.validCardNumber = true;
+                makeInputValid(cardNumberInput);
                 cardsImg.classList.add("cards__img_mastercard");
             }
 
             if (dateInput) {
                 dateInput.value = "04/24";
-                validCardDate = true;
-                dateInput.classList.add('valid');
-                dateInput.classList.remove('invalid');
+                formFields.validCardDate = true;
+                makeInputValid(dateInput);
             }
 
             if (cvvInput) {
                 cvvInput.value = "344";
-                validCardCvv = true;
-                cvvInput.classList.add('valid');
-                cvvInput.classList.remove('invalid');
+                formFields.validCardCvv = true;
+                makeInputValid(cvvInput);
             }
         })
+
+        closeButton?.addEventListener('click', () => {
+            this.hide();
+        })
+
+        document.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                this.hide();
+            }
+        })
+
+        paymentPage?.addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                this.hide();
+            } else {
+                return;
+            }
+        })
+
     }
 }

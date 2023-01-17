@@ -117,6 +117,15 @@ export default class ProductPageView extends View<ProductPage> {
             buttonImg0.style.borderBottom = "2px solid #8B9D93"
         })
 
+        function shake():void {
+          stock.classList.add("shake-product");
+          stockItem.classList.add("shake-product");
+          setTimeout(() => {
+            stock.classList.remove("shake-product");
+            stockItem.classList.remove("shake-product");
+          }, 3000);
+        }
+
         // Добавление в корзину
         const buttonAdd = document.querySelector('.button-add-cart') as HTMLElement;
         const arrowUp = document.querySelector('.arrow-up') as HTMLElement
@@ -138,10 +147,7 @@ export default class ProductPageView extends View<ProductPage> {
           // верификация по in ctock + трести in ctock
           if (Number(quantityInput.value) > Number(quantityInput.dataset.stock)) {
             quantityInput.value = String(quantityInput.dataset.stock);
-            stock.classList.add("shake-product");
-            stockItem.classList.add("shake-product");
-            setTimeout(() => stock.classList.remove("shake-product"), 3000);
-            setTimeout(() => stockItem.classList.remove("shake-product"), 3000);
+            shake()
           }
         })
 
@@ -153,10 +159,7 @@ export default class ProductPageView extends View<ProductPage> {
           }
           // трести in stock если импутом внесено большее количество чем есть
           if (Number(quantityInput.value) == Number(quantityInput.dataset.stock)) {
-            stock.classList.add("shake-product");
-            stockItem.classList.add("shake-product");
-            setTimeout(() => stock.classList.remove("shake-product"), 3000);
-            setTimeout(() => stockItem.classList.remove("shake-product"), 3000);
+            shake()
           }
         })
 
