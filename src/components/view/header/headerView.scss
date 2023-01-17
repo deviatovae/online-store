@@ -1,0 +1,61 @@
+@import '../../../assets/styles/common/_variables';
+
+.header-cart {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+
+  &__img {
+    background: url("../../../assets/img/cart-header.svg") no-repeat center;
+    width: 80px;
+    height: 80px;
+
+    @media screen and (max-width: 450px) {
+      width: 50px;
+      height: 50px;
+      background-size: contain;
+    }
+  }
+
+  &__amount-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 14px;
+    right: -8px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: $oliva;
+    border: 0.5px solid #747474;
+
+    @media screen and (max-width: 450px) {
+      width: 25px;
+      height: 25px;
+      top: 5px;
+      right: -3px;
+      background-size: contain;
+    }
+  }
+
+  &__num {
+    font: 1.2rem $Sitara;
+    color: #747474;
+
+    @media screen and (max-width: 600px) {
+      font-size: 1.2rem;
+    }
+
+    @media screen and (max-width: 450px) {
+      font-size: 1rem;
+    }
+  }
+
+  &__amount {
+    font: 1rem $Sitara;
+    color: #eee;
+  }
+}
