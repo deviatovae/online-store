@@ -8,6 +8,14 @@ import {HeaderView} from "../../header/headerView";
 import {FooterView} from "../../footer/footerView";
 import {Controller} from "../../../controller/controller";
 import {Router} from "../../../router/router";
+import {lightInvalid} from "./utils"
+import {makeInputInvalid, makeInputValid} from "./utils"
+import {checkFormatName, checkNameLength, checkFormatAddress, checkAddressLength,
+        checkFormatEmail, checkFormatNumber, checkNumberLength, checkFormatNameCard,
+        checkFormatLength, checkFormatCvv, checkLengthCvv, formatCardNumber, isYearValid,
+        isMonthValid, isDateFormatValid, formatDate} from "./validation"
+
+
 
 export class PaymentPageView extends View<CartDataType> {
     protected views = {
@@ -80,6 +88,31 @@ export class PaymentPageView extends View<CartDataType> {
     public afterRender(controller: Controller): void {
         super.afterRender(controller);
         
+        const nameInput = document.querySelector(".payment-details__name") as HTMLInputElement;
+        const addressInput = document.querySelector(".payment-details__shipping-address") as HTMLInputElement;
+        const emailInput = document.querySelector(".payment-details__email") as HTMLInputElement;
+        const numberInput = document.querySelector(".payment-details__phone-number") as HTMLInputElement;
+        const cardNumberInput = document.querySelector(".card-details__card-number") as HTMLInputElement;
+        const nameCardInput = document.querySelector(".card-details__name") as HTMLInputElement;
+        const cvvInput = document.querySelector(".bottom-row__cvv") as HTMLInputElement;
+        const dateInput = document.querySelector(".bottom-row__date") as HTMLInputElement;
+        const cardsImg = document.querySelector(".cards__img") as HTMLElement | null;
+        const loadingSpinner = document.querySelector(".loading-spinner") as HTMLInputElement;
+        const orderBtn = document.querySelector(".summary-content__order-btn") as HTMLInputElement;
+        const paymentPage = document.querySelector('.payment-page') as HTMLElement;
+        const closeButton = document.querySelector('.payment-details__close-btn') as HTMLElement;
+
+        const inputElements: {[key: string] : HTMLInputElement} = {
+            validName: nameInput,
+            validAddress: addressInput,
+            validEmail: emailInput,
+            validTell: numberInput,
+            validCardName: nameCardInput,
+            validCardNumber: cardNumberInput,
+            validCardDate: dateInput,
+            validCardCvv: cvvInput
+        };
+
         const formFields: Validation = {
             validName: false,
             validAddress: false,
@@ -91,27 +124,7 @@ export class PaymentPageView extends View<CartDataType> {
             validCardCvv: false
         };
 
-        function makeInputValid(input: HTMLElement | null) {
-            if (!input) return;
-                input.classList.remove('invalid');
-                input.classList.add('valid');
-        }
-
-       function makeInputInvalid(input: HTMLElement | null) {
-            if (!input) return;
-                input.classList.add('invalid');
-                input.classList.remove('valid');
-        }
-
         // name
-        const nameInput = document.querySelector(".payment-details__name") as HTMLInputElement;
-
-        const checkFormatName = (value: string) => value.replace(/[^-\A-Za-z, А-Яа-я]/g, '');
-        const checkNameLength = (value: string) => {
-            const arrName = value.split(' ');
-            return arrName.length >= 2 && arrName.every((el) => el.length >= 3);
-        }
-
         nameInput?.addEventListener('input', (event: Event) => {
             nameInput.value = checkFormatName(nameInput.value);
             const isValidNameInput = checkNameLength(nameInput.value);
@@ -119,20 +132,11 @@ export class PaymentPageView extends View<CartDataType> {
                 formFields.validName = true;
                 makeInputValid(nameInput);
             } else {
-                formFields.validName = false;
                 makeInputInvalid(nameInput);
             }
         })
 
         // address
-        const addressInput = document.querySelector(".payment-details__shipping-address") as HTMLInputElement;
-
-        const checkFormatAddress = (value: string) => value.replace(/[^-\A-Za-z, А-Яа-я]/g, '');
-        const checkAddressLength = (value: string) => {
-            const arrAddress = value.split(' ');
-            return arrAddress.length >= 3 && arrAddress.every((el) => el.length >= 5);
-        }
-
         addressInput?.addEventListener('input', (event: Event) => {
             addressInput.value = checkFormatAddress(addressInput.value);
             const isValidAddressInput = checkAddressLength(addressInput.value);
@@ -140,16 +144,11 @@ export class PaymentPageView extends View<CartDataType> {
                 formFields.validAddress = true;
                 makeInputValid(addressInput);
             } else {
-                formFields.validAddress = false;
                 makeInputInvalid(addressInput);
             }
         })
 
         // email
-        const emailInput = document.querySelector(".payment-details__email") as HTMLInputElement;
-
-        const checkFormatEmail = (value: string) => value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
-
         emailInput?.addEventListener('input', (event: Event) => {
             const isValidEmailInput = checkFormatEmail(emailInput.value);
             if (isValidEmailInput) {
@@ -157,17 +156,11 @@ export class PaymentPageView extends View<CartDataType> {
                 makeInputValid(emailInput);
 
             } else {
-                formFields.validEmail = false;
                 makeInputInvalid(emailInput);
             }
         })
 
         // phone-number
-        const numberInput = document.querySelector(".payment-details__phone-number") as HTMLInputElement;
-
-        const checkFormatNumber = (value: string) => value.replace(/[^+\d]/g, '').substring(0, 16)
-        const checkNumberLength = (value: string) => value.match(/^\+\d{9}/g);
-        
         numberInput?.addEventListener('input', (event: Event) => {
             numberInput.value = checkFormatNumber(numberInput.value);
             const isValidNumberInput = checkNumberLength(numberInput.value);
@@ -175,63 +168,40 @@ export class PaymentPageView extends View<CartDataType> {
                 formFields.validTell = true;
                 makeInputValid(numberInput);
             } else {
-                formFields.validTell = false;
                 makeInputInvalid(numberInput);
             }
         })
 
-        // валидация card number
-
-        const cardNumberInput = document.querySelector(".card-details__card-number") as HTMLInputElement;
-        const cardsImg = document.querySelector(".cards__img") as HTMLElement | null;
-
+        // card number
         cardNumberInput?.addEventListener('input', (event: Event) => {
-
-            const value = cardNumberInput.value.replace(/[^\d]/g, '').substring(0, 16);
-            const formattedValue = value.match(/.{1,4}/g)?.join(' ') || '';
-            cardNumberInput.value = formattedValue;
-
+            cardNumberInput.value = formatCardNumber(cardNumberInput.value);
             if (!cardsImg) return;
 
-            switch (value[0]) {
+            switch (cardNumberInput.value[0]) {
                 case Card.VISA:
                     cardsImg.classList.add("cards__img_visa");
                     break;
-        
                 case Card.MASTERCARD:
                     cardsImg.classList.add("cards__img_mastercard");
                     break;
-        
                 case Card.AMEX:
                     cardsImg.classList.add("cards__img_amex");
                     break;
-        
                 default:
                     cardsImg.classList.remove("cards__img_visa");
                     cardsImg.classList.remove("cards__img_mastercard");
                     cardsImg.classList.remove("cards__img_amex");
                     break;
             }
-            if (value.length >= 16) {
+            if (cardNumberInput.value.length >= 16) {
                 formFields.validCardNumber = true;
                 makeInputValid(cardNumberInput);
-
             } else {
-                formFields.validCardNumber = false;
                 makeInputInvalid(cardNumberInput);
             }
         })
 
-        // валидация name on card
-
-        const nameCardInput = document.querySelector(".card-details__name") as HTMLInputElement;
-
-        const checkFormatNameCard = (value: string) => value.replace(/[^\A-Za-z /]/g, '');
-        const checkFormatLength = (value: string) => {
-          const arrName = value.split(' ');
-          return arrName.length >= 2 && arrName.every((el) => el.length >= 3);
-        }
-        
+        // name on card
         nameCardInput?.addEventListener('input', (event: Event) => {
             nameCardInput.value = checkFormatNameCard(nameCardInput.value);
             const isValidNameInput = checkFormatLength(nameCardInput.value);
@@ -239,18 +209,11 @@ export class PaymentPageView extends View<CartDataType> {
                 formFields.validCardName = true;
                 makeInputValid(nameCardInput);
             } else {
-                formFields.validCardName = false;
                 makeInputInvalid(nameCardInput);
             }
         });
 
-        // валидация CVV
-
-        const cvvInput = document.querySelector(".bottom-row__cvv") as HTMLInputElement;
-
-        const checkFormatCvv = (value: string) => value.replace(/[^\d]/g, '').substring(0, 3);
-        const checkLengthCvv = (value: string) => value.length === 3;
-
+        //  CVV
         cvvInput?.addEventListener('input', (event: Event) => {
             cvvInput.value = checkFormatCvv(cvvInput.value);
             const isValidCvvInput = checkLengthCvv(cvvInput.value);
@@ -258,61 +221,22 @@ export class PaymentPageView extends View<CartDataType> {
                   formFields.validCardCvv = true;
                   makeInputValid(cvvInput);
               } else {
-                  formFields.validCardCvv = false;
                   makeInputInvalid(cvvInput);
               }
         });
 
-        // валидация MM/YY
-        const dateInput = document.querySelector(".bottom-row__date") as HTMLInputElement;
+        // MM/YY
         dateInput?.addEventListener('input', (event: Event) => {
-
-            const thisYear = new Date().getFullYear().toString().substring(2, 4)
-            let value = dateInput.value.replace(/[^\d]/g, '').substring(0, 4);
-
-            if (value != '') {
-                value = value.match(/.{1,2}/g)?.join('/') || '';
-            } else value = '';
-            dateInput.value = value;
-
-            if (Number(dateInput.value.substring(0, 2)) >= 12) {
-
-                dateInput.classList.add('invalid');
-            } else dateInput.classList.remove('invalid');
-
-            if (dateInput.value.match(/.{5}/g) &&
-                Number(dateInput.value.substring(0, 2)) <= 12 &&
-                Number(dateInput.value.substring(3, 5)) >= +thisYear) {
-                    formFields.validCardDate = true;
-                    makeInputValid(dateInput);
+            formatDate(dateInput)
+            if (isYearValid(dateInput) &&
+                isMonthValid(dateInput) &&
+                isDateFormatValid(dateInput)) {
+                formFields.validCardDate = true;
+                makeInputValid(dateInput);
             } else {
-                formFields.validCardDate = false;
                 makeInputInvalid(dateInput);
             }
         })
-
-        const closeButton = document.querySelector<HTMLElement>('.payment-details__close-btn');
-        closeButton?.addEventListener('click', () => {
-            this.hide();
-        })
-
-        document.addEventListener('keydown', (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
-                this.hide();
-            }
-        })
-
-        const paymentPage = document.querySelector<HTMLElement>('.payment-page');
-        paymentPage?.addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) {
-                this.hide();
-            } else {
-                return;
-            }
-        })
-
-        const loadingSpinner = document.querySelector<HTMLInputElement>(".loading-spinner");
-        const orderBtn = document.querySelector<HTMLInputElement>(".summary-content__order-btn");
 
         const checkFormValidity = (formFields: Validation): boolean => {
             return Object.values(formFields).every(value => value === true);
@@ -337,15 +261,7 @@ export class PaymentPageView extends View<CartDataType> {
                 }, 2000);
 
                 // Подсвететка не валидных блоков
-
-                if (!formFields.validName) makeInputInvalid(nameInput);
-                if (!formFields.validAddress) makeInputInvalid(addressInput);
-                if (!formFields.validEmail) makeInputInvalid(emailInput);
-                if (!formFields.validTell) makeInputInvalid(numberInput);
-                if (!formFields.validCardName) makeInputInvalid(nameCardInput);
-                if (!formFields.validCardNumber) makeInputInvalid(cardNumberInput);
-                if (!formFields.validCardDate) makeInputInvalid(dateInput);
-                if (!formFields.validCardCvv) makeInputInvalid(cvvInput);
+                lightInvalid(formFields, inputElements);
             }
         })
 
@@ -401,5 +317,24 @@ export class PaymentPageView extends View<CartDataType> {
                 makeInputValid(cvvInput);
             }
         })
+
+        closeButton?.addEventListener('click', () => {
+            this.hide();
+        })
+
+        document.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                this.hide();
+            }
+        })
+
+        paymentPage?.addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                this.hide();
+            } else {
+                return;
+            }
+        })
+
     }
 }
